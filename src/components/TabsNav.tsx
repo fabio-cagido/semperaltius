@@ -6,11 +6,12 @@ import {
   Layers,
   Compass,
   BarChart3,
+  Briefcase,
   Search,
   Users
 } from 'lucide-react';
 
-export type ActiveTab = 'cenario' | 'ciclos' | 'analise360' | 'comparativo' | 'explorador' | 'tabela';
+export type ActiveTab = 'cenario' | 'ciclos' | 'analise360' | 'comparativo' | 'gestao' | 'explorador' | 'tabela';
 
 interface TabsNavProps {
   activeTab: ActiveTab;
@@ -42,6 +43,12 @@ export default function TabsNav({ activeTab, setActiveTab }: TabsNavProps) {
       label: 'Comparativo entre Ciclos',
       sublabel: 'Coordenações, Psicologia & Docência',
       icon: BarChart3,
+    },
+    {
+      id: 'gestao' as ActiveTab,
+      label: 'Gestão & Especialistas',
+      sublabel: 'Coordenações, Psicologia & Inglês',
+      icon: Briefcase,
     },
     {
       id: 'explorador' as ActiveTab,

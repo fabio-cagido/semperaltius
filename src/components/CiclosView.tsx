@@ -49,36 +49,26 @@ export default function CiclosView({ analytics, metadata, unidade }: CiclosViewP
 
   // Build Radar Data for the 5 Âmbitos (Novidade 2026 - Slides 13, 17, 21, 25)
   // Vertices = 5 Âmbitos
-  // Curves = Coordenador (ou avaliação dada pelo coordenador), Docentes, Psicólogo, Supervisor de Inglês
+  // Curves = Coordenador, Docentes, Psicólogo, Gestão de Inglês
   const radarAmbitosData = metadata.ambitos.map((amb) => {
-    // In Curitiba / RJ, check data availability
     const docenteScore = currentCicloData.ambitos[amb] || 0;
-    
-    // Perfil Avaliador / Cargo specific variations
-    const coordScore = currentCicloData.cargos.Coordenação[amb] 
-      || currentCicloData.perfis_avaliadores.coordenador 
-      || docenteScore;
-
-    const psicoScore = currentCicloData.cargos.Psicólogos[amb]
-      || currentCicloData.perfis_avaliadores.outros_psicólogo
-      || 0;
-
-    // Supervisor de Inglês (applicable in Curitiba)
-    const inglesScore = unidade === 'Rio de Janeiro' ? 0 : (docenteScore > 0 ? Number((docenteScore * 0.98).toFixed(2)) : 0);
+    const coordScore = currentCicloData.cargos?.Coordenação?.[amb] ?? null;
+    const psicoScore = currentCicloData.cargos?.Psicólogos?.[amb] ?? null;
+    const inglesScore = currentCicloData.cargos?.['Supervisão de Inglês']?.[amb] ?? null;
 
     return {
       ambito: amb.length > 25 ? amb.substring(0, 22) + '...' : amb,
       fullName: amb,
-      'Docentes': docenteScore,
-      'Coordenador': coordScore > 0 ? coordScore : null,
-      'Psicólogo': psicoScore > 0 ? psicoScore : null,
-      'Supervisor de Inglês': unidade !== 'Rio de Janeiro' && inglesScore > 0 ? inglesScore : null
+      'Docentes': docenteScore > 0 ? docenteScore : null,
+      'Coordenador': coordScore && coordScore > 0 ? coordScore : null,
+      'Psicólogo': psicoScore && psicoScore > 0 ? psicoScore : null,
+      'Gestão de Inglês': inglesScore && inglesScore > 0 ? inglesScore : null
     };
   });
 
-  const hasCoord = currentCicloData.cargos.Coordenação && Object.values(currentCicloData.cargos.Coordenação).some(v => v > 0);
-  const hasPsico = currentCicloData.cargos.Psicólogos && Object.values(currentCicloData.cargos.Psicólogos).some(v => v > 0);
-  const hasIngles = unidade === 'Curitiba' || unidade === 'Todas';
+  const hasCoord = Object.values(currentCicloData.cargos?.Coordenação || {}).some(v => v > 0);
+  const hasPsico = Object.values(currentCicloData.cargos?.Psicólogos || {}).some(v => v > 0);
+  const hasIngles = Object.values(currentCicloData.cargos?.['Supervisão de Inglês'] || {}).some(v => v > 0);
 
   return (
     <div className="space-y-8 pb-12">
@@ -215,19 +205,27 @@ export default function CiclosView({ analytics, metadata, unidade }: CiclosViewP
 
           {/* Recorte Notes */}
           <div className="flex flex-wrap gap-2 text-[11px]">
-            {!hasCoord && (
+            {hasCoord ? (
+              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-amber-50 text-amber-900 border border-amber-200 font-medium">
+                Coordenação ativa ({selectedCiclo})
+              </span>
+            ) : (
               <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-slate-100 text-slate-600 italic border border-slate-200">
-                <Info className="w-3 h-3" /> Coordenadores: Sem avaliados diretos no ciclo
+                <Info className="w-3 h-3" /> Coordenadores: Sem avaliados neste recorte
               </span>
             )}
-            {!hasPsico && (
+            {hasPsico ? (
+              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-emerald-50 text-emerald-900 border border-emerald-200 font-medium">
+                Psicologia ativa ({selectedCiclo})
+              </span>
+            ) : (
               <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-slate-100 text-slate-600 italic border border-slate-200">
-                <Info className="w-3 h-3" /> Psicólogos: Atuação transversal / sem avaliado específico
+                <Info className="w-3 h-3" /> Psicólogos: Sem avaliados neste recorte
               </span>
             )}
-            {unidade === 'Rio de Janeiro' && (
-              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-amber-50 text-amber-800 border border-amber-200">
-                Supervisão de Inglês: Aplica-se exclusivamente a Curitiba
+            {hasIngles && (
+              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-purple-50 text-purple-900 border border-purple-200 font-medium">
+                Gestão de Inglês ativa ({selectedCiclo})
               </span>
             )}
           </div>
@@ -291,11 +289,11 @@ export default function CiclosView({ analytics, metadata, unidade }: CiclosViewP
                 />
               ) : null}
 
-              {/* Supervisor de Inglês Curve (Ctba only) */}
+              {/* Gestão de Inglês Curve */}
               {hasIngles ? (
                 <Radar
-                  name="Supervisor de Inglês (Ctba)"
-                  dataKey="Supervisor de Inglês"
+                  name="Gestão de Inglês"
+                  dataKey="Gestão de Inglês"
                   stroke="#9333EA"
                   fill="#9333EA"
                   fillOpacity={0.15}

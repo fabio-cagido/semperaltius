@@ -7,6 +7,7 @@ import CenarioGeralView from '@/components/CenarioGeralView';
 import CiclosView from '@/components/CiclosView';
 import Analise360View from '@/components/Analise360View';
 import ComparativoCiclosView from '@/components/ComparativoCiclosView';
+import GestaoEspecialistasView from '@/components/GestaoEspecialistasView';
 import ExploradorQuesitosView from '@/components/ExploradorQuesitosView';
 import TabelaAvaliadosView from '@/components/TabelaAvaliadosView';
 import LoginScreen from '@/components/LoginScreen';
@@ -137,6 +138,13 @@ export default function Home() {
           <ComparativoCiclosView
             analytics={activeAnalytics}
             metadata={data.metadata}
+            unidade={unidade}
+          />
+        )}
+
+        {activeTab === 'gestao' && (
+          <GestaoEspecialistasView
+            data={data}
             unidade={unidade}
           />
         )}

@@ -2,13 +2,15 @@ export type UnidadeScope = 'Todas' | 'Curitiba' | 'Rio de Janeiro';
 export type CicloEscolar = 'EI' | 'EFI' | 'EFII' | 'EM' | 'Geral / Transversal';
 export type PerformanceLevel = 'Inicial' | 'Em Desenvolvimento' | 'Atuação Adequada' | 'Referência';
 export type CargoAvaliado = 'Docentes' | 'Coordenação / Direção' | 'Psicólogos' | 'Supervisão de Inglês';
+export type InstrumentoGestao = 'coordenadores_ciclo' | 'psicologos' | 'gestao_ingles' | 'disciplinas_institucionais';
 
 export interface QuesitoMeta {
   id: number;
   ambito: string;
   perfil: string;
   quesito: string;
-  raw_sub: string;
+  raw_sub?: string;
+  raw?: string;
   key: string;
 }
 
@@ -33,6 +35,12 @@ export interface EvaluatorProfiles {
   pares: number;
   outros_psicólogo: number;
   alunos: number;
+  autoavaliacao?: number;
+  outros?: number;
+  colegas?: number;
+  dos_pares?: number;
+  dos_subordinados?: number;
+  do_lider?: number;
 }
 
 export interface MatrixCell {
@@ -53,7 +61,18 @@ export interface CicloData {
     Docentes: Record<string, number>;
     Coordenação: Record<string, number>;
     Psicólogos: Record<string, number>;
+    'Supervisão de Inglês'?: Record<string, number>;
   };
+}
+
+export interface GestaoInstrumentAnalytics {
+  total: number;
+  media_geral: number;
+  ambitos: Record<string, number>;
+  perfis_avaliadores: Record<string, number>;
+  rankings: RankingsData;
+  distribuicao_ciclo: Record<string, number>;
+  distribuicao_nivel: Record<string, number>;
 }
 
 export interface ScopeAnalytics {
@@ -82,6 +101,7 @@ export interface ScopeAnalytics {
     Coordenação: Record<string, Record<string, number>>;
     Psicólogos: Record<string, Record<string, number>>;
   };
+  gestao_especialistas?: Record<InstrumentoGestao, GestaoInstrumentAnalytics>;
 }
 
 export interface AvaliadoRecord {
@@ -109,6 +129,28 @@ export interface AvaliadoRecord {
   nivel: PerformanceLevel | null;
 }
 
+export interface EspecialistaRecord {
+  nome: string;
+  email: string;
+  unidade: 'Curitiba' | 'Rio de Janeiro';
+  segmento: string;
+  segmentos_list: string[];
+  cargo: string;
+  instrumento: InstrumentoGestao;
+  lider: string;
+  nota_final: number | null;
+  media: number | null;
+  autoavaliacao: number | null;
+  do_lider: number | null;
+  outros: number | null;
+  colegas: number | null;
+  dos_pares: number | null;
+  dos_subordinados: number | null;
+  nivel: PerformanceLevel | null;
+  topicos: Record<string, number | null>;
+  questoes: Record<string, number | null>;
+}
+
 export interface DashboardData {
   metadata: {
     titulo: string;
@@ -124,7 +166,23 @@ export interface DashboardData {
       label: string;
       cor: string;
     }>;
+    gestao_especialistas_meta?: {
+      ambitos_coordenadores: string[];
+      ambitos_psicologos: string[];
+      ambitos_gestao_ingles: string[];
+      ambitos_disciplinas_institucionais: string[];
+      questoes_coordenadores: QuesitoMeta[];
+      questoes_psicologos: QuesitoMeta[];
+      questoes_gestao_ingles: QuesitoMeta[];
+      questoes_disciplinas_institucionais: QuesitoMeta[];
+    };
   };
   scopes: Record<UnidadeScope, ScopeAnalytics>;
   avaliados: AvaliadoRecord[];
+  gestao_especialistas?: {
+    coordenadores_ciclo: EspecialistaRecord[];
+    psicologos: EspecialistaRecord[];
+    gestao_ingles: EspecialistaRecord[];
+    disciplinas_institucionais: EspecialistaRecord[];
+  };
 }

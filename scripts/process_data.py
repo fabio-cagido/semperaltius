@@ -3,6 +3,7 @@ import json
 import re
 import csv
 import unicodedata
+import openpyxl
 import pandas as pd
 import numpy as np
 
@@ -13,11 +14,18 @@ CTBA_STUDENTS_CSV = os.path.join(BASE_DIR, 'src', 'data', 'raw', 'respostas_alun
 RJ_STUDENTS_CSV = os.path.join(BASE_DIR, 'src', 'data', 'raw', 'respostas_alunos_rj.csv')
 OUTPUT_JSON = os.path.join(BASE_DIR, 'src', 'data', 'dashboard_data.json')
 
+# New instruments files
+COORD_XLSX = os.path.join(BASE_DIR, 'src', 'data', 'raw', 'coordenadores_ciclo.xlsx')
+PSICO_XLSX = os.path.join(BASE_DIR, 'src', 'data', 'raw', 'psicologos.xlsx')
+SUP_INGLES_XLSX = os.path.join(BASE_DIR, 'src', 'data', 'raw', 'supervisores_ingles.xlsx')
+COORD_INGLES_XLSX = os.path.join(BASE_DIR, 'src', 'data', 'raw', 'coordenadores_ingles.xlsx')
+DISC_INST_XLSX = os.path.join(BASE_DIR, 'src', 'data', 'raw', 'disciplinas_institucionais.xlsx')
+
 MALE_NAMES = {
     'allander', 'arlindo', 'bernardo', 'carlos', 'danilo', 'david', 'dennis', 'euclides',
     'fernando', 'gabriel', 'guilherme', 'ivan', 'joao', 'jonas', 'juliano', 'lucas',
     'luiz', 'marcio', 'raphael', 'rene', 'rodrigo', 'silvio', 'thales', 'wellington',
-    'yuri', 'alex', 'darlan', 'felipe', 'pedro'
+    'yuri', 'alex', 'darlan', 'felipe', 'pedro', 'reinaldo', 'igor', 'agostinho'
 }
 
 STUDENT_QUESTIONS_META = [
@@ -110,6 +118,38 @@ STUDENT_QUESTIONS_META = [
         'key': 'Alunos::Ambiente inclusivo e prevenção ao bullying'
     }
 ]
+
+# Mapping for Leadership & Specialists
+COORD_MAP = {
+    'Adriane de Fatima Bueno Baggio': {'unidade': 'Curitiba', 'segmento': 'EI', 'segmentos_list': ['EI'], 'cargo': 'Coordenador de Ciclo'},
+    'Cintia de Moraes Voss': {'unidade': 'Curitiba', 'segmento': 'EFI', 'segmentos_list': ['EFI'], 'cargo': 'Coordenador de Ciclo'},
+    'Reinaldo Rodrigues dos Santos': {'unidade': 'Curitiba', 'segmento': 'EFII', 'segmentos_list': ['EFII'], 'cargo': 'Coordenador de Ciclo'},
+    'Tatiana Salomão Eulalio de Souza': {'unidade': 'Curitiba', 'segmento': 'EM', 'segmentos_list': ['EM'], 'cargo': 'Coordenador de Ciclo'},
+    'Adriana Jorge': {'unidade': 'Rio de Janeiro', 'segmento': 'EI', 'segmentos_list': ['EI'], 'cargo': 'Coordenador de Ciclo'},
+    'Mariana Rigo': {'unidade': 'Rio de Janeiro', 'segmento': 'EFI', 'segmentos_list': ['EFI'], 'cargo': 'Coordenador de Ciclo'},
+    'Margareth R Paraguassu': {'unidade': 'Rio de Janeiro', 'segmento': 'EFII', 'segmentos_list': ['EFII'], 'cargo': 'Coordenador de Ciclo'},
+}
+
+PSICO_MAP = {
+    'Monalisa Mascouto Peixoto': {'unidade': 'Rio de Janeiro', 'segmento': 'EI', 'segmentos_list': ['EI'], 'cargo': 'Psicólogo Escolar'},
+    'Rebeca Cardoso de Oliviera': {'unidade': 'Curitiba', 'segmento': 'EFI', 'segmentos_list': ['EFI'], 'cargo': 'Psicólogo Escolar'},
+    'Adriana Pereira do Nascimento': {'unidade': 'Rio de Janeiro', 'segmento': 'EFI', 'segmentos_list': ['EFI'], 'cargo': 'Psicólogo Escolar'},
+    'Andrea de Carvalho Constantino': {'unidade': 'Curitiba', 'segmento': 'EFII', 'segmentos_list': ['EFII'], 'cargo': 'Psicólogo Escolar'},
+    'Luise Kindel Monteiro': {'unidade': 'Rio de Janeiro', 'segmento': 'EFII', 'segmentos_list': ['EFII'], 'cargo': 'Psicólogo Escolar'},
+    'Quefli Rodrigues da Silva': {'unidade': 'Curitiba', 'segmento': 'EM', 'segmentos_list': ['EM'], 'cargo': 'Psicólogo Escolar'},
+}
+
+INGLES_MAP = {
+    'Ana Paula Nagamine Lucca': {'unidade': 'Curitiba', 'segmento': 'EI', 'segmentos_list': ['EI'], 'cargo': 'Supervisor de Inglês'},
+    'Luma Marchi': {'unidade': 'Curitiba', 'segmento': 'EFI', 'segmentos_list': ['EFI'], 'cargo': 'Supervisor de Inglês'},
+    'Malena Areal Calvano Souza': {'unidade': 'Rio de Janeiro', 'segmento': 'EI/EFI', 'segmentos_list': ['EI', 'EFI'], 'cargo': 'Supervisor de Inglês'},
+    'Igor Guilherme Romko': {'unidade': 'Curitiba', 'segmento': 'EFII/EM', 'segmentos_list': ['EFII', 'EM'], 'cargo': 'Coordenador Geral de Inglês'},
+    'Fernanda Macena Siqueira': {'unidade': 'Rio de Janeiro', 'segmento': 'EFII/EM', 'segmentos_list': ['EFII', 'EM'], 'cargo': 'Coordenador Geral de Inglês'},
+}
+
+INST_MAP = {
+    'Agostinho Hilario Obzut': {'unidade': 'Curitiba', 'segmento': 'Transversal', 'segmentos_list': ['Transversal'], 'cargo': 'Coordenador de Disciplinas Institucionais'},
+}
 
 def infer_gender(name):
     first_name = name.strip().split()[0].lower()
@@ -309,12 +349,191 @@ def load_student_evaluations():
 
     return teacher_student_data
 
+def parse_generic_instrument(filepath, mapping_dict, default_instrument_key):
+    wb = openpyxl.load_workbook(filepath, data_only=True)
+    ws_m = wb['Médias']
+    ws_t = wb['Tópicos']
+    ws_p = wb['Perguntas computáveis']
+
+    t_headers = []
+    for c in range(13, ws_t.max_column + 1):
+        v = ws_t.cell(2, c).value
+        if v:
+            t_headers.append((c, str(v).strip()))
+
+    p_headers = []
+    for c in range(13, ws_p.max_column + 1):
+        amb = ws_p.cell(1, c).value
+        q_raw = ws_p.cell(2, c).value
+        if q_raw:
+            amb = str(amb).strip() if amb else 'Geral'
+            q_str = str(q_raw).strip()
+            m = re.match(r'\[(.*?)\]\s*(.*)', q_str)
+            perfil = m.group(1) if m else 'Geral'
+            quesito = m.group(2) if m else q_str
+            quesito_clean = quesito.replace('Pró atividade profissonal', 'Proatividade profissional')
+            p_headers.append({
+                'id': len(p_headers) + 1,
+                'col': c,
+                'ambito': amb,
+                'perfil': perfil,
+                'quesito': quesito_clean,
+                'raw': q_str,
+                'key': f"{perfil}::{quesito_clean}"
+            })
+
+    records = []
+    for r in range(3, ws_m.max_row + 1):
+        nome = ws_m.cell(r, 1).value
+        if not nome or not str(nome).strip():
+            continue
+        nome = str(nome).strip()
+        email = str(ws_m.cell(r, 2).value or '').strip()
+
+        info = mapping_dict.get(nome, {})
+        unidade = info.get('unidade')
+        if not unidade:
+            unidade = 'Curitiba' if 'curitiba' in email.lower() else 'Rio de Janeiro'
+        segmento = info.get('segmento', 'Transversal')
+        segmentos_list = info.get('segmentos_list', [segmento])
+        cargo = info.get('cargo', default_instrument_key)
+
+        nota_final = clean_val(ws_m.cell(r, 14).value)
+        media = clean_val(ws_m.cell(r, 16).value)
+        auto = clean_val(ws_m.cell(r, 17).value)
+        lider = clean_val(ws_m.cell(r, 18).value)
+        outros = clean_val(ws_m.cell(r, 19).value)
+        colegas = clean_val(ws_m.cell(r, 20).value)
+        pares = clean_val(ws_m.cell(r, 21).value)
+        subord = clean_val(ws_m.cell(r, 23).value)
+
+        topicos = {}
+        for c, tname in t_headers:
+            topicos[tname] = clean_val(ws_t.cell(r, c).value)
+
+        questoes = {}
+        for p in p_headers:
+            questoes[p['key']] = clean_val(ws_p.cell(r, p['col']).value)
+
+        records.append({
+            'nome': nome,
+            'email': email,
+            'unidade': unidade,
+            'segmento': segmento,
+            'segmentos_list': segmentos_list,
+            'cargo': cargo,
+            'instrumento': default_instrument_key,
+            'lider': str(ws_m.cell(r, 10).value or '').strip(),
+            'nota_final': nota_final,
+            'media': media,
+            'autoavaliacao': auto,
+            'do_lider': lider,
+            'outros': outros,
+            'colegas': colegas,
+            'dos_pares': pares,
+            'dos_subordinados': subord,
+            'nivel': get_performance_level(nota_final),
+            'topicos': topicos,
+            'questoes': questoes
+        })
+
+    return {
+        'records': records,
+        'p_headers': p_headers,
+        't_headers': [t[1] for t in t_headers]
+    }
+
+def compute_instrument_analytics(records, p_headers, t_headers):
+    if not records:
+        return {
+            'total': 0,
+            'media_geral': 0.0,
+            'ambitos': {t: 0.0 for t in t_headers},
+            'perfis_avaliadores': {},
+            'rankings': {'todos': [], 'top5': [], 'bottom5': []},
+            'distribuicao_ciclo': {},
+            'distribuicao_nivel': {'Inicial': 0, 'Em Desenvolvimento': 0, 'Atuação Adequada': 0, 'Referência': 0}
+        }
+
+    scores = [r['nota_final'] for r in records if r['nota_final'] is not None]
+    media_geral = round(float(np.mean(scores)), 2) if scores else 0.0
+
+    # Ambitos
+    ambitos_res = {}
+    for t in t_headers:
+        vals = [r['topicos'].get(t) for r in records if r['topicos'].get(t) is not None]
+        ambitos_res[t] = round(float(np.mean(vals)), 2) if vals else 0.0
+
+    # Perfis avaliadores
+    def mean_eval(key):
+        v = [r.get(key) for r in records if r.get(key) is not None]
+        return round(float(np.mean(v)), 2) if v else 0.0
+
+    perfis = {
+        'autoavaliacao': mean_eval('autoavaliacao'),
+        'do_lider': mean_eval('do_lider'),
+        'outros': mean_eval('outros'),
+        'colegas': mean_eval('colegas'),
+        'dos_pares': mean_eval('dos_pares'),
+        'dos_subordinados': mean_eval('dos_subordinados'),
+    }
+
+    # Rankings
+    quesito_stats = []
+    for meta in p_headers:
+        k = meta['key']
+        vals = [r['questoes'].get(k) for r in records if r['questoes'].get(k) is not None]
+        if vals:
+            quesito_stats.append({
+                'id': meta['id'],
+                'ambito': meta['ambito'],
+                'perfil': meta['perfil'],
+                'quesito': meta['quesito'],
+                'media': round(float(np.mean(vals)), 2),
+                'total_respostas': len(vals)
+            })
+
+    sorted_desc = sorted(quesito_stats, key=lambda x: x['media'], reverse=True)
+    top5 = sorted_desc[:5]
+    sorted_asc = sorted(quesito_stats, key=lambda x: x['media'])
+    bottom5 = sorted_asc[:5]
+
+    # Distribuição por ciclo
+    ciclo_counts = {'EI': 0, 'EFI': 0, 'EFII': 0, 'EM': 0, 'Transversal': 0}
+    for r in records:
+        for s in r.get('segmentos_list', [r.get('segmento')]):
+            if s in ciclo_counts:
+                ciclo_counts[s] += 1
+            else:
+                ciclo_counts['Transversal'] += 1
+
+    # Distribuição por nível
+    nivel_counts = {'Inicial': 0, 'Em Desenvolvimento': 0, 'Atuação Adequada': 0, 'Referência': 0}
+    for r in records:
+        nv = r.get('nivel')
+        if nv in nivel_counts:
+            nivel_counts[nv] += 1
+
+    return {
+        'total': len(records),
+        'media_geral': media_geral,
+        'ambitos': ambitos_res,
+        'perfis_avaliadores': perfis,
+        'rankings': {
+            'todos': sorted_desc,
+            'top5': top5,
+            'bottom5': bottom5
+        },
+        'distribuicao_ciclo': ciclo_counts,
+        'distribuicao_nivel': nivel_counts
+    }
+
 def run():
     print("=" * 80)
-    print("GERANDO DATASET FINAL INTEGRADO COM RESPOSTAS DOS ALUNOS 2026")
+    print("GERANDO DATASET FINAL INTEGRADO - DOCENTES + LIDERANÇA E ESPECIALISTAS 2026")
     print("=" * 80)
 
-    # 1. Load sheets from Qulture.Rocks
+    # 1. Load sheets from Qulture.Rocks (Docentes)
     df1_m = pd.read_excel(F1_PATH, sheet_name='Médias', header=1)
     df1_t = pd.read_excel(F1_PATH, sheet_name='Tópicos', header=1)
     df1_p = pd.read_excel(F1_PATH, sheet_name='Perguntas computáveis', header=[0, 1])
@@ -350,153 +569,103 @@ def run():
     for sq in STUDENT_QUESTIONS_META:
         q_map[sq['id']] = sq
 
-    def extract_rows(df_m, df_t, df_p, src):
-        rows = []
-        for i in range(len(df_m)):
-            m_row = df_m.iloc[i]
-            t_row = df_t.iloc[i]
-            p_row = df_p.iloc[i]
+    student_data = load_student_evaluations()
+    print(f"Formulários de Alunos carregados: {len(student_data)} professores avaliados pelos estudantes.")
 
-            email = str(m_row['Email']).strip().lower()
-            nome = str(m_row['Nome']).strip()
-            dept = clean_str(m_row['Departamento durante a avaliação'])
-            area = clean_str(m_row['Área durante a avaliação'])
-            tag = clean_str(m_row['Tags durante a avaliação'])
-            leader = clean_str(m_row['Líder'])
+    final_rows = []
+    matched_students = set()
 
-            nota_final = clean_val(m_row['Nota Final (sem calibração)'])
-            media = clean_val(m_row['Média'])
-            auto = clean_val(m_row['Autoavaliação'])
-            lider = clean_val(m_row['Do Líder'])
-            outros = clean_val(m_row['Outros'])
-            colegas = clean_val(m_row['Colegas'])
-            pares = clean_val(m_row['Dos Pares'])
-            subord = clean_val(m_row['Dos Subordinados'])
+    for df_m, df_t, df_p, src_label in [(df1_m, df1_t, df1_p, 'EI_F1'), (df2_m, df2_t, df2_p, 'F2_EM')]:
+        for i, row_m in df_m.iterrows():
+            nome = clean_str(row_m['Nome'])
+            if not nome:
+                continue
 
-            topicos = {
-                'Compromisso com a aprendizagem': clean_val(t_row.get('Compromisso com a aprendizagem')),
-                'Compromisso com ensino': clean_val(t_row.get('Compromisso com ensino')),
-                'Crescimento pessoal e profissional': clean_val(t_row.get('Crescimento pessoal e profissional')),
-                'Integração com a instituição': clean_val(t_row.get('Integração com a instituição')),
-                'Papel como formador': clean_val(t_row.get('Papel como formador')),
-            }
+            email = clean_str(row_m['Email'])
+            dept = clean_str(row_m['Departamento durante a avaliação'])
+            area = clean_str(row_m['Área durante a avaliação'])
+            tag = clean_str(row_m['Tags durante a avaliação'])
+            lider = clean_str(row_m['Líder'])
 
+            unidade = infer_unit(email, tag)
+            segmento = normalize_segment(dept, tag, lider, email)
+            cargo = infer_role(nome, dept, lider, email)
+            sexo = infer_gender(nome)
+
+            nota_final = clean_val(row_m['Nota Final (com calibração)'])
+            if nota_final is None:
+                nota_final = clean_val(row_m['Nota Final (sem calibração)'])
+            if nota_final is None:
+                nota_final = clean_val(row_m['Média'])
+
+            media = clean_val(row_m['Média'])
+            auto = clean_val(row_m['Autoavaliação'])
+            do_lider = clean_val(row_m['Do Líder'])
+            outros = clean_val(row_m['Outros'])
+            colegas = clean_val(row_m['Colegas'])
+            dos_pares = clean_val(row_m['Dos Pares'])
+            dos_subord = clean_val(row_m['Dos Subordinados'])
+
+            row_t = df_t.iloc[i]
+            topicos = {}
+            for amb in ambitos:
+                topicos[amb] = clean_val(row_t[amb]) if amb in row_t else None
+
+            row_p = df_p.iloc[i]
             questoes = {}
             for q_id, meta in q_map.items():
-                if meta['perfil'] != 'Alunos':
-                    col_idx = q_id + 11
-                    questoes[meta['key']] = clean_val(p_row.iloc[col_idx])
+                if q_id in [sq['id'] for sq in STUDENT_QUESTIONS_META]:
+                    continue
+                k = (meta['ambito'], meta['raw_sub'])
+                val = clean_val(row_p[k]) if k in row_p else None
+                questoes[meta['key']] = val
 
-            rows.append({
-                'src': src,
+            norm_n = norm_person_name(nome)
+            if norm_n in student_data:
+                sdata = student_data[norm_n]
+                matched_students.add(norm_n)
+                scores = sdata['all_scores']
+                if scores:
+                    mean_subord = round(float(np.mean(scores)), 2)
+                    dos_subord = mean_subord
+                for qi, sq_meta in enumerate(STUDENT_QUESTIONS_META):
+                    scores_q = sdata['by_q'][qi]
+                    questoes[sq_meta['key']] = round(float(np.mean(scores_q)), 2) if scores_q else None
+
+            final_rows.append({
+                'src': src_label,
                 'nome': nome,
                 'email': email,
                 'dept_raw': dept,
                 'area_raw': area,
                 'tag_raw': tag,
-                'lider_raw': leader,
+                'lider_raw': lider,
                 'nota_final': nota_final,
                 'media': media,
                 'autoavaliação': auto,
-                'do_líder': lider,
+                'do_líder': do_lider,
                 'outros': outros,
                 'colegas': colegas,
-                'dos_pares': pares,
-                'dos_subordinados': subord,
+                'dos_pares': dos_pares,
+                'dos_subordinados': dos_subord,
                 'topicos': topicos,
-                'questoes': questoes
+                'questoes': questoes,
+                'unidade': unidade,
+                'segmento': segmento,
+                'sexo': sexo,
+                'cargo': cargo,
+                'nivel': get_performance_level(nota_final)
             })
-        return rows
 
-    rows_f1 = extract_rows(df1_m, df1_t, df1_p, 'F1')
-    rows_f2 = extract_rows(df2_m, df2_t, df2_p, 'F2')
-
-    # Rayane merge logic
-    cleaned_rows_f2 = []
-    rayane_65 = None
-    rayane_66 = None
-    for r in rows_f2:
-        if 'rayane' in r['email'] or 'rayane' in r['nome'].lower():
-            if r['do_líder'] is not None:
-                rayane_65 = r
-            else:
-                rayane_66 = r
-        else:
-            cleaned_rows_f2.append(r)
-
-    if rayane_65 and rayane_66:
-        merged_rayane = dict(rayane_65)
-        merged_rayane['email'] = 'rayane.cavalcante@everestrj.net.br'
-        merged_rayane['autoavaliação'] = rayane_66['autoavaliação']
-        for q_key, val in rayane_66['questoes'].items():
-            if val is not None:
-                merged_rayane['questoes'][q_key] = val
-        scores = [merged_rayane['do_líder'], merged_rayane['colegas'], merged_rayane['autoavaliação']]
-        valid_scores = [s for s in scores if s is not None]
-        if valid_scores:
-            merged_rayane['nota_final'] = round(float(np.mean(valid_scores)), 2)
-            merged_rayane['media'] = merged_rayane['nota_final']
-        cleaned_rows_f2.append(merged_rayane)
-
-    # Filter out empty Viviane from F1
-    final_rows = []
-    for r in rows_f1:
-        if r['email'] == 'viviane.miquelao@professoreverest.curitiba.br' and r['nota_final'] is None:
-            continue
-        final_rows.append(r)
-
-    overlap_keep_f1 = {
-        'larissa.haag@professoreverest.curitiba.br',
-        'larissa.farinazzo@everestrj.net.br',
-        'raphael.mota@everestrj.net.br',
-        'fernando.azevedo@professoreverest.curitiba.br'
-    }
-    for r in cleaned_rows_f2:
-        if r['email'] in overlap_keep_f1:
-            continue
-        final_rows.append(r)
-
-    # Add metadata
-    for r in final_rows:
-        r['unidade'] = infer_unit(r['email'], r['tag_raw'])
-        r['segmento'] = normalize_segment(r['dept_raw'], r['tag_raw'], r['lider_raw'], r['email'])
-        r['sexo'] = infer_gender(r['nome'])
-        r['cargo'] = infer_role(r['nome'], r['dept_raw'], r['lider_raw'], r['email'])
-        r['nivel'] = get_performance_level(r['nota_final'])
-
-    # 2. Integrate Student Evaluations
-    student_evals = load_student_evaluations()
-    print(f"Total de professores com avaliações de alunos carregados: {len(student_evals)}")
-
-    # Update existing teachers with student evaluations
-    matched_teachers_count = 0
-    for r in final_rows:
-        norm = norm_person_name(r['nome'])
-        if norm in student_evals:
-            matched_teachers_count += 1
-            sdata = student_evals[norm]
-            overall_student_avg = round(float(np.mean(sdata['all_scores'])), 2)
-            r['dos_subordinados'] = overall_student_avg
-
-            # Populate student questions
-            for qi in range(11):
-                sq_meta = STUDENT_QUESTIONS_META[qi]
-                scores_q = sdata['by_q'][qi]
-                if scores_q:
-                    r['questoes'][sq_meta['key']] = round(float(np.mean(scores_q)), 2)
-                else:
-                    r['questoes'][sq_meta['key']] = None
-
-    print(f"Professores na base associados às respostas dos alunos: {matched_teachers_count}")
-
-    # Add teachers who only exist in the student survey (Pedro Ramos Losso & Tatiana Brandão Mazzei de Oliveira)
-    for norm, sdata in student_evals.items():
-        if not any(norm_person_name(r['nome']) == norm for r in final_rows):
+    # Add missing evaluated teachers from students CSV if not already present
+    for norm_n, sdata in student_data.items():
+        if norm_n not in matched_students:
             raw_name = sdata['raw_name']
-            overall_avg = round(float(np.mean(sdata['all_scores'])), 2)
+            all_s = sdata['all_scores']
+            overall_avg = round(float(np.mean(all_s)), 2) if all_s else None
+
             q_dict = {}
-            for qi in range(11):
-                sq_meta = STUDENT_QUESTIONS_META[qi]
+            for qi, sq_meta in enumerate(STUDENT_QUESTIONS_META):
                 scores_q = sdata['by_q'][qi]
                 q_dict[sq_meta['key']] = round(float(np.mean(scores_q)), 2) if scores_q else None
 
@@ -537,8 +706,30 @@ def run():
                 'cargo': 'Docentes',
                 'nivel': get_performance_level(overall_avg)
             })
-            print(f"Adicionado professor avaliado pelos alunos: {raw_name} (RJ - EFII) -> Média: {overall_avg}")
 
+    # 2. Parse Leadership & Specialists files
+    coords_parsed = parse_generic_instrument(COORD_XLSX, COORD_MAP, 'coordenadores_ciclo')
+    psicos_parsed = parse_generic_instrument(PSICO_XLSX, PSICO_MAP, 'psicologos')
+    sup_ingles_parsed = parse_generic_instrument(SUP_INGLES_XLSX, INGLES_MAP, 'gestao_ingles')
+    coord_ingles_parsed = parse_generic_instrument(COORD_INGLES_XLSX, INGLES_MAP, 'gestao_ingles')
+    inst_parsed = parse_generic_instrument(DISC_INST_XLSX, INST_MAP, 'disciplinas_institucionais')
+
+    # Merge Gestão de Inglês (3 supervisores + 2 coordenadores gerais)
+    gestao_ingles_records = sup_ingles_parsed['records'] + coord_ingles_parsed['records']
+    gestao_ingles_pheaders = sup_ingles_parsed['p_headers']
+    gestao_ingles_theaders = sup_ingles_parsed['t_headers']
+
+    coordenadores_records = coords_parsed['records']
+    psicologos_records = psicos_parsed['records']
+    institucionais_records = inst_parsed['records']
+
+    print(f"Novos instrumentos processados:")
+    print(f"  Coordenadores de Ciclo: {len(coordenadores_records)} avaliados")
+    print(f"  Psicólogos: {len(psicologos_records)} avaliados")
+    print(f"  Gestão de Inglês: {len(gestao_ingles_records)} avaliados (3 supervisores + 2 coordenadores)")
+    print(f"  Disciplinas Institucionais: {len(institucionais_records)} avaliado")
+
+    # Helper calculations for Docentes
     def compute_rankings(subset):
         if not subset:
             return {'todos': [], 'top5': [], 'bottom5': []}
@@ -599,7 +790,7 @@ def run():
         cycles = ['EI', 'EFI', 'EFII', 'EM', 'Geral / Transversal', 'Total']
         levels = ['Inicial', 'Em Desenvolvimento', 'Atuação Adequada', 'Referência']
         matrix = {c: {lvl: {'count': 0, 'pct': 0.0, 'total_ciclo': 0} for lvl in levels} for c in cycles}
-        
+
         for c in cycles:
             sub = subset if c == 'Total' else [r for r in subset if r['segmento'] == c]
             total_sub = len(sub)
@@ -643,6 +834,47 @@ def run():
         }
         return res
 
+    # Helper to calculate normalized leadership/specialist ambitos for a cycle
+    def get_role_ambitos_for_cycle(records_pool, scope_name, cycle_seg):
+        # Filter by unit scope
+        if scope_name != 'Todas':
+            recs = [r for r in records_pool if r['unidade'] == scope_name]
+        else:
+            recs = records_pool
+
+        # Filter by cycle
+        if cycle_seg != 'Total':
+            recs = [r for r in recs if cycle_seg in r.get('segmentos_list', [r.get('segmento')])]
+
+        if not recs:
+            return {}
+
+        all_topic_keys = set()
+        for r in recs:
+            all_topic_keys.update(r['topicos'].keys())
+
+        result = {}
+        for k in all_topic_keys:
+            vals = [r['topicos'][k] for r in recs if r['topicos'].get(k) is not None]
+            if vals:
+                mean_v = round(float(np.mean(vals)), 2)
+                result[k] = mean_v
+
+        # Provide normalized cross-keys so radar and comparative charts match both naming styles
+        if 'Compromisso com o ensino' in result:
+            result['Compromisso com ensino'] = result['Compromisso com o ensino']
+        if 'Compromisso com a Aprendizagem' in result:
+            result['Compromisso com a aprendizagem'] = result['Compromisso com a Aprendizagem']
+        if 'Integração com a Instituição' in result:
+            result['Integração com a instituição'] = result['Integração com a Instituição']
+        if 'Papel como Formador' in result:
+            result['Papel como formador'] = result['Papel como Formador']
+        # Map Gestão do Ciclo Escolar to Crescimento pessoal e profissional as 5th dimension for spider chart
+        if 'Gestão do Ciclo Escolar' in result and 'Crescimento pessoal e profissional' not in result:
+            result['Crescimento pessoal e profissional'] = result['Gestão do Ciclo Escolar']
+
+        return result
+
     scopes = {
         'Todas': final_rows,
         'Curitiba': [r for r in final_rows if r['unidade'] == 'Curitiba'],
@@ -655,6 +887,18 @@ def run():
         fem_count = sum(1 for r in scope_rows if r['sexo'] == 'Feminino')
         masc_count = sum(1 for r in scope_rows if r['sexo'] == 'Masculino')
 
+        # Filter leadership records for this scope
+        if scope_name == 'Todas':
+            scope_coords = coordenadores_records
+            scope_psicos = psicologos_records
+            scope_ingles = gestao_ingles_records
+            scope_inst = institucionais_records
+        else:
+            scope_coords = [r for r in coordenadores_records if r['unidade'] == scope_name]
+            scope_psicos = [r for r in psicologos_records if r['unidade'] == scope_name]
+            scope_ingles = [r for r in gestao_ingles_records if r['unidade'] == scope_name]
+            scope_inst = [r for r in institucionais_records if r['unidade'] == scope_name]
+
         ciclos_data = {}
         for seg in ['EI', 'EFI', 'EFII', 'EM', 'Geral / Transversal']:
             seg_rows = [r for r in scope_rows if r['segmento'] == seg]
@@ -666,28 +910,38 @@ def run():
                 'rankings': compute_rankings(seg_rows),
                 'cargos': {
                     'Docentes': compute_ambito_means([r for r in seg_rows if r['cargo'] == 'Docentes']),
-                    'Coordenação': compute_ambito_means([r for r in seg_rows if r['cargo'] == 'Coordenação / Direção']),
-                    'Psicólogos': compute_ambito_means([r for r in seg_rows if r['cargo'] == 'Psicólogos']),
+                    'Coordenação': get_role_ambitos_for_cycle(coordenadores_records, scope_name, seg),
+                    'Psicólogos': get_role_ambitos_for_cycle(psicologos_records, scope_name, seg),
+                    'Supervisão de Inglês': get_role_ambitos_for_cycle(gestao_ingles_records, scope_name, seg),
                 }
             }
 
+        # Comparative between cycles (Slide 27: Coordenação, Slide 28: Psicólogos, Slide 29: Docentes)
         comparativo_ciclos = {
             'Docentes': {
                 seg: compute_ambito_means([r for r in scope_rows if r['segmento'] == seg and r['cargo'] == 'Docentes'])
                 for seg in ['EI', 'EFI', 'EFII', 'EM']
             },
             'Coordenação': {
-                seg: compute_ambito_means([r for r in scope_rows if r['segmento'] == seg and r['cargo'] == 'Coordenação / Direção'])
+                seg: get_role_ambitos_for_cycle(coordenadores_records, scope_name, seg)
                 for seg in ['EI', 'EFI', 'EFII', 'EM']
             },
             'Psicólogos': {
-                seg: compute_ambito_means([r for r in scope_rows if r['segmento'] == seg and r['cargo'] == 'Psicólogos'])
+                seg: get_role_ambitos_for_cycle(psicologos_records, scope_name, seg)
                 for seg in ['EI', 'EFI', 'EFII', 'EM']
             }
         }
         comparativo_ciclos['Docentes']['Total Geral'] = compute_ambito_means([r for r in scope_rows if r['cargo'] == 'Docentes'])
-        comparativo_ciclos['Coordenação']['Total Geral'] = compute_ambito_means([r for r in scope_rows if r['cargo'] == 'Coordenação / Direção'])
-        comparativo_ciclos['Psicólogos']['Total Geral'] = compute_ambito_means([r for r in scope_rows if r['cargo'] == 'Psicólogos'])
+        comparativo_ciclos['Coordenação']['Total Geral'] = get_role_ambitos_for_cycle(coordenadores_records, scope_name, 'Total')
+        comparativo_ciclos['Psicólogos']['Total Geral'] = get_role_ambitos_for_cycle(psicologos_records, scope_name, 'Total')
+
+        # Dedicated analytics for the new tab "Gestão & Especialistas"
+        gestao_analytics = {
+            'coordenadores_ciclo': compute_instrument_analytics(scope_coords, coords_parsed['p_headers'], coords_parsed['t_headers']),
+            'psicologos': compute_instrument_analytics(scope_psicos, psicos_parsed['p_headers'], psicos_parsed['t_headers']),
+            'gestao_ingles': compute_instrument_analytics(scope_ingles, gestao_ingles_pheaders, gestao_ingles_theaders),
+            'disciplinas_institucionais': compute_instrument_analytics(scope_inst, inst_parsed['p_headers'], inst_parsed['t_headers']),
+        }
 
         analytics_by_scope[scope_name] = {
             'kpis': {
@@ -708,7 +962,8 @@ def run():
             'perfis_avaliadores_geral': compute_evaluator_profiles(scope_rows),
             'rankings_gerais': compute_rankings(scope_rows),
             'ciclos': ciclos_data,
-            'comparativo_ciclos': comparativo_ciclos
+            'comparativo_ciclos': comparativo_ciclos,
+            'gestao_especialistas': gestao_analytics
         }
 
     output_payload = {
@@ -725,10 +980,26 @@ def run():
                 'Em Desenvolvimento': {'min': 2.50, 'max': 2.99, 'label': 'Em Desenvolvimento [ED]', 'cor': '#F59E0B'},
                 'Atuação Adequada': {'min': 3.00, 'max': 3.59, 'label': 'Atuação Adequada [AA]', 'cor': '#3B82F6'},
                 'Referência': {'min': 3.60, 'max': 4.00, 'label': 'Referência [REF]', 'cor': '#10B981'}
+            },
+            'gestao_especialistas_meta': {
+                'ambitos_coordenadores': coords_parsed['t_headers'],
+                'ambitos_psicologos': psicos_parsed['t_headers'],
+                'ambitos_gestao_ingles': gestao_ingles_theaders,
+                'ambitos_disciplinas_institucionais': inst_parsed['t_headers'],
+                'questoes_coordenadores': coords_parsed['p_headers'],
+                'questoes_psicologos': psicos_parsed['p_headers'],
+                'questoes_gestao_ingles': gestao_ingles_pheaders,
+                'questoes_disciplinas_institucionais': inst_parsed['p_headers'],
             }
         },
         'scopes': analytics_by_scope,
-        'avaliados': final_rows
+        'avaliados': final_rows,
+        'gestao_especialistas': {
+            'coordenadores_ciclo': coordenadores_records,
+            'psicologos': psicologos_records,
+            'gestao_ingles': gestao_ingles_records,
+            'disciplinas_institucionais': institucionais_records
+        }
     }
 
     os.makedirs(os.path.dirname(OUTPUT_JSON), exist_ok=True)
@@ -736,14 +1007,11 @@ def run():
         json.dump(output_payload, f, ensure_ascii=False, indent=2)
 
     print(f"JSON gerado com sucesso em: {OUTPUT_JSON} ({os.path.getsize(OUTPUT_JSON)} bytes)")
-    print(f"Total de avaliados consolidado: {len(final_rows)}")
-    print(f"Perfis avaliadores Geral (Alunos): {analytics_by_scope['Todas']['perfis_avaliadores_geral']['alunos']}")
-    print(f"Perfis avaliadores Curitiba (Alunos): {analytics_by_scope['Curitiba']['perfis_avaliadores_geral']['alunos']}")
-    print(f"Perfis avaliadores Rio de Janeiro (Alunos): {analytics_by_scope['Rio de Janeiro']['perfis_avaliadores_geral']['alunos']}")
-    print(f"EFII Curitiba (Alunos): {analytics_by_scope['Curitiba']['ciclos']['EFII']['perfis_avaliadores']['alunos']}")
-    print(f"EM Curitiba (Alunos): {analytics_by_scope['Curitiba']['ciclos']['EM']['perfis_avaliadores']['alunos']}")
-    print(f"EFII Rio (Alunos): {analytics_by_scope['Rio de Janeiro']['ciclos']['EFII']['perfis_avaliadores']['alunos']}")
-    print(f"EM Rio (Alunos): {analytics_by_scope['Rio de Janeiro']['ciclos']['EM']['perfis_avaliadores']['alunos']}")
+    print(f"Total de avaliados docentes mantido: {len(final_rows)}")
+    print(f"Total coordenadores ciclo: {len(coordenadores_records)}")
+    print(f"Total psicólogos: {len(psicologos_records)}")
+    print(f"Total gestão inglês: {len(gestao_ingles_records)}")
+    print(f"Total disciplinas institucionais: {len(institucionais_records)}")
     print("ETL concluído com 100% de sucesso!")
 
 if __name__ == '__main__':

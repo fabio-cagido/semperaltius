@@ -45,7 +45,7 @@ export default function Analise360View({ analytics, metadata, unidade }: Analise
     ];
 
     if (isF2orEM) {
-      items.push({ papel: 'Nota Alunos', nota: data.alunos > 0 ? data.alunos : 0 });
+      items.push({ papel: 'Nota Alunos', nota: (data.alunos ?? 0) > 0 ? (data.alunos ?? 0) : 0 });
     }
 
     return items;

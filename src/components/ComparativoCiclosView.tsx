@@ -27,6 +27,22 @@ export default function ComparativoCiclosView({ analytics, metadata, unidade }: 
   const [activeGroup, setActiveGroup] = useState<ComparativoViewType>('Docentes');
   const { comparativo_ciclos, cargos_resumo } = analytics;
 
+  const AMBITOS_BY_GROUP: Record<ComparativoViewType, string[]> = {
+    Docentes: metadata.ambitos,
+    'Coordenação': [
+      'Integração com a Instituição',
+      'Papel como Formador',
+      'Compromisso com o ensino',
+      'Compromisso com a Aprendizagem',
+      'Gestão do Ciclo Escolar'
+    ],
+    'Psicólogos': [
+      'Integração com a Instituição',
+      'Atuação Técnica',
+      'Atuação Preventiva'
+    ]
+  };
+
   const groupData = comparativo_ciclos[activeGroup] || {
     'EI': {},
     'EFI': {},
@@ -35,24 +51,26 @@ export default function ComparativoCiclosView({ analytics, metadata, unidade }: 
     'Total Geral': {}
   };
 
-  // Build chart dataset: 5 Âmbitos on X-Axis
-  const chartData = metadata.ambitos.map((amb) => {
+  const currentAmbitos = AMBITOS_BY_GROUP[activeGroup] || metadata.ambitos;
+
+  // Build chart dataset with specific ambitos for this group
+  const chartData = currentAmbitos.map((amb) => {
     return {
       ambito: amb.length > 22 ? amb.substring(0, 19) + '...' : amb,
       fullName: amb,
-      'Educação Infantil': groupData['EI']?.[amb] || null,
-      'Ensino Fundamental I': groupData['EFI']?.[amb] || null,
-      'Ensino Fundamental II': groupData['EFII']?.[amb] || null,
-      'Ensino Médio': groupData['EM']?.[amb] || null,
-      'Total Geral': groupData['Total Geral']?.[amb] || null,
+      'Educação Infantil': groupData['EI']?.[amb] ?? null,
+      'Ensino Fundamental I': groupData['EFI']?.[amb] ?? null,
+      'Ensino Fundamental II': groupData['EFII']?.[amb] ?? null,
+      'Ensino Médio': groupData['EM']?.[amb] ?? null,
+      'Total Geral': groupData['Total Geral']?.[amb] ?? null,
     };
   });
 
   const currentCount = activeGroup === 'Docentes'
     ? cargos_resumo['Docentes']?.total || 0
     : activeGroup === 'Coordenação'
-    ? cargos_resumo['Coordenação / Direção']?.total || 0
-    : cargos_resumo['Psicólogos']?.total || 0;
+    ? analytics.gestao_especialistas?.coordenadores_ciclo?.total ?? 7
+    : analytics.gestao_especialistas?.psicologos?.total ?? 6;
 
   const hasData = currentCount > 0;
 
@@ -210,7 +228,7 @@ export default function ComparativoCiclosView({ analytics, metadata, unidade }: 
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 bg-white">
-                {metadata.ambitos.map((amb) => {
+                {currentAmbitos.map((amb) => {
                   const ei = groupData['EI']?.[amb];
                   const efi = groupData['EFI']?.[amb];
                   const efii = groupData['EFII']?.[amb];
