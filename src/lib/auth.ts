@@ -30,41 +30,43 @@ export const SYSTEM_USERS: User[] = [
   },
 ];
 
-// Valid credentials map (supports common variants)
-interface CredentialDef {
-  userId: string;
-  validUsernames: string[];
-  validPasswords: string[];
-}
+// Senhas oficiais configuradas para cada perfil
+export const PROFILE_PASSWORDS: Record<string, string[]> = {
+  semperaltius: ['semperaltius2026', 'everest2026'],
+  curitiba: ['curitiba2026', 'everest2026'],
+  rio: ['rio2026', 'everest2026'],
+};
 
-const CREDENTIAL_DEFS: CredentialDef[] = [
-  {
-    userId: 'semperaltius',
-    validUsernames: ['semperaltius', 'admin', 'direcao'],
-    validPasswords: ['semperaltius2026', 'everest2026', 'semperaltius'],
-  },
-  {
-    userId: 'curitiba',
-    validUsernames: ['curitiba', 'everestcuritiba', 'ctba'],
-    validPasswords: ['curitiba2026', 'everest2026', 'curitiba'],
-  },
-  {
-    userId: 'rio',
-    validUsernames: ['rio', 'riodejaneiro', 'everestrio', 'rj'],
-    validPasswords: ['rio2026', 'riodejaneiro2026', 'everest2026', 'rio'],
-  },
-];
+export function authenticateProfile(
+  userId: string,
+  passwordInput: string
+): { success: boolean; user?: User; error?: string } {
+  const cleanPass = passwordInput.trim();
+  const validPasswords = PROFILE_PASSWORDS[userId];
+
+  if (!validPasswords) {
+    return { success: false, error: 'Perfil não reconhecido.' };
+  }
+
+  if (validPasswords.includes(cleanPass)) {
+    const user = SYSTEM_USERS.find((u) => u.id === userId);
+    if (user) {
+      return { success: true, user };
+    }
+  }
+
+  return { success: false, error: 'Senha incorreta para este perfil. Tente novamente.' };
+}
 
 export function authenticateUser(usernameInput: string, passwordInput: string): User | null {
   const cleanUser = usernameInput.trim().toLowerCase();
   const cleanPass = passwordInput.trim();
 
-  for (const cred of CREDENTIAL_DEFS) {
-    if (cred.validUsernames.includes(cleanUser) && cred.validPasswords.includes(cleanPass)) {
-      const foundUser = SYSTEM_USERS.find(u => u.id === cred.userId);
-      return foundUser || null;
+  for (const user of SYSTEM_USERS) {
+    if (user.id === cleanUser || user.username === cleanUser) {
+      const auth = authenticateProfile(user.id, cleanPass);
+      if (auth.success && auth.user) return auth.user;
     }
   }
-
   return null;
 }

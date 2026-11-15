@@ -1,44 +1,64 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { User } from '@/types/auth';
-import { authenticateUser, SYSTEM_USERS } from '@/lib/auth';
-import { Lock, User as UserIcon, Eye, EyeOff, ShieldCheck, Building2, ArrowRight, AlertCircle, Sparkles } from 'lucide-react';
+import { SYSTEM_USERS, authenticateProfile } from '@/lib/auth';
+import { Lock, Eye, EyeOff, ShieldCheck, Building2, ArrowRight, AlertCircle, KeyRound, ChevronRight, X } from 'lucide-react';
 
 interface LoginScreenProps {
   onLoginSuccess: (user: User) => void;
 }
 
 export default function LoginScreen({ onLoginSuccess }: LoginScreenProps) {
-  const [username, setUsername] = useState('');
+  const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const passwordInputRef = useRef<HTMLInputElement>(null);
+
+  // Auto focus password input when a profile is selected
+  useEffect(() => {
+    if (selectedUserId && passwordInputRef.current) {
+      passwordInputRef.current.focus();
+    }
+  }, [selectedUserId]);
+
+  const handleSelectProfile = (userId: string) => {
+    if (selectedUserId === userId) {
+      // Toggle or keep active
+      return;
+    }
+    setSelectedUserId(userId);
+    setPassword('');
+    setError(null);
+  };
+
+  const handleCancelSelection = () => {
+    setSelectedUserId(null);
+    setPassword('');
+    setError(null);
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!selectedUserId) return;
+
     setError(null);
     setIsLoading(true);
 
     setTimeout(() => {
-      const user = authenticateUser(username, password);
-      if (user) {
-        onLoginSuccess(user);
+      const result = authenticateProfile(selectedUserId, password);
+      if (result.success && result.user) {
+        onLoginSuccess(result.user);
       } else {
-        setError('Usuário ou senha incorretos. Verifique as credenciais ou use o acesso rápido.');
+        setError(result.error || 'Senha incorreta para este perfil.');
       }
       setIsLoading(false);
-    }, 250);
+    }, 200);
   };
 
-  const handleQuickLogin = (selectedUser: User) => {
-    setError(null);
-    let defaultPass = `${selectedUser.id}2026`;
-    setUsername(selectedUser.username);
-    setPassword(defaultPass);
-    onLoginSuccess(selectedUser);
-  };
+  const selectedUser = SYSTEM_USERS.find((u) => u.id === selectedUserId);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0B1B30] via-[#0F294A] to-[#1E3A8A] flex flex-col justify-center items-center p-4 sm:p-6 lg:p-8 relative overflow-hidden">
@@ -75,197 +95,361 @@ export default function LoginScreen({ onLoginSuccess }: LoginScreenProps) {
           </p>
         </div>
 
-        {/* Form Body */}
-        <div className="p-6 sm:p-8 space-y-6">
+        {/* Profiles Selection Body */}
+        <div className="p-6 sm:p-8 space-y-4">
           
-          <div className="text-center">
-            <h2 className="text-base font-bold text-slate-800">Acesso Restrito ao Painel</h2>
+          <div className="text-center mb-2">
+            <h2 className="text-base font-bold text-slate-800">
+              {selectedUserId ? 'Digite a Senha de Acesso' : 'Selecione seu Perfil de Acesso'}
+            </h2>
             <p className="text-xs text-slate-500 mt-0.5">
-              Entre com suas credenciais de acesso por unidade
+              {selectedUserId
+                ? `Informe a senha autorizada para ${selectedUser?.name}`
+                : 'Escolha uma das unidades abaixo para acessar o painel'}
             </p>
           </div>
 
-          {error && (
-            <div className="flex items-start gap-2.5 p-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-xs animate-shake">
-              <AlertCircle className="w-4 h-4 shrink-0 mt-0.5 text-red-500" />
-              <span>{error}</span>
-            </div>
-          )}
-
-          <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Profile Cards */}
+          <div className="space-y-3">
             
-            {/* Usuário */}
-            <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1.5">
-                Usuário
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-                  <UserIcon className="w-4 h-4" />
-                </div>
-                <input
-                  type="text"
-                  required
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  placeholder="semperaltius, curitiba ou rio"
-                  className="w-full pl-9 pr-3 py-2 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all"
-                />
-              </div>
-            </div>
-
-            {/* Senha */}
-            <div>
-              <div className="flex justify-between items-center mb-1.5">
-                <label className="block text-xs font-semibold text-slate-700">
-                  Senha
-                </label>
-              </div>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-                  <Lock className="w-4 h-4" />
-                </div>
-                <input
-                  type={showPassword ? 'text' : 'password'}
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Digite sua senha"
-                  className="w-full pl-9 pr-10 py-2 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600"
-                >
-                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                </button>
-              </div>
-            </div>
-
-            {/* Submit Button */}
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="w-full py-2.5 px-4 bg-gradient-to-r from-[#0F294A] to-[#1E56A0] hover:from-[#0B1B30] hover:to-[#164075] text-white font-semibold text-sm rounded-lg shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-70"
-            >
-              {isLoading ? (
-                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-              ) : (
-                <>
-                  <span>Entrar no Dashboard</span>
-                  <ArrowRight className="w-4 h-4" />
-                </>
-              )}
-            </button>
-          </form>
-
-          {/* Separator */}
-          <div className="relative my-4">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-slate-200" />
-            </div>
-            <div className="relative flex justify-center text-[11px] uppercase tracking-wider text-slate-400">
-              <span className="bg-white px-2 font-medium">Perfis de Acesso Rápido</span>
-            </div>
-          </div>
-
-          {/* Quick Access Profiles */}
-          <div className="space-y-2">
-            <div className="text-[11px] text-slate-500 mb-1 flex items-center gap-1">
-              <Sparkles className="w-3 h-3 text-amber-500" />
-              <span>Clique para entrar diretamente com o perfil desejado:</span>
-            </div>
-
-            <div className="grid grid-cols-1 gap-2">
-              
-              {/* Semper Altius */}
-              <button
-                type="button"
-                onClick={() => handleQuickLogin(SYSTEM_USERS[0])}
-                className="w-full text-left p-2.5 rounded-lg border border-blue-200 bg-blue-50/70 hover:bg-blue-100/80 transition-colors flex items-center justify-between group"
+            {/* Card 1: Semper Altius */}
+            {(!selectedUserId || selectedUserId === 'semperaltius') && (
+              <div
+                className={`rounded-xl border transition-all duration-200 overflow-hidden ${
+                  selectedUserId === 'semperaltius'
+                    ? 'border-blue-600 bg-blue-50/70 shadow-md ring-2 ring-blue-500/20'
+                    : 'border-slate-200 bg-white hover:border-blue-300 hover:bg-slate-50/80 cursor-pointer shadow-sm'
+                }`}
+                onClick={() => !selectedUserId && handleSelectProfile('semperaltius')}
               >
-                <div className="flex items-center gap-2.5">
-                  <div className="w-7 h-7 rounded-full bg-[#0F294A] text-white flex items-center justify-center font-bold text-xs">
-                    SA
-                  </div>
-                  <div>
-                    <div className="text-xs font-bold text-slate-900 group-hover:text-blue-900 flex items-center gap-1.5">
-                      <span>Semper Altius (Direção Geral)</span>
-                      <span className="text-[10px] bg-blue-200/80 text-blue-900 px-1.5 py-0.2 rounded font-medium">
-                        Rede Completa
-                      </span>
+                <div className="p-3.5 flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-lg bg-[#0F294A] text-white flex items-center justify-center font-bold text-xs shadow-sm">
+                      SA
                     </div>
-                    <div className="text-[11px] text-slate-500">
-                      Vê todas as unidades, Curitiba e Rio de Janeiro
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs sm:text-sm font-bold text-slate-900">
+                          Semper Altius (Direção Geral)
+                        </span>
+                        <span className="text-[10px] bg-blue-200/80 text-blue-900 font-semibold px-2 py-0.5 rounded">
+                          Rede Completa
+                        </span>
+                      </div>
+                      <div className="text-[11px] text-slate-500 mt-0.5">
+                        Visualiza toda a Rede, Curitiba e Rio de Janeiro
+                      </div>
                     </div>
                   </div>
+                  {selectedUserId === 'semperaltius' ? (
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleCancelSelection();
+                      }}
+                      className="p-1 text-slate-400 hover:text-slate-600 rounded-md hover:bg-slate-200/60"
+                      title="Trocar perfil"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  ) : (
+                    <ChevronRight className="w-5 h-5 text-slate-400" />
+                  )}
                 </div>
-                <ArrowRight className="w-4 h-4 text-blue-500 group-hover:translate-x-0.5 transition-transform" />
-              </button>
 
-              {/* Curitiba */}
-              <button
-                type="button"
-                onClick={() => handleQuickLogin(SYSTEM_USERS[1])}
-                className="w-full text-left p-2.5 rounded-lg border border-emerald-200 bg-emerald-50/70 hover:bg-emerald-100/80 transition-colors flex items-center justify-between group"
+                {/* Password Input Expanded for Semper Altius */}
+                {selectedUserId === 'semperaltius' && (
+                  <form onSubmit={handleSubmit} className="px-3.5 pb-3.5 pt-1 border-t border-blue-200/60 mt-1">
+                    {error && (
+                      <div className="mb-2.5 flex items-center gap-2 p-2 rounded-lg bg-red-50 border border-red-200 text-red-700 text-xs animate-shake">
+                        <AlertCircle className="w-4 h-4 shrink-0 text-red-500" />
+                        <span>{error}</span>
+                      </div>
+                    )}
+                    <label className="block text-[11px] font-semibold text-slate-700 mb-1 flex items-center gap-1">
+                      <KeyRound className="w-3.5 h-3.5 text-blue-700" />
+                      <span>Senha de Acesso (Rede Semper Altius):</span>
+                    </label>
+                    <div className="relative mb-3">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                        <Lock className="w-4 h-4" />
+                      </div>
+                      <input
+                        ref={passwordInputRef}
+                        type={showPassword ? 'text' : 'password'}
+                        required
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="Digite a senha..."
+                        className="w-full pl-9 pr-10 py-2 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all shadow-inner"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600"
+                      >
+                        {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                      </button>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <button
+                        type="submit"
+                        disabled={isLoading}
+                        className="flex-1 py-2 px-3 bg-gradient-to-r from-[#0F294A] to-[#1E56A0] hover:from-[#0B1B30] hover:to-[#164075] text-white font-semibold text-xs rounded-lg shadow hover:shadow-md transition-all flex items-center justify-center gap-1.5 disabled:opacity-70"
+                      >
+                        {isLoading ? (
+                          <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                        ) : (
+                          <>
+                            <span>Acessar Painel</span>
+                            <ArrowRight className="w-3.5 h-3.5" />
+                          </>
+                        )}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={handleCancelSelection}
+                        className="py-2 px-3 bg-white hover:bg-slate-100 text-slate-600 font-medium text-xs rounded-lg border border-slate-200 transition-colors"
+                      >
+                        Voltar
+                      </button>
+                    </div>
+                  </form>
+                )}
+              </div>
+            )}
+
+            {/* Card 2: Curitiba */}
+            {(!selectedUserId || selectedUserId === 'curitiba') && (
+              <div
+                className={`rounded-xl border transition-all duration-200 overflow-hidden ${
+                  selectedUserId === 'curitiba'
+                    ? 'border-emerald-600 bg-emerald-50/70 shadow-md ring-2 ring-emerald-500/20'
+                    : 'border-slate-200 bg-white hover:border-emerald-300 hover:bg-slate-50/80 cursor-pointer shadow-sm'
+                }`}
+                onClick={() => !selectedUserId && handleSelectProfile('curitiba')}
               >
-                <div className="flex items-center gap-2.5">
-                  <div className="w-7 h-7 rounded-full bg-emerald-700 text-white flex items-center justify-center font-bold text-xs">
-                    CT
-                  </div>
-                  <div>
-                    <div className="text-xs font-bold text-slate-900 group-hover:text-emerald-900 flex items-center gap-1.5">
-                      <span>Everest Curitiba</span>
-                      <span className="text-[10px] bg-emerald-200 text-emerald-900 px-1.5 py-0.2 rounded font-medium">
-                        Restrito Curitiba
-                      </span>
+                <div className="p-3.5 flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-lg bg-emerald-700 text-white flex items-center justify-center font-bold text-xs shadow-sm">
+                      CT
                     </div>
-                    <div className="text-[11px] text-slate-500">
-                      Visualiza exclusivamente a Unidade Curitiba
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs sm:text-sm font-bold text-slate-900">
+                          Everest Curitiba
+                        </span>
+                        <span className="text-[10px] bg-emerald-200 text-emerald-900 font-semibold px-2 py-0.5 rounded">
+                          Restrito Curitiba
+                        </span>
+                      </div>
+                      <div className="text-[11px] text-slate-500 mt-0.5">
+                        Visualiza exclusivamente os resultados de Curitiba
+                      </div>
                     </div>
                   </div>
+                  {selectedUserId === 'curitiba' ? (
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleCancelSelection();
+                      }}
+                      className="p-1 text-slate-400 hover:text-slate-600 rounded-md hover:bg-slate-200/60"
+                      title="Trocar perfil"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  ) : (
+                    <ChevronRight className="w-5 h-5 text-slate-400" />
+                  )}
                 </div>
-                <ArrowRight className="w-4 h-4 text-emerald-600 group-hover:translate-x-0.5 transition-transform" />
-              </button>
 
-              {/* Rio de Janeiro */}
-              <button
-                type="button"
-                onClick={() => handleQuickLogin(SYSTEM_USERS[2])}
-                className="w-full text-left p-2.5 rounded-lg border border-amber-200 bg-amber-50/70 hover:bg-amber-100/80 transition-colors flex items-center justify-between group"
+                {/* Password Input Expanded for Curitiba */}
+                {selectedUserId === 'curitiba' && (
+                  <form onSubmit={handleSubmit} className="px-3.5 pb-3.5 pt-1 border-t border-emerald-200/60 mt-1">
+                    {error && (
+                      <div className="mb-2.5 flex items-center gap-2 p-2 rounded-lg bg-red-50 border border-red-200 text-red-700 text-xs animate-shake">
+                        <AlertCircle className="w-4 h-4 shrink-0 text-red-500" />
+                        <span>{error}</span>
+                      </div>
+                    )}
+                    <label className="block text-[11px] font-semibold text-slate-700 mb-1 flex items-center gap-1">
+                      <KeyRound className="w-3.5 h-3.5 text-emerald-700" />
+                      <span>Senha de Acesso (Unidade Curitiba):</span>
+                    </label>
+                    <div className="relative mb-3">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                        <Lock className="w-4 h-4" />
+                      </div>
+                      <input
+                        ref={passwordInputRef}
+                        type={showPassword ? 'text' : 'password'}
+                        required
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="Digite a senha..."
+                        className="w-full pl-9 pr-10 py-2 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:border-transparent transition-all shadow-inner"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600"
+                      >
+                        {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                      </button>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <button
+                        type="submit"
+                        disabled={isLoading}
+                        className="flex-1 py-2 px-3 bg-gradient-to-r from-emerald-700 to-emerald-600 hover:from-emerald-800 hover:to-emerald-700 text-white font-semibold text-xs rounded-lg shadow hover:shadow-md transition-all flex items-center justify-center gap-1.5 disabled:opacity-70"
+                      >
+                        {isLoading ? (
+                          <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                        ) : (
+                          <>
+                            <span>Acessar Painel</span>
+                            <ArrowRight className="w-3.5 h-3.5" />
+                          </>
+                        )}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={handleCancelSelection}
+                        className="py-2 px-3 bg-white hover:bg-slate-100 text-slate-600 font-medium text-xs rounded-lg border border-slate-200 transition-colors"
+                      >
+                        Voltar
+                      </button>
+                    </div>
+                  </form>
+                )}
+              </div>
+            )}
+
+            {/* Card 3: Rio de Janeiro */}
+            {(!selectedUserId || selectedUserId === 'rio') && (
+              <div
+                className={`rounded-xl border transition-all duration-200 overflow-hidden ${
+                  selectedUserId === 'rio'
+                    ? 'border-amber-600 bg-amber-50/70 shadow-md ring-2 ring-amber-500/20'
+                    : 'border-slate-200 bg-white hover:border-amber-300 hover:bg-slate-50/80 cursor-pointer shadow-sm'
+                }`}
+                onClick={() => !selectedUserId && handleSelectProfile('rio')}
               >
-                <div className="flex items-center gap-2.5">
-                  <div className="w-7 h-7 rounded-full bg-amber-600 text-white flex items-center justify-center font-bold text-xs">
-                    RJ
-                  </div>
-                  <div>
-                    <div className="text-xs font-bold text-slate-900 group-hover:text-amber-900 flex items-center gap-1.5">
-                      <span>Everest Rio de Janeiro</span>
-                      <span className="text-[10px] bg-amber-200 text-amber-900 px-1.5 py-0.2 rounded font-medium">
-                        Restrito Rio
-                      </span>
+                <div className="p-3.5 flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-lg bg-amber-600 text-white flex items-center justify-center font-bold text-xs shadow-sm">
+                      RJ
                     </div>
-                    <div className="text-[11px] text-slate-500">
-                      Visualiza exclusivamente a Unidade Rio de Janeiro
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs sm:text-sm font-bold text-slate-900">
+                          Everest Rio de Janeiro
+                        </span>
+                        <span className="text-[10px] bg-amber-200 text-amber-900 font-semibold px-2 py-0.5 rounded">
+                          Restrito Rio
+                        </span>
+                      </div>
+                      <div className="text-[11px] text-slate-500 mt-0.5">
+                        Visualiza exclusivamente os resultados do Rio de Janeiro
+                      </div>
                     </div>
                   </div>
+                  {selectedUserId === 'rio' ? (
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleCancelSelection();
+                      }}
+                      className="p-1 text-slate-400 hover:text-slate-600 rounded-md hover:bg-slate-200/60"
+                      title="Trocar perfil"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  ) : (
+                    <ChevronRight className="w-5 h-5 text-slate-400" />
+                  )}
                 </div>
-                <ArrowRight className="w-4 h-4 text-amber-600 group-hover:translate-x-0.5 transition-transform" />
-              </button>
 
-            </div>
+                {/* Password Input Expanded for Rio */}
+                {selectedUserId === 'rio' && (
+                  <form onSubmit={handleSubmit} className="px-3.5 pb-3.5 pt-1 border-t border-amber-200/60 mt-1">
+                    {error && (
+                      <div className="mb-2.5 flex items-center gap-2 p-2 rounded-lg bg-red-50 border border-red-200 text-red-700 text-xs animate-shake">
+                        <AlertCircle className="w-4 h-4 shrink-0 text-red-500" />
+                        <span>{error}</span>
+                      </div>
+                    )}
+                    <label className="block text-[11px] font-semibold text-slate-700 mb-1 flex items-center gap-1">
+                      <KeyRound className="w-3.5 h-3.5 text-amber-700" />
+                      <span>Senha de Acesso (Unidade Rio de Janeiro):</span>
+                    </label>
+                    <div className="relative mb-3">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                        <Lock className="w-4 h-4" />
+                      </div>
+                      <input
+                        ref={passwordInputRef}
+                        type={showPassword ? 'text' : 'password'}
+                        required
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="Digite a senha..."
+                        className="w-full pl-9 pr-10 py-2 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-600 focus:border-transparent transition-all shadow-inner"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600"
+                      >
+                        {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                      </button>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <button
+                        type="submit"
+                        disabled={isLoading}
+                        className="flex-1 py-2 px-3 bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800 text-white font-semibold text-xs rounded-lg shadow hover:shadow-md transition-all flex items-center justify-center gap-1.5 disabled:opacity-70"
+                      >
+                        {isLoading ? (
+                          <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                        ) : (
+                          <>
+                            <span>Acessar Painel</span>
+                            <ArrowRight className="w-3.5 h-3.5" />
+                          </>
+                        )}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={handleCancelSelection}
+                        className="py-2 px-3 bg-white hover:bg-slate-100 text-slate-600 font-medium text-xs rounded-lg border border-slate-200 transition-colors"
+                      >
+                        Voltar
+                      </button>
+                    </div>
+                  </form>
+                )}
+              </div>
+            )}
+
           </div>
 
         </div>
 
         {/* Footer info */}
-        <div className="bg-slate-50 px-6 py-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500">
+        <div className="bg-slate-50 px-6 py-3.5 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500">
           <div className="flex items-center gap-1.5">
             <Building2 className="w-3.5 h-3.5 text-slate-400" />
             <span>Colégios Everest</span>
           </div>
-          <span className="font-mono text-slate-400">v2026.1</span>
+          <span className="font-mono text-slate-400">Ciclo 2026</span>
         </div>
 
       </div>
