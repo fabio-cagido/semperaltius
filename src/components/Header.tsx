@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { UnidadeScope } from '@/types/dashboard';
-import { Building2, School, Printer, Award, Users, TrendingUp } from 'lucide-react';
+import { Building2, Printer, Users, TrendingUp } from 'lucide-react';
 
 interface HeaderProps {
   unidade: UnidadeScope;
@@ -18,9 +18,13 @@ export default function Header({ unidade, setUnidade, totalAvaliados, mediaGeral
         <div className="flex flex-col md:flex-row md:items-center md:justify-between py-4 gap-4">
           
           {/* Logo & Title */}
-          <div className="flex items-center space-x-4">
-            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-everest-blue to-everest-dark flex items-center justify-center shadow-lg border border-white/10">
-              <School className="w-7 h-7 text-white" />
+          <div className="flex items-center space-x-3.5">
+            <div className="relative shrink-0">
+              <img
+                src="/logo-everest.jpeg"
+                alt="Colégio Everest Logo"
+                className="w-12 h-12 sm:w-[52px] sm:h-[52px] rounded-full object-cover border-2 border-white/30 shadow-md bg-white p-0.5 transition-transform hover:scale-105"
+              />
             </div>
             <div>
               <div className="flex items-center gap-2">
