@@ -30,18 +30,18 @@ export const SYSTEM_USERS: User[] = [
   },
 ];
 
-// Senhas oficiais configuradas para cada perfil
+// Senhas oficiais configuradas para cada perfil (6 caracteres com números e letras minúsculas)
 export const PROFILE_PASSWORDS: Record<string, string[]> = {
-  semperaltius: ['semperaltius2026', 'everest2026'],
-  curitiba: ['curitiba2026', 'everest2026'],
-  rio: ['rio2026', 'everest2026'],
+  semperaltius: ['sa26x4'],
+  curitiba: ['ct26b8'],
+  rio: ['rj26m3'],
 };
 
 export function authenticateProfile(
   userId: string,
   passwordInput: string
 ): { success: boolean; user?: User; error?: string } {
-  const cleanPass = passwordInput.trim();
+  const cleanPass = passwordInput.trim().toLowerCase();
   const validPasswords = PROFILE_PASSWORDS[userId];
 
   if (!validPasswords) {
