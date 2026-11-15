@@ -556,84 +556,139 @@ export default function CenarioGeralView({ analytics, metadata, unidade }: Cenar
         </div>
 
         {/* Groups Summary Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 pt-4">
           
           {/* Docentes */}
-          <div className="bg-blue-50/40 rounded-xl p-5 border border-blue-100">
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-xs font-bold uppercase tracking-wider text-blue-900">Docentes</span>
-              <span className="text-xs font-semibold text-blue-700 bg-blue-100 px-2.5 py-0.5 rounded-full">
-                {cargos_resumo['Docentes']?.total || 0} avaliados
-              </span>
-            </div>
-            <div className="text-3xl font-extrabold text-blue-900 mb-4">
-              {cargos_resumo['Docentes']?.media_geral.toFixed(2)} <span className="text-xs text-blue-600 font-normal">/ 4.00</span>
-            </div>
-            <div className="space-y-1.5 text-xs text-slate-600">
-              {metadata.ambitos.map(amb => (
-                <div key={amb} className="flex justify-between py-1 border-b border-blue-100/50">
-                  <span className="truncate pr-2">{amb}</span>
-                  <span className="font-semibold text-slate-900">{cargos_resumo['Docentes']?.ambitos[amb]?.toFixed(2) || '0.00'}</span>
-                </div>
-              ))}
+          <div className="bg-blue-50/40 rounded-xl p-5 border border-blue-100 flex flex-col justify-between">
+            <div>
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-xs font-bold uppercase tracking-wider text-blue-900">Docentes</span>
+                <span className="text-xs font-semibold text-blue-700 bg-blue-100 px-2.5 py-0.5 rounded-full">
+                  {cargos_resumo['Docentes']?.total || 0} avaliados
+                </span>
+              </div>
+              <div className="text-3xl font-extrabold text-blue-900 mb-4">
+                {cargos_resumo['Docentes']?.media_geral.toFixed(2)} <span className="text-xs text-blue-600 font-normal">/ 4.00</span>
+              </div>
+              <div className="space-y-1.5 text-xs text-slate-600">
+                {metadata.ambitos.map(amb => (
+                  <div key={amb} className="flex justify-between py-1 border-b border-blue-100/50">
+                    <span className="truncate pr-2">{amb}</span>
+                    <span className="font-semibold text-slate-900">{cargos_resumo['Docentes']?.ambitos[amb]?.toFixed(2) || '0.00'}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
           {/* Coordenação */}
-          <div className="bg-amber-50/40 rounded-xl p-5 border border-amber-100">
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-xs font-bold uppercase tracking-wider text-amber-900">Coordenação / Direção</span>
-              <span className="text-xs font-semibold text-amber-800 bg-amber-100 px-2.5 py-0.5 rounded-full">
-                {cargos_resumo['Coordenação / Direção']?.total || 0} avaliado(s)
-              </span>
-            </div>
-            <div className="text-3xl font-extrabold text-amber-900 mb-4">
-              {cargos_resumo['Coordenação / Direção']?.media_geral > 0
-                ? `${cargos_resumo['Coordenação / Direção']?.media_geral.toFixed(2)} / 4.00`
-                : <span className="text-sm font-medium text-slate-500">Sem avaliados diretos</span>}
-            </div>
-            <div className="space-y-1.5 text-xs text-slate-600">
-              {cargos_resumo['Coordenação / Direção']?.total > 0 ? (
-                metadata.ambitos.map(amb => (
-                  <div key={amb} className="flex justify-between py-1 border-b border-amber-100/50">
-                    <span className="truncate pr-2">{amb}</span>
-                    <span className="font-semibold text-slate-900">{cargos_resumo['Coordenação / Direção']?.ambitos[amb]?.toFixed(2) || '-'}</span>
+          <div className="bg-amber-50/40 rounded-xl p-5 border border-amber-100 flex flex-col justify-between">
+            <div>
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-xs font-bold uppercase tracking-wider text-amber-900">Coordenação / Direção</span>
+                <span className="text-xs font-semibold text-amber-800 bg-amber-100 px-2.5 py-0.5 rounded-full">
+                  {cargos_resumo['Coordenação / Direção']?.total || 0} avaliado(s)
+                </span>
+              </div>
+              <div className="text-3xl font-extrabold text-amber-900 mb-4">
+                {cargos_resumo['Coordenação / Direção']?.media_geral > 0
+                  ? `${cargos_resumo['Coordenação / Direção']?.media_geral.toFixed(2)} / 4.00`
+                  : <span className="text-sm font-medium text-slate-500">Sem avaliados diretos</span>}
+              </div>
+              <div className="space-y-1.5 text-xs text-slate-600">
+                {cargos_resumo['Coordenação / Direção']?.total > 0 ? (
+                  metadata.ambitos.map(amb => (
+                    <div key={amb} className="flex justify-between py-1 border-b border-amber-100/50">
+                      <span className="truncate pr-2">{amb}</span>
+                      <span className="font-semibold text-slate-900">{cargos_resumo['Coordenação / Direção']?.ambitos[amb]?.toFixed(2) || '-'}</span>
+                    </div>
+                  ))
+                ) : (
+                  <div className="text-slate-500 py-6 text-center italic">
+                    Avaliados de Coordenação e Direção consolidados na Unidade de Curitiba.
                   </div>
-                ))
-              ) : (
-                <div className="text-slate-500 py-6 text-center italic">
-                  Avaliados de Coordenação e Direção consolidados na Unidade de Curitiba.
-                </div>
-              )}
+                )}
+              </div>
             </div>
           </div>
 
           {/* Psicólogos */}
-          <div className="bg-emerald-50/40 rounded-xl p-5 border border-emerald-100">
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-xs font-bold uppercase tracking-wider text-emerald-900">Psicólogos</span>
-              <span className="text-xs font-semibold text-emerald-800 bg-emerald-100 px-2.5 py-0.5 rounded-full">
-                {cargos_resumo['Psicólogos']?.total || 0} avaliado(s)
-              </span>
-            </div>
-            <div className="text-3xl font-extrabold text-emerald-900 mb-4">
-              {cargos_resumo['Psicólogos']?.media_geral > 0
-                ? `${cargos_resumo['Psicólogos']?.media_geral.toFixed(2)} / 4.00`
-                : <span className="text-sm font-medium text-slate-500">Sem avaliados diretos</span>}
-            </div>
-            <div className="space-y-1.5 text-xs text-slate-600">
-              {cargos_resumo['Psicólogos']?.total > 0 ? (
-                metadata.ambitos.map(amb => (
-                  <div key={amb} className="flex justify-between py-1 border-b border-emerald-100/50">
-                    <span className="truncate pr-2">{amb}</span>
-                    <span className="font-semibold text-slate-900">{cargos_resumo['Psicólogos']?.ambitos[amb]?.toFixed(2) || '-'}</span>
+          <div className="bg-emerald-50/40 rounded-xl p-5 border border-emerald-100 flex flex-col justify-between">
+            <div>
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-xs font-bold uppercase tracking-wider text-emerald-900">Psicólogos</span>
+                <span className="text-xs font-semibold text-emerald-800 bg-emerald-100 px-2.5 py-0.5 rounded-full">
+                  {cargos_resumo['Psicólogos']?.total || 0} avaliado(s)
+                </span>
+              </div>
+              <div className="text-3xl font-extrabold text-emerald-900 mb-4">
+                {cargos_resumo['Psicólogos']?.media_geral > 0
+                  ? `${cargos_resumo['Psicólogos']?.media_geral.toFixed(2)} / 4.00`
+                  : <span className="text-sm font-medium text-slate-500">Sem avaliados diretos</span>}
+              </div>
+              <div className="space-y-1.5 text-xs text-slate-600">
+                {cargos_resumo['Psicólogos']?.total > 0 ? (
+                  metadata.ambitos.map(amb => (
+                    <div key={amb} className="flex justify-between py-1 border-b border-emerald-100/50">
+                      <span className="truncate pr-2">{amb}</span>
+                      <span className="font-semibold text-slate-900">{cargos_resumo['Psicólogos']?.ambitos[amb]?.toFixed(2) || '-'}</span>
+                    </div>
+                  ))
+                ) : (
+                  <div className="text-slate-500 py-6 text-center italic">
+                    Avaliados de Psicologia presentes na Unidade Rio de Janeiro (equipe transversal).
                   </div>
-                ))
-              ) : (
-                <div className="text-slate-500 py-6 text-center italic">
-                  Avaliados de Psicologia presentes na Unidade Rio de Janeiro (equipe transversal).
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Visão dos Alunos (Novidade Integrada) */}
+          <div className="bg-purple-50/40 rounded-xl p-5 border border-purple-200 flex flex-col justify-between">
+            <div>
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-xs font-bold uppercase tracking-wider text-purple-900">Visão dos Alunos</span>
+                <span className="text-xs font-semibold text-purple-800 bg-purple-100 px-2.5 py-0.5 rounded-full">
+                  {cargos_resumo['Alunos']?.total || 0} profs. avaliados
+                </span>
+              </div>
+              <div className="text-3xl font-extrabold text-purple-900 mb-4">
+                {cargos_resumo['Alunos']?.media_geral > 0
+                  ? `${cargos_resumo['Alunos']?.media_geral.toFixed(2)}`
+                  : '0.00'}{' '}
+                <span className="text-xs text-purple-600 font-normal">/ 4.00</span>
+              </div>
+              <div className="space-y-1.5 text-xs text-slate-600">
+                <div className="flex justify-between py-1 border-b border-purple-100/60">
+                  <span className="truncate pr-2">Compromisso com o ensino</span>
+                  <span className="font-semibold text-slate-900">
+                    {cargos_resumo['Alunos']?.ambitos['Compromisso com o ensino']?.toFixed(2) || '0.00'}
+                  </span>
                 </div>
-              )}
+                <div className="flex justify-between py-1 border-b border-purple-100/60">
+                  <span className="truncate pr-2">Compromisso com a aprendizagem</span>
+                  <span className="font-semibold text-slate-900">
+                    {cargos_resumo['Alunos']?.ambitos['Compromisso com a aprendizagem']?.toFixed(2) || '0.00'}
+                  </span>
+                </div>
+                <div className="flex justify-between py-1 border-b border-purple-100/60">
+                  <span className="truncate pr-2">Papel como formador</span>
+                  <span className="font-semibold text-slate-900">
+                    {cargos_resumo['Alunos']?.ambitos['Papel como formador']?.toFixed(2) || '0.00'}
+                  </span>
+                </div>
+                <div className="flex justify-between py-1 border-b border-purple-100/60 text-slate-400 italic">
+                  <span className="truncate pr-2">Crescimento pessoal</span>
+                  <span className="text-[10px]">Não avaliado</span>
+                </div>
+                <div className="flex justify-between py-1 text-slate-400 italic">
+                  <span className="truncate pr-2">Integração institucional</span>
+                  <span className="text-[10px]">Não avaliado</span>
+                </div>
+              </div>
+            </div>
+            <div className="mt-3 pt-2 border-t border-purple-100 text-[10px] text-purple-700 font-medium">
+              Avaliação de discentes de EFII e Ensino Médio
             </div>
           </div>
 

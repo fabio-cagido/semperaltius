@@ -1,12 +1,16 @@
 import os
 import json
 import re
+import csv
+import unicodedata
 import pandas as pd
 import numpy as np
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 F1_PATH = r'C:\Users\fabio\.gemini\antigravity\brain\34aa6095-ea20-4631-a6e6-6855274ee13f\.user_uploaded\media_1794739840081_1803d051.xlsx'
 F2_PATH = r'C:\Users\fabio\.gemini\antigravity\brain\34aa6095-ea20-4631-a6e6-6855274ee13f\.user_uploaded\media_1794739840081_f5427846.xlsx'
+CTBA_STUDENTS_CSV = os.path.join(BASE_DIR, 'src', 'data', 'raw', 'respostas_alunos_ctba.csv')
+RJ_STUDENTS_CSV = os.path.join(BASE_DIR, 'src', 'data', 'raw', 'respostas_alunos_rj.csv')
 OUTPUT_JSON = os.path.join(BASE_DIR, 'src', 'data', 'dashboard_data.json')
 
 MALE_NAMES = {
@@ -15,6 +19,97 @@ MALE_NAMES = {
     'luiz', 'marcio', 'raphael', 'rene', 'rodrigo', 'silvio', 'thales', 'wellington',
     'yuri', 'alex', 'darlan', 'felipe', 'pedro'
 }
+
+STUDENT_QUESTIONS_META = [
+    {
+        'id': 50,
+        'ambito': 'Compromisso com ensino',
+        'perfil': 'Alunos',
+        'quesito': 'Metodologias CAR',
+        'raw_sub': '[Alunos] Metodologias CAR',
+        'key': 'Alunos::Metodologias CAR'
+    },
+    {
+        'id': 51,
+        'ambito': 'Compromisso com ensino',
+        'perfil': 'Alunos',
+        'quesito': 'Eixos e temas contemporâneos transversais',
+        'raw_sub': '[Alunos] Eixos e temas contemporâneos transversais',
+        'key': 'Alunos::Eixos e temas contemporâneos transversais'
+    },
+    {
+        'id': 52,
+        'ambito': 'Compromisso com ensino',
+        'perfil': 'Alunos',
+        'quesito': 'Utilização de espaços além da sala de aula',
+        'raw_sub': '[Alunos] Utilização de espaços além da sala de aula',
+        'key': 'Alunos::Utilização de espaços além da sala de aula'
+    },
+    {
+        'id': 53,
+        'ambito': 'Compromisso com a aprendizagem',
+        'perfil': 'Alunos',
+        'quesito': 'Instrução diferenciada',
+        'raw_sub': '[Alunos] Instrução diferenciada',
+        'key': 'Alunos::Instrução diferenciada'
+    },
+    {
+        'id': 54,
+        'ambito': 'Compromisso com a aprendizagem',
+        'perfil': 'Alunos',
+        'quesito': 'Avaliação Formativa',
+        'raw_sub': '[Alunos] Avaliação Formativa',
+        'key': 'Alunos::Avaliação Formativa'
+    },
+    {
+        'id': 55,
+        'ambito': 'Compromisso com a aprendizagem',
+        'perfil': 'Alunos',
+        'quesito': 'Rubricas',
+        'raw_sub': '[Alunos] Rubricas',
+        'key': 'Alunos::Rubricas'
+    },
+    {
+        'id': 56,
+        'ambito': 'Compromisso com a aprendizagem',
+        'perfil': 'Alunos',
+        'quesito': 'Auto e coavaliação',
+        'raw_sub': '[Alunos] Auto e coavaliação',
+        'key': 'Alunos::Auto e coavaliação'
+    },
+    {
+        'id': 57,
+        'ambito': 'Compromisso com a aprendizagem',
+        'perfil': 'Alunos',
+        'quesito': 'Portfólio',
+        'raw_sub': '[Alunos] Portfólio',
+        'key': 'Alunos::Portfólio'
+    },
+    {
+        'id': 58,
+        'ambito': 'Compromisso com a aprendizagem',
+        'perfil': 'Alunos',
+        'quesito': 'Evidências de aprendizagem',
+        'raw_sub': '[Alunos] Evidências de aprendizagem',
+        'key': 'Alunos::Evidências de aprendizagem'
+    },
+    {
+        'id': 59,
+        'ambito': 'Papel como formador',
+        'perfil': 'Alunos',
+        'quesito': 'Percurso de Desenvolvimento Socioemocional',
+        'raw_sub': '[Alunos] Percurso de Desenvolvimento Socioemocional',
+        'key': 'Alunos::Percurso de Desenvolvimento Socioemocional'
+    },
+    {
+        'id': 60,
+        'ambito': 'Papel como formador',
+        'perfil': 'Alunos',
+        'quesito': 'Ambiente inclusivo e prevenção ao bullying',
+        'raw_sub': '[Alunos] Ambiente inclusivo e prevenção ao bullying',
+        'key': 'Alunos::Ambiente inclusivo e prevenção ao bullying'
+    }
+]
 
 def infer_gender(name):
     first_name = name.strip().split()[0].lower()
@@ -124,12 +219,102 @@ def clean_str(val):
         return None
     return s
 
+def norm_person_name(s):
+    if not s:
+        return ''
+    s = s.replace('ã¡Ssia', 'ássia').replace('ã£O', 'ão').replace('Mã¼ller', 'Müller')
+    s = s.replace('Cã¡Ssia', 'Cássia').replace('Antã£O', 'Antão')
+    s = unicodedata.normalize('NFKD', s)
+    s = ''.join(c for c in s if not unicodedata.combining(c))
+    return re.sub(r'\s+', ' ', s).strip().lower()
+
+def load_student_evaluations():
+    def parse_student_val(t):
+        if not t:
+            return None
+        s = t.strip()
+        if s.startswith('1'):
+            return 1.0
+        if s.startswith('2'):
+            return 2.0
+        if s.startswith('3'):
+            return 3.0
+        if s.startswith('4'):
+            return 4.0
+        return None
+
+    ALIASES = {
+        norm_person_name('Raphael Mota'): norm_person_name('Raphael de Miranda Mota'),
+        norm_person_name('Rita de Cã¡Ssia Fernandes de Lima'): norm_person_name('Rita de Cássia Fernandes de Lima'),
+        norm_person_name('Euclides Antã£O Mã¼ller'): norm_person_name('Euclides Antão Müller'),
+    }
+
+    teacher_student_data = {}
+
+    # Load Curitiba
+    if os.path.exists(CTBA_STUDENTS_CSV):
+        with open(CTBA_STUDENTS_CSV, encoding='utf-8') as f:
+            reader = csv.reader(f)
+            next(reader)
+            for r in reader:
+                if not r or len(r) <= 2:
+                    continue
+                raw_name = r[2].strip()
+                n = norm_person_name(raw_name)
+                n = ALIASES.get(n, n)
+                if n not in teacher_student_data:
+                    teacher_student_data[n] = {
+                        'raw_name': raw_name,
+                        'unidade': 'Curitiba',
+                        'count': 0,
+                        'by_q': [[] for _ in range(11)],
+                        'all_scores': []
+                    }
+                teacher_student_data[n]['count'] += 1
+                for qi in range(11):
+                    col_idx = 3 + qi
+                    if col_idx < len(r):
+                        val = parse_student_val(r[col_idx])
+                        if val is not None:
+                            teacher_student_data[n]['by_q'][qi].append(val)
+                            teacher_student_data[n]['all_scores'].append(val)
+
+    # Load Rio
+    if os.path.exists(RJ_STUDENTS_CSV):
+        with open(RJ_STUDENTS_CSV, encoding='utf-8') as f:
+            reader = csv.reader(f)
+            next(reader)
+            for r in reader:
+                if not r or len(r) <= 1:
+                    continue
+                raw_name = r[1].strip()
+                n = norm_person_name(raw_name)
+                n = ALIASES.get(n, n)
+                if n not in teacher_student_data:
+                    teacher_student_data[n] = {
+                        'raw_name': raw_name,
+                        'unidade': 'Rio de Janeiro',
+                        'count': 0,
+                        'by_q': [[] for _ in range(11)],
+                        'all_scores': []
+                    }
+                teacher_student_data[n]['count'] += 1
+                for qi in range(11):
+                    col_idx = 2 + qi
+                    if col_idx < len(r):
+                        val = parse_student_val(r[col_idx])
+                        if val is not None:
+                            teacher_student_data[n]['by_q'][qi].append(val)
+                            teacher_student_data[n]['all_scores'].append(val)
+
+    return teacher_student_data
+
 def run():
     print("=" * 80)
-    print("GERANDO DATASET FINAL PARA O DASHBOARD NEXT.JS 2026")
+    print("GERANDO DATASET FINAL INTEGRADO COM RESPOSTAS DOS ALUNOS 2026")
     print("=" * 80)
 
-    # 1. Load sheets
+    # 1. Load sheets from Qulture.Rocks
     df1_m = pd.read_excel(F1_PATH, sheet_name='Médias', header=1)
     df1_t = pd.read_excel(F1_PATH, sheet_name='Tópicos', header=1)
     df1_p = pd.read_excel(F1_PATH, sheet_name='Perguntas computáveis', header=[0, 1])
@@ -151,14 +336,19 @@ def run():
         perfil = sub[sub.find('[')+1 : sub.find(']')]
         quesito = sub[sub.find(']')+1 : ].strip()
         quesito_clean = quesito.replace('Pró atividade profissonal', 'Proatividade profissional')
-        q_map[idx] = {
-            'id': idx - 11,
+        q_id = idx - 11
+        q_map[q_id] = {
+            'id': q_id,
             'ambito': top,
             'perfil': perfil,
             'quesito': quesito_clean,
             'raw_sub': sub,
             'key': f"{perfil}::{quesito_clean}"
         }
+
+    # Add the 11 student questions to metadata
+    for sq in STUDENT_QUESTIONS_META:
+        q_map[sq['id']] = sq
 
     def extract_rows(df_m, df_t, df_p, src):
         rows = []
@@ -192,8 +382,10 @@ def run():
             }
 
             questoes = {}
-            for col_idx, meta in q_map.items():
-                questoes[meta['key']] = clean_val(p_row.iloc[col_idx])
+            for q_id, meta in q_map.items():
+                if meta['perfil'] != 'Alunos':
+                    col_idx = q_id + 11
+                    questoes[meta['key']] = clean_val(p_row.iloc[col_idx])
 
             rows.append({
                 'src': src,
@@ -219,13 +411,13 @@ def run():
     rows_f1 = extract_rows(df1_m, df1_t, df1_p, 'F1')
     rows_f2 = extract_rows(df2_m, df2_t, df2_p, 'F2')
 
-    # Rayane merge
+    # Rayane merge logic
+    cleaned_rows_f2 = []
     rayane_65 = None
     rayane_66 = None
-    cleaned_rows_f2 = []
     for r in rows_f2:
-        if 'rayane.cavalcante' in r['email']:
-            if r['email'] == 'rayane.cavalcante@everstrj.net.br':
+        if 'rayane' in r['email'] or 'rayane' in r['nome'].lower():
+            if r['do_líder'] is not None:
                 rayane_65 = r
             else:
                 rayane_66 = r
@@ -272,11 +464,86 @@ def run():
         r['cargo'] = infer_role(r['nome'], r['dept_raw'], r['lider_raw'], r['email'])
         r['nivel'] = get_performance_level(r['nota_final'])
 
+    # 2. Integrate Student Evaluations
+    student_evals = load_student_evaluations()
+    print(f"Total de professores com avaliações de alunos carregados: {len(student_evals)}")
+
+    # Update existing teachers with student evaluations
+    matched_teachers_count = 0
+    for r in final_rows:
+        norm = norm_person_name(r['nome'])
+        if norm in student_evals:
+            matched_teachers_count += 1
+            sdata = student_evals[norm]
+            overall_student_avg = round(float(np.mean(sdata['all_scores'])), 2)
+            r['dos_subordinados'] = overall_student_avg
+
+            # Populate student questions
+            for qi in range(11):
+                sq_meta = STUDENT_QUESTIONS_META[qi]
+                scores_q = sdata['by_q'][qi]
+                if scores_q:
+                    r['questoes'][sq_meta['key']] = round(float(np.mean(scores_q)), 2)
+                else:
+                    r['questoes'][sq_meta['key']] = None
+
+    print(f"Professores na base associados às respostas dos alunos: {matched_teachers_count}")
+
+    # Add teachers who only exist in the student survey (Pedro Ramos Losso & Tatiana Brandão Mazzei de Oliveira)
+    for norm, sdata in student_evals.items():
+        if not any(norm_person_name(r['nome']) == norm for r in final_rows):
+            raw_name = sdata['raw_name']
+            overall_avg = round(float(np.mean(sdata['all_scores'])), 2)
+            q_dict = {}
+            for qi in range(11):
+                sq_meta = STUDENT_QUESTIONS_META[qi]
+                scores_q = sdata['by_q'][qi]
+                q_dict[sq_meta['key']] = round(float(np.mean(scores_q)), 2) if scores_q else None
+
+            comp_ensino = [q_dict[m['key']] for m in STUDENT_QUESTIONS_META[:3] if q_dict.get(m['key']) is not None]
+            comp_aprend = [q_dict[m['key']] for m in STUDENT_QUESTIONS_META[3:9] if q_dict.get(m['key']) is not None]
+            papel_form = [q_dict[m['key']] for m in STUDENT_QUESTIONS_META[9:11] if q_dict.get(m['key']) is not None]
+
+            topicos = {
+                'Compromisso com a aprendizagem': round(float(np.mean(comp_aprend)), 2) if comp_aprend else None,
+                'Compromisso com ensino': round(float(np.mean(comp_ensino)), 2) if comp_ensino else None,
+                'Crescimento pessoal e profissional': None,
+                'Integração com a instituição': None,
+                'Papel como formador': round(float(np.mean(papel_form)), 2) if papel_form else None,
+            }
+
+            email_alias = f"{raw_name.split()[0].lower()}.{raw_name.split()[-1].lower()}@everestrj.net.br"
+            final_rows.append({
+                'src': 'Alunos_Forms',
+                'nome': raw_name,
+                'email': email_alias,
+                'dept_raw': 'FUNDAMENTAL 2 - DOCENTE',
+                'area_raw': 'Pedagógico',
+                'tag_raw': 'RJ - F2',
+                'lider_raw': 'Reinaldo Silva',
+                'nota_final': overall_avg,
+                'media': overall_avg,
+                'autoavaliação': None,
+                'do_líder': None,
+                'outros': None,
+                'colegas': None,
+                'dos_pares': None,
+                'dos_subordinados': overall_avg,
+                'topicos': topicos,
+                'questoes': q_dict,
+                'unidade': 'Rio de Janeiro',
+                'segmento': 'EFII',
+                'sexo': infer_gender(raw_name),
+                'cargo': 'Docentes',
+                'nivel': get_performance_level(overall_avg)
+            })
+            print(f"Adicionado professor avaliado pelos alunos: {raw_name} (RJ - EFII) -> Média: {overall_avg}")
+
     def compute_rankings(subset):
         if not subset:
             return {'todos': [], 'top5': [], 'bottom5': []}
         quesito_stats = []
-        for col_idx, meta in q_map.items():
+        for q_id, meta in q_map.items():
             k = meta['key']
             vals = [r['questoes'].get(k) for r in subset if r['questoes'].get(k) is not None]
             if vals:
@@ -354,6 +621,26 @@ def run():
                 'ambitos': compute_ambito_means(sub),
                 'rankings': compute_rankings(sub)
             }
+
+        # Dedicated summary for Alunos
+        sub_alunos = [r for r in subset if r.get('dos_subordinados') is not None]
+        aluno_scores = [r['dos_subordinados'] for r in sub_alunos if r['dos_subordinados'] is not None]
+        q_alunos_ensino = [r['questoes'].get(m['key']) for r in sub_alunos for m in STUDENT_QUESTIONS_META[:3] if r['questoes'].get(m['key']) is not None]
+        q_alunos_aprend = [r['questoes'].get(m['key']) for r in sub_alunos for m in STUDENT_QUESTIONS_META[3:9] if r['questoes'].get(m['key']) is not None]
+        q_alunos_form = [r['questoes'].get(m['key']) for r in sub_alunos for m in STUDENT_QUESTIONS_META[9:11] if r['questoes'].get(m['key']) is not None]
+
+        res['Alunos'] = {
+            'total': len(sub_alunos),
+            'media_geral': round(float(np.mean(aluno_scores)), 2) if aluno_scores else 0.0,
+            'ambitos': {
+                'Compromisso com o ensino': round(float(np.mean(q_alunos_ensino)), 2) if q_alunos_ensino else 0.0,
+                'Compromisso com a aprendizagem': round(float(np.mean(q_alunos_aprend)), 2) if q_alunos_aprend else 0.0,
+                'Crescimento pessoal e profissional': 0.0,
+                'Integração com a instituição': 0.0,
+                'Papel como formador': round(float(np.mean(q_alunos_form)), 2) if q_alunos_form else 0.0,
+            },
+            'rankings': compute_rankings(sub_alunos)
+        }
         return res
 
     scopes = {
@@ -449,6 +736,14 @@ def run():
         json.dump(output_payload, f, ensure_ascii=False, indent=2)
 
     print(f"JSON gerado com sucesso em: {OUTPUT_JSON} ({os.path.getsize(OUTPUT_JSON)} bytes)")
+    print(f"Total de avaliados consolidado: {len(final_rows)}")
+    print(f"Perfis avaliadores Geral (Alunos): {analytics_by_scope['Todas']['perfis_avaliadores_geral']['alunos']}")
+    print(f"Perfis avaliadores Curitiba (Alunos): {analytics_by_scope['Curitiba']['perfis_avaliadores_geral']['alunos']}")
+    print(f"Perfis avaliadores Rio de Janeiro (Alunos): {analytics_by_scope['Rio de Janeiro']['perfis_avaliadores_geral']['alunos']}")
+    print(f"EFII Curitiba (Alunos): {analytics_by_scope['Curitiba']['ciclos']['EFII']['perfis_avaliadores']['alunos']}")
+    print(f"EM Curitiba (Alunos): {analytics_by_scope['Curitiba']['ciclos']['EM']['perfis_avaliadores']['alunos']}")
+    print(f"EFII Rio (Alunos): {analytics_by_scope['Rio de Janeiro']['ciclos']['EFII']['perfis_avaliadores']['alunos']}")
+    print(f"EM Rio (Alunos): {analytics_by_scope['Rio de Janeiro']['ciclos']['EM']['perfis_avaliadores']['alunos']}")
     print("ETL concluído com 100% de sucesso!")
 
 if __name__ == '__main__':

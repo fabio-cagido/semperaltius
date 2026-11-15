@@ -59,7 +59,7 @@ export default function ExploradorQuesitosView({ analytics, metadata, unidade }:
     return list;
   }, [quesitosList, sortBy, viewFilter]);
 
-  const perfis = ['Todos', 'Coordenadores', 'Autoavaliação', 'Psicologos e Pares'];
+  const perfis = ['Todos', 'Coordenadores', 'Autoavaliação', 'Psicologos e Pares', 'Alunos'];
 
   return (
     <div className="space-y-6 pb-12">
@@ -68,7 +68,7 @@ export default function ExploradorQuesitosView({ analytics, metadata, unidade }:
       <div className="bg-gradient-to-r from-everest-navy to-everest-blue rounded-2xl p-6 text-white shadow-lg">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-xs font-medium text-blue-200 mb-2">
           <Search className="w-3.5 h-3.5" />
-          Drill-Down Analítico • Base Completa de 49 Quesitos
+          Drill-Down Analítico • Base Completa de 60 Quesitos (Inclui Avaliação dos Alunos)
         </div>
         <h2 className="text-2xl font-bold tracking-tight">
           Explorador Detalhado de Indicadores &amp; Quesitos
@@ -159,7 +159,7 @@ export default function ExploradorQuesitosView({ analytics, metadata, unidade }:
               className="w-full py-1.5 px-3 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-everest-blue font-medium"
             >
               {perfis.map((p) => (
-                <option key={p} value={p}>{p === 'Todos' ? 'Todos os Perfis (3)' : p}</option>
+                <option key={p} value={p}>{p === 'Todos' ? 'Todos os Perfis' : p}</option>
               ))}
             </select>
           </div>
