@@ -94,7 +94,7 @@ export default function Home() {
   const activeAnalytics = data.scopes[unidade];
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50">
+    <div className="min-h-screen flex flex-col print:block bg-slate-50 print:bg-white">
       
       {/* Top Header with Global Unit Selector & User Session */}
       <Header

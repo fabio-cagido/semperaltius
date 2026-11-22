@@ -153,8 +153,8 @@ function AmbitoBarChartCard({
       </div>
 
       {/* SVG Vertical Bars */}
-      <div className="w-full flex justify-center">
-        <svg viewBox="0 0 220 175" className="w-full max-w-[220px] h-auto overflow-visible">
+      <div className="w-full flex justify-center overflow-hidden">
+        <svg viewBox="0 0 220 175" className="w-full max-w-[210px] h-auto">
           {/* Y-axis grid lines & labels (0, 1, 2, 3, 4) */}
           {[0, 1, 2, 3, 4].map((tick) => {
             const y = 140 - (tick / 4) * maxBarHeight;
@@ -283,10 +283,11 @@ function SvgRadarChart({
   ambitosData: Record<string, AmbitoPorAvaliador>;
   series: RadarSeriesConfig[];
 }) {
-  const size = 340;
-  const cx = size / 2;
-  const cy = size / 2;
-  const radius = 102;
+  const width = 400;
+  const height = 310;
+  const cx = width / 2;
+  const cy = height / 2;
+  const radius = 92;
   const n = Math.max(3, ambitos.length);
 
   const getAngle = (idx: number) => -Math.PI / 2 + (2 * Math.PI * idx) / n;
@@ -317,8 +318,8 @@ function SvgRadarChart({
   };
 
   return (
-    <div className="flex flex-col items-center">
-      <svg viewBox={`0 0 ${size} ${size}`} className="w-full max-w-[330px] h-auto overflow-visible">
+    <div className="flex flex-col items-center overflow-hidden">
+      <svg viewBox={`0 0 ${width} ${height}`} className="w-full max-w-[360px] h-auto">
         {/* Concentric Polygons for levels 1.0, 2.0, 3.0, 4.0 */}
         {[1, 2, 3, 4].map((lvl) => {
           const pts = ambitos
@@ -558,7 +559,7 @@ function RelatorioIndividualSheet({
 
   return (
     <article
-      className={`bg-white rounded-3xl border border-slate-200/90 shadow-md p-6 sm:p-8 space-y-7 print:shadow-none print:border-0 print:p-0 print:rounded-none ${
+      className={`bg-white rounded-3xl border border-slate-200/90 shadow-md p-6 sm:p-8 space-y-7 print:shadow-none print:border-0 print:p-0 print:rounded-none print:w-full print:max-w-full print:overflow-hidden ${
         isBatchItem && !isLastBatchItem ? 'break-after-page mb-10 print:mb-0' : ''
       }`}
     >
@@ -761,11 +762,11 @@ function RelatorioIndividualSheet({
         <div
           className={`grid grid-cols-1 sm:grid-cols-2 ${
             colab.ambitos_order.length === 3
-              ? 'lg:grid-cols-3'
+              ? 'lg:grid-cols-3 print:grid-cols-3'
               : colab.ambitos_order.length === 4
-              ? 'lg:grid-cols-4'
-              : 'lg:grid-cols-5'
-          } gap-3.5`}
+              ? 'lg:grid-cols-4 print:grid-cols-4'
+              : 'lg:grid-cols-5 print:grid-cols-5'
+          } gap-3.5 print:gap-2`}
         >
           {colab.ambitos_order.map((amb) => {
             const notaGeralAmbito = colab.ambitos_por_avaliador[amb]?.geral ?? null;
@@ -870,7 +871,7 @@ function RelatorioIndividualSheet({
       </section>
 
       {/* SEÇÕES 4 E 5: GRÁFICOS ARANHA LADO A LADO (RADAR 1: TODOS OS AVALIADORES | RADAR 2: LÍDER VS. AUTOAVALIAÇÃO) */}
-      <section className="grid grid-cols-1 lg:grid-cols-2 gap-5 break-inside-avoid">
+      <section className="grid grid-cols-1 lg:grid-cols-2 print:grid-cols-2 gap-5 print:gap-3 break-inside-avoid">
         {/* Seção 4: Gráfico Aranha 1 — Comparação entre Todos os Avaliadores (por Âmbito) */}
         <div className="bg-slate-50/70 rounded-2xl border border-slate-200 p-4 flex flex-col justify-between space-y-3">
           <div>
