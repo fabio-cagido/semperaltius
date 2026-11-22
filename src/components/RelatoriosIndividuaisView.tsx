@@ -130,10 +130,10 @@ function AmbitoBarChartCard({
     <div className="bg-white rounded-xl border border-slate-200 p-3.5 shadow-2xs flex flex-col justify-between break-inside-avoid">
       {/* Title with institutional dark red underline like the PDF */}
       <div className="text-center mb-2">
-        <div className="text-[11px] font-extrabold uppercase tracking-wider text-slate-900 leading-tight line-clamp-2 min-h-[28px] flex items-center justify-center">
+        <div className="text-[11px] font-extrabold uppercase tracking-wider text-slate-900 leading-snug min-h-[34px] py-0.5 flex items-center justify-center">
           {ambito}
         </div>
-        <div className="h-[2.5px] w-4/5 mx-auto bg-[#7F1D1D] mt-1 rounded-full" />
+        <div className="h-[2.5px] w-4/5 mx-auto bg-[#7F1D1D] mt-1.5 rounded-full" />
       </div>
 
       {/* Legend: Máxima vs Nota */}
@@ -560,6 +560,8 @@ function RelatorioIndividualSheet({
         isBatchItem && !isLastBatchItem ? 'break-after-page mb-10 print:mb-0' : ''
       }`}
     >
+      {/* BLOCO PÁGINA 1 DO PDF: CABEÇALHO + SEÇÕES 1, 2 E 3 */}
+      <div data-pdf-page="1" className="space-y-6 bg-white">
       {/* CABEÇALHO INSTITUCIONAL (Inspirado no PDF AVALIAÇÃO_DOCENTE_RESULTADOS_CTBA_2024.pdf) */}
       <div className="rounded-2xl overflow-hidden border border-slate-200 break-inside-avoid">
         {/* Top Crimson/Burgundy Institutional Banner */}
@@ -722,15 +724,15 @@ function RelatorioIndividualSheet({
                     <div className="flex items-center gap-2">
                       <span className={`w-2.5 h-2.5 rounded-full shrink-0 ${c.dot}`} />
                       <div>
-                        <div className="font-extrabold leading-tight flex items-center gap-1.5">
-                          {c.label}
+                        <div className="font-extrabold leading-snug">
+                          <span>{c.label}</span>
                           {isCurrent && (
-                            <span className="text-[9px] uppercase px-1.5 py-0.2 bg-slate-900 text-white rounded">
+                            <span className="ml-2 inline-block text-[9px] uppercase px-1.5 py-0.5 bg-slate-900 text-white rounded leading-none align-middle">
                               Seu Nível
                             </span>
                           )}
                         </div>
-                        <div className="text-[10px] opacity-80">{c.desc}</div>
+                        <div className="text-[10px] opacity-80 mt-0.5">{c.desc}</div>
                       </div>
                     </div>
                     <span className="font-mono font-extrabold text-xs px-2 py-0.5 rounded bg-white/70 border border-black/5 shrink-0">
@@ -866,6 +868,42 @@ function RelatorioIndividualSheet({
           </div>
         </div>
       </section>
+
+      {/* Rodapé Página 1 (visível apenas na exportação PDF) */}
+      <div className="pt-3 border-t border-slate-200 flex items-center justify-between text-[10px] text-slate-400">
+        <span>Rede de Colégios Semper Altius • Colégio Everest {colab.unidade} • Avaliação 360º (2026)</span>
+        <span className="font-semibold text-slate-500">{colab.nome} — Página 1 / 2</span>
+      </div>
+      </div>
+
+      {/* BLOCO PÁGINA 2 DO PDF: SEÇÕES 4 E 5 (GRÁFICOS ARANHA) + RODAPÉ INSTITUCIONAL */}
+      <div data-pdf-page="2" className="space-y-6 bg-white pt-2 print-break">
+        {/* Mini-cabeçalho institucional para a Página 2 */}
+        <div
+          className="rounded-xl px-5 py-3 text-white flex items-center justify-between gap-4"
+          style={{
+            background: 'linear-gradient(90deg, #881337 0%, #991B1B 45%, #7F1D1D 100%)'
+          }}
+        >
+          <div className="flex items-center gap-3">
+            <img
+              src="/logo-everest.jpeg"
+              alt="Logo Colégio Everest"
+              className="w-9 h-9 rounded-full object-cover bg-white p-0.5 border border-white/80 shrink-0"
+            />
+            <div>
+              <div className="text-[9px] font-bold uppercase tracking-widest text-rose-200">
+                Rede Semper Altius • Colégio Everest {colab.unidade} • Devolutiva 2026
+              </div>
+              <div className="text-sm font-extrabold tracking-tight text-white">
+                {colab.nome} — <span className="font-normal text-rose-100">{colab.cargo} ({colab.segmento})</span>
+              </div>
+            </div>
+          </div>
+          <div className="text-right text-[10px] font-bold uppercase tracking-wider text-rose-200 shrink-0">
+            Análise 360º &amp; Alinhamento • Página 2 / 2
+          </div>
+        </div>
 
       {/* SEÇÕES 4 E 5: GRÁFICOS ARANHA LADO A LADO (RADAR 1: TODOS OS AVALIADORES | RADAR 2: LÍDER VS. AUTOAVALIAÇÃO) */}
       <section className="grid grid-cols-1 lg:grid-cols-2 print:grid-cols-2 gap-5 print:gap-3 break-inside-avoid">
@@ -1008,6 +1046,17 @@ function RelatorioIndividualSheet({
         </div>
       </section>
 
+      {/* Rodapé Institucional da Folha A4 (Fim da Página 2) */}
+      <div className="pt-4 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between text-[10px] text-slate-500 gap-2 break-inside-avoid">
+        <div className="font-bold text-slate-700">
+          Rede de Colégios Semper Altius • Colégio Everest {colab.unidade} • Avaliação 360º (Ciclo 2026)
+        </div>
+        <div className="italic">
+          Acolher • Servir • Acompanhar — Documento confidencial para uso em Devolutiva e PDI (Página 2 / 2)
+        </div>
+      </div>
+      </div>
+
       {/* SEÇÃO 6: PAINEL DETALHADO DE TODOS OS INDICADORES (SOMENTE NO DASHBOARD / OCULTO NA IMPRESSÃO PDF) */}
       <section data-html2canvas-ignore="true" className="no-print space-y-3">
         <div className="flex flex-wrap items-center justify-between gap-2">
@@ -1088,16 +1137,6 @@ function RelatorioIndividualSheet({
           </div>
         )}
       </section>
-
-      {/* Rodapé Institucional da Folha A4 */}
-      <div className="pt-4 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between text-[10px] text-slate-500 gap-2 break-inside-avoid">
-        <div className="font-bold text-slate-700">
-          Rede de Colégios Semper Altius • Colégio Everest {colab.unidade} • Avaliação 360º (Ciclo 2026)
-        </div>
-        <div className="italic">
-          Acolher • Servir • Acompanhar — Documento confidencial para uso em Devolutiva e PDI
-        </div>
-      </div>
     </article>
   );
 }
@@ -1286,54 +1325,63 @@ export default function RelatoriosIndividuaisView({ data, unidade }: RelatoriosI
     currentIndex >= 0 ? filteredColaboradores[currentIndex] : filteredColaboradores[0] || null;
 
   /**
-   * Captures a single report DOM element and appends it onto a strict A4 Portrait jsPDF instance
-   * (210mm x 297mm, rotation = 0 hardcoded in binary so it never opens sideways in WhatsApp/Adobe).
+   * Captures a single report's two logical A4 pages (Page 1: Header + Sections 1-3,
+   * Page 2: Mini-header + Sections 4-5 + Footer) at full 192mm width onto a strict
+   * A4 Portrait jsPDF instance (210mm x 297mm, rotation = 0).
    */
   const captureElementToA4PortraitPdf = async (
     el: HTMLElement,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     pdf: any,
     html2canvasFn: (element: HTMLElement, options?: Record<string, unknown>) => Promise<HTMLCanvasElement>,
-    isFirstPage: boolean
+    isFirstCollaborator: boolean
   ) => {
+    const page1El = el.querySelector<HTMLElement>('[data-pdf-page="1"]');
+    const page2El = el.querySelector<HTMLElement>('[data-pdf-page="2"]');
+    const targets = page1El && page2El ? [page1El, page2El] : [el];
+
     const prevWidth = el.style.width;
     const prevMaxWidth = el.style.maxWidth;
-    el.style.width = '1060px';
-    el.style.maxWidth = '1060px';
+    el.style.width = '1020px';
+    el.style.maxWidth = '1020px';
 
     try {
-      const canvas = await html2canvasFn(el, {
-        scale: 2,
-        useCORS: true,
-        backgroundColor: '#ffffff',
-        windowWidth: 1140,
-        logging: false
-      });
+      for (let pIdx = 0; pIdx < targets.length; pIdx++) {
+        const targetEl = targets[pIdx];
+        const canvas = await html2canvasFn(targetEl, {
+          scale: 2,
+          useCORS: true,
+          backgroundColor: '#ffffff',
+          windowWidth: 1100,
+          logging: false
+        });
 
-      const imgData = canvas.toDataURL('image/jpeg', 0.95);
-      if (!isFirstPage) {
-        pdf.addPage('a4', 'portrait');
+        const imgData = canvas.toDataURL('image/jpeg', 0.95);
+        if (!(isFirstCollaborator && pIdx === 0)) {
+          pdf.addPage('a4', 'portrait');
+        }
+
+        const pageW = 210;
+        const pageH = 297;
+        const marginX = 9;
+        const marginY = 9;
+        const usableW = pageW - marginX * 2; // 192mm full width
+        const usableH = pageH - marginY * 2; // 279mm usable height
+
+        const imgRatio = canvas.width / canvas.height;
+        let renderW = usableW;
+        let renderH = renderW / imgRatio;
+
+        if (renderH > usableH) {
+          renderH = usableH;
+          renderW = renderH * imgRatio;
+        }
+
+        const offsetX = (pageW - renderW) / 2;
+        const offsetY = marginY;
+
+        pdf.addImage(imgData, 'JPEG', offsetX, offsetY, renderW, renderH, undefined, 'FAST');
       }
-
-      const pageW = 210;
-      const pageH = 297;
-      const margin = 8;
-      const usableW = pageW - margin * 2;
-      const usableH = pageH - margin * 2;
-
-      const imgRatio = canvas.width / canvas.height;
-      let renderW = usableW;
-      let renderH = renderW / imgRatio;
-
-      if (renderH > usableH) {
-        renderH = usableH;
-        renderW = renderH * imgRatio;
-      }
-
-      const offsetX = (pageW - renderW) / 2;
-      const offsetY = margin;
-
-      pdf.addImage(imgData, 'JPEG', offsetX, offsetY, renderW, renderH, undefined, 'FAST');
     } finally {
       el.style.width = prevWidth;
       el.style.maxWidth = prevMaxWidth;
