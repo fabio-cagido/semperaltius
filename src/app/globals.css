@@ -29,12 +29,14 @@ body {
   background: #94a3b8;
 }
 
+/* Top-level @page rule required by W3C Paged Media & Chromium Print Ticket controller */
+@page {
+  size: A4 portrait;
+  margin: 10mm;
+}
+
 /* Print optimizations for executive export & A4 Individual Reports */
 @media print {
-  @page {
-    size: A4 portrait;
-    margin: 10mm;
-  }
   html, body {
     width: 190mm !important;
     max-width: 190mm !important;

@@ -19,13 +19,9 @@ import {
   Award,
   TrendingUp,
   TrendingDown,
-  Compass,
-  UserCheck,
-  Table,
-  CheckSquare,
-  Square,
   FileText,
-  Sparkles
+  Download,
+  Loader2
 } from 'lucide-react';
 
 interface RelatoriosIndividuaisViewProps {
@@ -559,7 +555,8 @@ function RelatorioIndividualSheet({
 
   return (
     <article
-      className={`print-report-sheet bg-white rounded-3xl border border-slate-200/90 shadow-md p-6 sm:p-8 space-y-7 print:shadow-none print:border-0 print:p-0 print:rounded-none print:w-full print:max-w-full print:overflow-hidden ${
+      data-report-sheet={colab.id}
+      className={`print-report-sheet bg-white rounded-3xl border border-slate-200/90 shadow-md p-6 sm:p-8 space-y-6 print:shadow-none print:border-0 print:p-0 print:rounded-none print:w-full print:max-w-full print:overflow-hidden ${
         isBatchItem && !isLastBatchItem ? 'break-after-page mb-10 print:mb-0' : ''
       }`}
     >
@@ -1012,7 +1009,7 @@ function RelatorioIndividualSheet({
       </section>
 
       {/* SEÇÃO 6: PAINEL DETALHADO DE TODOS OS INDICADORES (SOMENTE NO DASHBOARD / OCULTO NA IMPRESSÃO PDF) */}
-      <section className="no-print space-y-3">
+      <section data-html2canvas-ignore="true" className="no-print space-y-3">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-2 flex-1">
             <div
@@ -1111,6 +1108,8 @@ export default function RelatoriosIndividuaisView({ data, unidade }: RelatoriosI
   const [cicloFilter, setCicloFilter] = useState('TODOS');
   const [selectedId, setSelectedId] = useState<string>('');
   const [batchPrintMode, setBatchPrintMode] = useState<boolean>(false);
+  const [isGeneratingPdf, setIsGeneratingPdf] = useState<boolean>(false);
+  const [pdfProgressText, setPdfProgressText] = useState<string>('');
 
   // Build unified list of all collaborators (Docentes + Gestão & Especialistas)
   const allColaboradores = useMemo<UnifiedColaborador[]>(() => {
@@ -1286,18 +1285,151 @@ export default function RelatoriosIndividuaisView({ data, unidade }: RelatoriosI
   const activeColaborador =
     currentIndex >= 0 ? filteredColaboradores[currentIndex] : filteredColaboradores[0] || null;
 
-  const handlePrintIndividual = () => {
+  /**
+   * Captures a single report DOM element and appends it onto a strict A4 Portrait jsPDF instance
+   * (210mm x 297mm, rotation = 0 hardcoded in binary so it never opens sideways in WhatsApp/Adobe).
+   */
+  const captureElementToA4PortraitPdf = async (
+    el: HTMLElement,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    pdf: any,
+    html2canvasFn: (element: HTMLElement, options?: Record<string, unknown>) => Promise<HTMLCanvasElement>,
+    isFirstPage: boolean
+  ) => {
+    const prevWidth = el.style.width;
+    const prevMaxWidth = el.style.maxWidth;
+    el.style.width = '1060px';
+    el.style.maxWidth = '1060px';
+
+    try {
+      const canvas = await html2canvasFn(el, {
+        scale: 2,
+        useCORS: true,
+        backgroundColor: '#ffffff',
+        windowWidth: 1140,
+        logging: false
+      });
+
+      const imgData = canvas.toDataURL('image/jpeg', 0.95);
+      if (!isFirstPage) {
+        pdf.addPage('a4', 'portrait');
+      }
+
+      const pageW = 210;
+      const pageH = 297;
+      const margin = 8;
+      const usableW = pageW - margin * 2;
+      const usableH = pageH - margin * 2;
+
+      const imgRatio = canvas.width / canvas.height;
+      let renderW = usableW;
+      let renderH = renderW / imgRatio;
+
+      if (renderH > usableH) {
+        renderH = usableH;
+        renderW = renderH * imgRatio;
+      }
+
+      const offsetX = (pageW - renderW) / 2;
+      const offsetY = margin;
+
+      pdf.addImage(imgData, 'JPEG', offsetX, offsetY, renderW, renderH, undefined, 'FAST');
+    } finally {
+      el.style.width = prevWidth;
+      el.style.maxWidth = prevMaxWidth;
+    }
+  };
+
+  // Direct A4 Portrait PDF Download (Individual)
+  const handleDownloadIndividualPdf = async () => {
+    if (!activeColaborador || isGeneratingPdf) return;
+    setIsGeneratingPdf(true);
+    setPdfProgressText(`Gerando PDF A4 Vertical de ${activeColaborador.nome}...`);
+
+    try {
+      const [{ jsPDF }, html2canvasModule] = await Promise.all([
+        import('jspdf'),
+        import('html2canvas')
+      ]);
+      const html2canvasFn = html2canvasModule.default;
+
+      const el = document.querySelector<HTMLElement>(
+        `article[data-report-sheet="${CSS.escape(activeColaborador.id)}"]`
+      );
+      if (!el) return;
+
+      const pdf = new jsPDF({
+        orientation: 'portrait',
+        unit: 'mm',
+        format: 'a4',
+        compress: true
+      });
+
+      await captureElementToA4PortraitPdf(el, pdf, html2canvasFn, true);
+      pdf.save(`${activeColaborador.nome} 2026.pdf`);
+    } catch (err) {
+      console.error('Erro ao gerar PDF individual:', err);
+      window.print();
+    } finally {
+      setIsGeneratingPdf(false);
+      setPdfProgressText('');
+    }
+  };
+
+  // Direct A4 Portrait PDF Download (Batch - All Filtered Collaborators)
+  const handleDownloadBatchPdf = async () => {
+    if (filteredColaboradores.length === 0 || isGeneratingPdf) return;
+    setIsGeneratingPdf(true);
+    setBatchPrintMode(true);
+    setPdfProgressText(`Preparando ${filteredColaboradores.length} relatórios...`);
+
+    try {
+      // Wait for React to render all batch sheets in the DOM
+      await new Promise((r) => setTimeout(r, 350));
+
+      const [{ jsPDF }, html2canvasModule] = await Promise.all([
+        import('jspdf'),
+        import('html2canvas')
+      ]);
+      const html2canvasFn = html2canvasModule.default;
+
+      const pdf = new jsPDF({
+        orientation: 'portrait',
+        unit: 'mm',
+        format: 'a4',
+        compress: true
+      });
+
+      for (let i = 0; i < filteredColaboradores.length; i++) {
+        const colab = filteredColaboradores[i];
+        setPdfProgressText(
+          `Gerando PDF (${i + 1} de ${filteredColaboradores.length}): ${colab.nome}...`
+        );
+        const el = document.querySelector<HTMLElement>(
+          `article[data-report-sheet="${CSS.escape(colab.id)}"]`
+        );
+        if (el) {
+          await captureElementToA4PortraitPdf(el, pdf, html2canvasFn, i === 0);
+        }
+      }
+
+      const unitSlug = unidade.toLowerCase().replace(/\s+/g, '_');
+      pdf.save(`Relatorios_Individuais_Everest_${unitSlug}_2026.pdf`);
+    } catch (err) {
+      console.error('Erro ao gerar PDF em lote:', err);
+      window.print();
+    } finally {
+      setIsGeneratingPdf(false);
+      setPdfProgressText('');
+      setBatchPrintMode(false);
+    }
+  };
+
+  const handleNativeBrowserPrint = () => {
     setBatchPrintMode(false);
     setTimeout(() => {
       window.print();
     }, 80);
-  };
-
-  const handlePrintBatch = () => {
-    setBatchPrintMode(true);
-    setTimeout(() => {
-      window.print();
-    }, 250);
   };
 
   return (
@@ -1318,29 +1450,55 @@ export default function RelatoriosIndividuaisView({ data, unidade }: RelatoriosI
             </p>
           </div>
 
-          {/* Botões de Impressão Individual e em Lote */}
+          {/* Botões de Download PDF A4 Vertical Direto e Impressão */}
           <div className="flex flex-wrap items-center gap-2.5 shrink-0">
             <button
               type="button"
-              onClick={handlePrintIndividual}
-              disabled={!activeColaborador}
+              onClick={handleDownloadIndividualPdf}
+              disabled={!activeColaborador || isGeneratingPdf}
               className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-everest-navy hover:bg-slate-800 disabled:opacity-50 text-white font-bold text-xs shadow-sm transition-all cursor-pointer"
             >
-              <Printer className="w-4 h-4 text-amber-300" />
+              {isGeneratingPdf ? (
+                <Loader2 className="w-4 h-4 text-amber-300 animate-spin" />
+              ) : (
+                <Download className="w-4 h-4 text-amber-300" />
+              )}
               Imprimir / Salvar PDF Individual
             </button>
 
             <button
               type="button"
-              onClick={handlePrintBatch}
-              disabled={filteredColaboradores.length === 0}
+              onClick={handleDownloadBatchPdf}
+              disabled={filteredColaboradores.length === 0 || isGeneratingPdf}
               className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#991B1B] hover:bg-[#7F1D1D] disabled:opacity-50 text-white font-bold text-xs shadow-sm transition-all cursor-pointer"
             >
-              <Files className="w-4 h-4 text-amber-200" />
+              {isGeneratingPdf ? (
+                <Loader2 className="w-4 h-4 text-amber-200 animate-spin" />
+              ) : (
+                <Files className="w-4 h-4 text-amber-200" />
+              )}
               Imprimir Todos em Lote ({filteredColaboradores.length} PDF)
+            </button>
+
+            <button
+              type="button"
+              onClick={handleNativeBrowserPrint}
+              disabled={!activeColaborador || isGeneratingPdf}
+              title="Abrir diálogo de impressora física do sistema"
+              className="inline-flex items-center gap-1.5 px-3 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 disabled:opacity-50 text-slate-700 font-semibold text-xs border border-slate-200 transition-all cursor-pointer"
+            >
+              <Printer className="w-3.5 h-3.5 text-slate-600" />
+              Impressora
             </button>
           </div>
         </div>
+
+        {isGeneratingPdf && pdfProgressText && (
+          <div className="bg-blue-50 border border-blue-200 text-blue-950 px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2.5">
+            <Loader2 className="w-4 h-4 text-everest-blue animate-spin shrink-0" />
+            <span>{pdfProgressText}</span>
+          </div>
+        )}
 
         {/* Filtros e Seletor de Colaborador */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-3 items-end">
