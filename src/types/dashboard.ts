@@ -104,6 +104,25 @@ export interface ScopeAnalytics {
   gestao_especialistas?: Record<InstrumentoGestao, GestaoInstrumentAnalytics>;
 }
 
+export interface AmbitoPorAvaliador {
+  lider: number | null;
+  autoavaliacao: number | null;
+  pares_psicologos: number | null;
+  alunos: number | null;
+  geral: number | null;
+}
+
+export interface IndicadorIndividual {
+  codigo: string;
+  enunciado: string;
+  ambito: string;
+  lider: number | null;
+  autoavaliacao: number | null;
+  pares_psicologos: number | null;
+  alunos: number | null;
+  media: number | null;
+}
+
 export interface AvaliadoRecord {
   src: string;
   nome: string;
@@ -122,6 +141,8 @@ export interface AvaliadoRecord {
   dos_subordinados: number | null;
   topicos: Record<string, number | null>;
   questoes: Record<string, number | null>;
+  ambitos_por_avaliador?: Record<string, AmbitoPorAvaliador>;
+  indicadores?: IndicadorIndividual[];
   unidade: 'Curitiba' | 'Rio de Janeiro';
   segmento: CicloEscolar;
   sexo: 'Feminino' | 'Masculino';
@@ -149,6 +170,8 @@ export interface EspecialistaRecord {
   nivel: PerformanceLevel | null;
   topicos: Record<string, number | null>;
   questoes: Record<string, number | null>;
+  ambitos_por_avaliador?: Record<string, AmbitoPorAvaliador>;
+  indicadores?: IndicadorIndividual[];
 }
 
 export interface DashboardData {

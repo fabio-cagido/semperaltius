@@ -10,6 +10,7 @@ import ComparativoCiclosView from '@/components/ComparativoCiclosView';
 import GestaoEspecialistasView from '@/components/GestaoEspecialistasView';
 import ExploradorQuesitosView from '@/components/ExploradorQuesitosView';
 import TabelaAvaliadosView from '@/components/TabelaAvaliadosView';
+import RelatoriosIndividuaisView from '@/components/RelatoriosIndividuaisView';
 import LoginScreen from '@/components/LoginScreen';
 
 import dashboardJson from '@/data/dashboard_data.json';
@@ -109,7 +110,7 @@ export default function Home() {
       <TabsNav activeTab={activeTab} setActiveTab={setActiveTab} />
 
       {/* Main Content Area */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-6 print-full-width">
         {activeTab === 'cenario' && (
           <CenarioGeralView
             analytics={activeAnalytics}
@@ -161,6 +162,13 @@ export default function Home() {
           <TabelaAvaliadosView
             avaliados={data.avaliados}
             metadata={data.metadata}
+            unidade={unidade}
+          />
+        )}
+
+        {activeTab === 'relatorios' && (
+          <RelatoriosIndividuaisView
+            data={data}
             unidade={unidade}
           />
         )}

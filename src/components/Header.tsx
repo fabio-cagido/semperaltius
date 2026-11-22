@@ -25,7 +25,7 @@ export default function Header({
   const isSingleUnit = currentUser && currentUser.allowedUnits.length === 1;
 
   return (
-    <header className="bg-everest-navy text-white shadow-xl border-b border-everest-dark/60 sticky top-0 z-50">
+    <header className="bg-everest-navy text-white shadow-xl border-b border-everest-dark/60 sticky top-0 z-50 no-print">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between py-4 gap-4">
           

@@ -349,6 +349,128 @@ def load_student_evaluations():
 
     return teacher_student_data
 
+def build_individual_details(questoes_dict, meta_list, ambitos_list, topicos_dict, mode='docentes'):
+    """
+    Computes per-collaborator:
+    1) ambitos_por_avaliador: { ambito: { lider, autoavaliacao, pares_psicologos, alunos, geral } }
+    2) indicadores: [ { codigo, enunciado, ambito, lider, autoavaliacao, pares_psicologos, alunos, media } ]
+    """
+    def map_profile(p):
+        if mode == 'docentes':
+            if p == 'Coordenadores':
+                return 'lider'
+            elif p == 'Autoavaliação':
+                return 'autoavaliacao'
+            elif p == 'Psicologos e Pares':
+                return 'pares_psicologos'
+            elif p == 'Alunos':
+                return 'alunos'
+        elif mode == 'psicologos':
+            if p == 'Superior Imediato/Pares':
+                return 'lider_and_pares'
+            elif p == 'Autoavaliação':
+                return 'autoavaliacao'
+        else:
+            # coordenadores_ciclo, gestao_ingles, disciplinas_institucionais
+            if p == 'Diretor':
+                return 'lider'
+            elif p == 'Autoavaliação':
+                return 'autoavaliacao'
+            elif p in ('Psicólogas', 'Professores'):
+                return 'pares_psicologos'
+        return 'outros'
+
+    # 1. Group questions by (ambito, quesito) preserving order of appearance
+    indicator_order = []
+    indicator_groups = {}
+    for m in meta_list:
+        amb = m['ambito']
+        q_name = m['quesito']
+        g_key = (amb, q_name)
+        if g_key not in indicator_groups:
+            indicator_order.append(g_key)
+            indicator_groups[g_key] = {
+                'lider': [],
+                'autoavaliacao': [],
+                'pares_psicologos': [],
+                'alunos': []
+            }
+        val = questoes_dict.get(m['key'])
+        if val is not None:
+            mapped = map_profile(m['perfil'])
+            if mapped == 'lider_and_pares':
+                indicator_groups[g_key]['lider'].append(val)
+                indicator_groups[g_key]['pares_psicologos'].append(val)
+            elif mapped in indicator_groups[g_key]:
+                indicator_groups[g_key][mapped].append(val)
+
+    indicadores = []
+    for idx, (amb, q_name) in enumerate(indicator_order, start=1):
+        grp = indicator_groups[(amb, q_name)]
+        v_lider = round(float(np.mean(grp['lider'])), 2) if grp['lider'] else None
+        v_auto = round(float(np.mean(grp['autoavaliacao'])), 2) if grp['autoavaliacao'] else None
+        v_pares = round(float(np.mean(grp['pares_psicologos'])), 2) if grp['pares_psicologos'] else None
+        v_alunos = round(float(np.mean(grp['alunos'])), 2) if grp['alunos'] else None
+
+        # Media geral do quesito
+        if mode == 'psicologos':
+            all_vals = grp['lider'] + grp['autoavaliacao']
+        else:
+            all_vals = grp['lider'] + grp['autoavaliacao'] + grp['pares_psicologos'] + grp['alunos']
+        v_media = round(float(np.mean(all_vals)), 2) if all_vals else None
+
+        indicadores.append({
+            'codigo': f"IND-{idx:02d}",
+            'enunciado': q_name,
+            'ambito': amb,
+            'lider': v_lider,
+            'autoavaliacao': v_auto,
+            'pares_psicologos': v_pares,
+            'alunos': v_alunos,
+            'media': v_media
+        })
+
+    # 2. Group by ambito and evaluator profile
+    ambitos_por_avaliador = {}
+    for amb in ambitos_list:
+        amb_lider = []
+        amb_auto = []
+        amb_pares = []
+        amb_alunos = []
+        for m in meta_list:
+            if m['ambito'] != amb:
+                continue
+            val = questoes_dict.get(m['key'])
+            if val is None:
+                continue
+            mapped = map_profile(m['perfil'])
+            if mapped == 'lider_and_pares':
+                amb_lider.append(val)
+                amb_pares.append(val)
+            elif mapped == 'lider':
+                amb_lider.append(val)
+            elif mapped == 'autoavaliacao':
+                amb_auto.append(val)
+            elif mapped == 'pares_psicologos':
+                amb_pares.append(val)
+            elif mapped == 'alunos':
+                amb_alunos.append(val)
+
+        geral_val = topicos_dict.get(amb)
+        if geral_val is None:
+            combined = amb_lider + amb_auto + (amb_pares if mode != 'psicologos' else []) + amb_alunos
+            geral_val = round(float(np.mean(combined)), 2) if combined else None
+
+        ambitos_por_avaliador[amb] = {
+            'lider': round(float(np.mean(amb_lider)), 2) if amb_lider else None,
+            'autoavaliacao': round(float(np.mean(amb_auto)), 2) if amb_auto else None,
+            'pares_psicologos': round(float(np.mean(amb_pares)), 2) if amb_pares else None,
+            'alunos': round(float(np.mean(amb_alunos)), 2) if amb_alunos else None,
+            'geral': geral_val
+        }
+
+    return ambitos_por_avaliador, indicadores
+
 def parse_generic_instrument(filepath, mapping_dict, default_instrument_key):
     wb = openpyxl.load_workbook(filepath, data_only=True)
     ws_m = wb['Médias']
@@ -415,6 +537,15 @@ def parse_generic_instrument(filepath, mapping_dict, default_instrument_key):
         for p in p_headers:
             questoes[p['key']] = clean_val(ws_p.cell(r, p['col']).value)
 
+        mode_key = 'psicologos' if default_instrument_key == 'psicologos' else 'gestao'
+        amb_por_av, ind_list = build_individual_details(
+            questoes,
+            p_headers,
+            [t[1] for t in t_headers],
+            topicos,
+            mode=mode_key
+        )
+
         records.append({
             'nome': nome,
             'email': email,
@@ -434,7 +565,9 @@ def parse_generic_instrument(filepath, mapping_dict, default_instrument_key):
             'dos_subordinados': subord,
             'nivel': get_performance_level(nota_final),
             'topicos': topicos,
-            'questoes': questoes
+            'questoes': questoes,
+            'ambitos_por_avaliador': amb_por_av,
+            'indicadores': ind_list
         })
 
     return {
@@ -533,15 +666,6 @@ def run():
     print("GERANDO DATASET FINAL INTEGRADO - DOCENTES + LIDERANÇA E ESPECIALISTAS 2026")
     print("=" * 80)
 
-    # 1. Load sheets from Qulture.Rocks (Docentes)
-    df1_m = pd.read_excel(F1_PATH, sheet_name='Médias', header=1)
-    df1_t = pd.read_excel(F1_PATH, sheet_name='Tópicos', header=1)
-    df1_p = pd.read_excel(F1_PATH, sheet_name='Perguntas computáveis', header=[0, 1])
-
-    df2_m = pd.read_excel(F2_PATH, sheet_name='Médias', header=1)
-    df2_t = pd.read_excel(F2_PATH, sheet_name='Tópicos', header=1)
-    df2_p = pd.read_excel(F2_PATH, sheet_name='Perguntas computáveis', header=[0, 1])
-
     ambitos = [
         'Compromisso com a aprendizagem',
         'Compromisso com ensino',
@@ -550,162 +674,209 @@ def run():
         'Papel como formador'
     ]
 
-    q_map = {}
-    for idx, (top, sub) in enumerate(df1_p.columns[12:], start=12):
-        perfil = sub[sub.find('[')+1 : sub.find(']')]
-        quesito = sub[sub.find(']')+1 : ].strip()
-        quesito_clean = quesito.replace('Pró atividade profissonal', 'Proatividade profissional')
-        q_id = idx - 11
-        q_map[q_id] = {
-            'id': q_id,
-            'ambito': top,
-            'perfil': perfil,
-            'quesito': quesito_clean,
-            'raw_sub': sub,
-            'key': f"{perfil}::{quesito_clean}"
-        }
+    try:
+        # 1. Load sheets from Qulture.Rocks (Docentes)
+        df1_m = pd.read_excel(F1_PATH, sheet_name='Médias', header=1)
+        df1_t = pd.read_excel(F1_PATH, sheet_name='Tópicos', header=1)
+        df1_p = pd.read_excel(F1_PATH, sheet_name='Perguntas computáveis', header=[0, 1])
 
-    # Add the 11 student questions to metadata
-    for sq in STUDENT_QUESTIONS_META:
-        q_map[sq['id']] = sq
+        df2_m = pd.read_excel(F2_PATH, sheet_name='Médias', header=1)
+        df2_t = pd.read_excel(F2_PATH, sheet_name='Tópicos', header=1)
+        df2_p = pd.read_excel(F2_PATH, sheet_name='Perguntas computáveis', header=[0, 1])
 
-    student_data = load_student_evaluations()
-    print(f"Formulários de Alunos carregados: {len(student_data)} professores avaliados pelos estudantes.")
-
-    final_rows = []
-    matched_students = set()
-
-    for df_m, df_t, df_p, src_label in [(df1_m, df1_t, df1_p, 'EI_F1'), (df2_m, df2_t, df2_p, 'F2_EM')]:
-        for i, row_m in df_m.iterrows():
-            nome = clean_str(row_m['Nome'])
-            if not nome:
-                continue
-
-            email = clean_str(row_m['Email'])
-            dept = clean_str(row_m['Departamento durante a avaliação'])
-            area = clean_str(row_m['Área durante a avaliação'])
-            tag = clean_str(row_m['Tags durante a avaliação'])
-            lider = clean_str(row_m['Líder'])
-
-            unidade = infer_unit(email, tag)
-            segmento = normalize_segment(dept, tag, lider, email)
-            cargo = infer_role(nome, dept, lider, email)
-            sexo = infer_gender(nome)
-
-            nota_final = clean_val(row_m['Nota Final (com calibração)'])
-            if nota_final is None:
-                nota_final = clean_val(row_m['Nota Final (sem calibração)'])
-            if nota_final is None:
-                nota_final = clean_val(row_m['Média'])
-
-            media = clean_val(row_m['Média'])
-            auto = clean_val(row_m['Autoavaliação'])
-            do_lider = clean_val(row_m['Do Líder'])
-            outros = clean_val(row_m['Outros'])
-            colegas = clean_val(row_m['Colegas'])
-            dos_pares = clean_val(row_m['Dos Pares'])
-            dos_subord = clean_val(row_m['Dos Subordinados'])
-
-            row_t = df_t.iloc[i]
-            topicos = {}
-            for amb in ambitos:
-                topicos[amb] = clean_val(row_t[amb]) if amb in row_t else None
-
-            row_p = df_p.iloc[i]
-            questoes = {}
-            for q_id, meta in q_map.items():
-                if q_id in [sq['id'] for sq in STUDENT_QUESTIONS_META]:
-                    continue
-                k = (meta['ambito'], meta['raw_sub'])
-                val = clean_val(row_p[k]) if k in row_p else None
-                questoes[meta['key']] = val
-
-            norm_n = norm_person_name(nome)
-            if norm_n in student_data:
-                sdata = student_data[norm_n]
-                matched_students.add(norm_n)
-                scores = sdata['all_scores']
-                if scores:
-                    mean_subord = round(float(np.mean(scores)), 2)
-                    dos_subord = mean_subord
-                for qi, sq_meta in enumerate(STUDENT_QUESTIONS_META):
-                    scores_q = sdata['by_q'][qi]
-                    questoes[sq_meta['key']] = round(float(np.mean(scores_q)), 2) if scores_q else None
-
-            final_rows.append({
-                'src': src_label,
-                'nome': nome,
-                'email': email,
-                'dept_raw': dept,
-                'area_raw': area,
-                'tag_raw': tag,
-                'lider_raw': lider,
-                'nota_final': nota_final,
-                'media': media,
-                'autoavaliação': auto,
-                'do_líder': do_lider,
-                'outros': outros,
-                'colegas': colegas,
-                'dos_pares': dos_pares,
-                'dos_subordinados': dos_subord,
-                'topicos': topicos,
-                'questoes': questoes,
-                'unidade': unidade,
-                'segmento': segmento,
-                'sexo': sexo,
-                'cargo': cargo,
-                'nivel': get_performance_level(nota_final)
-            })
-
-    # Add missing evaluated teachers from students CSV if not already present
-    for norm_n, sdata in student_data.items():
-        if norm_n not in matched_students:
-            raw_name = sdata['raw_name']
-            all_s = sdata['all_scores']
-            overall_avg = round(float(np.mean(all_s)), 2) if all_s else None
-
-            q_dict = {}
-            for qi, sq_meta in enumerate(STUDENT_QUESTIONS_META):
-                scores_q = sdata['by_q'][qi]
-                q_dict[sq_meta['key']] = round(float(np.mean(scores_q)), 2) if scores_q else None
-
-            comp_ensino = [q_dict[m['key']] for m in STUDENT_QUESTIONS_META[:3] if q_dict.get(m['key']) is not None]
-            comp_aprend = [q_dict[m['key']] for m in STUDENT_QUESTIONS_META[3:9] if q_dict.get(m['key']) is not None]
-            papel_form = [q_dict[m['key']] for m in STUDENT_QUESTIONS_META[9:11] if q_dict.get(m['key']) is not None]
-
-            topicos = {
-                'Compromisso com a aprendizagem': round(float(np.mean(comp_aprend)), 2) if comp_aprend else None,
-                'Compromisso com ensino': round(float(np.mean(comp_ensino)), 2) if comp_ensino else None,
-                'Crescimento pessoal e profissional': None,
-                'Integração com a instituição': None,
-                'Papel como formador': round(float(np.mean(papel_form)), 2) if papel_form else None,
+        q_map = {}
+        for idx, (top, sub) in enumerate(df1_p.columns[12:], start=12):
+            perfil = sub[sub.find('[')+1 : sub.find(']')]
+            quesito = sub[sub.find(']')+1 : ].strip()
+            quesito_clean = quesito.replace('Pró atividade profissonal', 'Proatividade profissional')
+            q_id = idx - 11
+            q_map[q_id] = {
+                'id': q_id,
+                'ambito': top,
+                'perfil': perfil,
+                'quesito': quesito_clean,
+                'raw_sub': sub,
+                'key': f"{perfil}::{quesito_clean}"
             }
 
-            email_alias = f"{raw_name.split()[0].lower()}.{raw_name.split()[-1].lower()}@everestrj.net.br"
-            final_rows.append({
-                'src': 'Alunos_Forms',
-                'nome': raw_name,
-                'email': email_alias,
-                'dept_raw': 'FUNDAMENTAL 2 - DOCENTE',
-                'area_raw': 'Pedagógico',
-                'tag_raw': 'RJ - F2',
-                'lider_raw': 'Reinaldo Silva',
-                'nota_final': overall_avg,
-                'media': overall_avg,
-                'autoavaliação': None,
-                'do_líder': None,
-                'outros': None,
-                'colegas': None,
-                'dos_pares': None,
-                'dos_subordinados': overall_avg,
-                'topicos': topicos,
-                'questoes': q_dict,
-                'unidade': 'Rio de Janeiro',
-                'segmento': 'EFII',
-                'sexo': infer_gender(raw_name),
-                'cargo': 'Docentes',
-                'nivel': get_performance_level(overall_avg)
-            })
+        # Add the 11 student questions to metadata
+        for sq in STUDENT_QUESTIONS_META:
+            q_map[sq['id']] = sq
+
+        student_data = load_student_evaluations()
+        print(f"Formulários de Alunos carregados: {len(student_data)} professores avaliados pelos estudantes.")
+
+        final_rows = []
+        matched_students = set()
+
+        for df_m, df_t, df_p, src_label in [(df1_m, df1_t, df1_p, 'EI_F1'), (df2_m, df2_t, df2_p, 'F2_EM')]:
+            for i, row_m in df_m.iterrows():
+                nome = clean_str(row_m['Nome'])
+                if not nome:
+                    continue
+
+                email = clean_str(row_m['Email'])
+                dept = clean_str(row_m['Departamento durante a avaliação'])
+                area = clean_str(row_m['Área durante a avaliação'])
+                tag = clean_str(row_m['Tags durante a avaliação'])
+                lider = clean_str(row_m['Líder'])
+
+                unidade = infer_unit(email, tag)
+                segmento = normalize_segment(dept, tag, lider, email)
+                cargo = infer_role(nome, dept, lider, email)
+                sexo = infer_gender(nome)
+
+                nota_final = clean_val(row_m['Nota Final (com calibração)'])
+                if nota_final is None:
+                    nota_final = clean_val(row_m['Nota Final (sem calibração)'])
+                if nota_final is None:
+                    nota_final = clean_val(row_m['Média'])
+
+                media = clean_val(row_m['Média'])
+                auto = clean_val(row_m['Autoavaliação'])
+                do_lider = clean_val(row_m['Do Líder'])
+                outros = clean_val(row_m['Outros'])
+                colegas = clean_val(row_m['Colegas'])
+                dos_pares = clean_val(row_m['Dos Pares'])
+                dos_subord = clean_val(row_m['Dos Subordinados'])
+
+                row_t = df_t.iloc[i]
+                topicos = {}
+                for amb in ambitos:
+                    topicos[amb] = clean_val(row_t[amb]) if amb in row_t else None
+
+                row_p = df_p.iloc[i]
+                questoes = {}
+                for q_id, meta in q_map.items():
+                    if q_id in [sq['id'] for sq in STUDENT_QUESTIONS_META]:
+                        continue
+                    k = (meta['ambito'], meta['raw_sub'])
+                    val = clean_val(row_p[k]) if k in row_p else None
+                    questoes[meta['key']] = val
+
+                norm_n = norm_person_name(nome)
+                if norm_n in student_data:
+                    sdata = student_data[norm_n]
+                    matched_students.add(norm_n)
+                    scores = sdata['all_scores']
+                    if scores:
+                        mean_subord = round(float(np.mean(scores)), 2)
+                        dos_subord = mean_subord
+                    for qi, sq_meta in enumerate(STUDENT_QUESTIONS_META):
+                        scores_q = sdata['by_q'][qi]
+                        questoes[sq_meta['key']] = round(float(np.mean(scores_q)), 2) if scores_q else None
+
+                amb_por_av, ind_list = build_individual_details(
+                    questoes,
+                    list(q_map.values()),
+                    ambitos,
+                    topicos,
+                    mode='docentes'
+                )
+
+                final_rows.append({
+                    'src': src_label,
+                    'nome': nome,
+                    'email': email,
+                    'dept_raw': dept,
+                    'area_raw': area,
+                    'tag_raw': tag,
+                    'lider_raw': lider,
+                    'nota_final': nota_final,
+                    'media': media,
+                    'autoavaliação': auto,
+                    'do_líder': do_lider,
+                    'outros': outros,
+                    'colegas': colegas,
+                    'dos_pares': dos_pares,
+                    'dos_subordinados': dos_subord,
+                    'topicos': topicos,
+                    'questoes': questoes,
+                    'ambitos_por_avaliador': amb_por_av,
+                    'indicadores': ind_list,
+                    'unidade': unidade,
+                    'segmento': segmento,
+                    'sexo': sexo,
+                    'cargo': cargo,
+                    'nivel': get_performance_level(nota_final)
+                })
+
+        # Add missing evaluated teachers from students CSV if not already present
+        for norm_n, sdata in student_data.items():
+            if norm_n not in matched_students:
+                raw_name = sdata['raw_name']
+                all_s = sdata['all_scores']
+                overall_avg = round(float(np.mean(all_s)), 2) if all_s else None
+
+                q_dict = {}
+                for qi, sq_meta in enumerate(STUDENT_QUESTIONS_META):
+                    scores_q = sdata['by_q'][qi]
+                    q_dict[sq_meta['key']] = round(float(np.mean(scores_q)), 2) if scores_q else None
+
+                comp_ensino = [q_dict[m['key']] for m in STUDENT_QUESTIONS_META[:3] if q_dict.get(m['key']) is not None]
+                comp_aprend = [q_dict[m['key']] for m in STUDENT_QUESTIONS_META[3:9] if q_dict.get(m['key']) is not None]
+                papel_form = [q_dict[m['key']] for m in STUDENT_QUESTIONS_META[9:11] if q_dict.get(m['key']) is not None]
+
+                topicos = {
+                    'Compromisso com a aprendizagem': round(float(np.mean(comp_aprend)), 2) if comp_aprend else None,
+                    'Compromisso com ensino': round(float(np.mean(comp_ensino)), 2) if comp_ensino else None,
+                    'Crescimento pessoal e profissional': None,
+                    'Integração com a instituição': None,
+                    'Papel como formador': round(float(np.mean(papel_form)), 2) if papel_form else None,
+                }
+
+                amb_por_av, ind_list = build_individual_details(
+                    q_dict,
+                    list(q_map.values()),
+                    ambitos,
+                    topicos,
+                    mode='docentes'
+                )
+
+                email_alias = f"{raw_name.split()[0].lower()}.{raw_name.split()[-1].lower()}@everestrj.net.br"
+                final_rows.append({
+                    'src': 'Alunos_Forms',
+                    'nome': raw_name,
+                    'email': email_alias,
+                    'dept_raw': 'FUNDAMENTAL 2 - DOCENTE',
+                    'area_raw': 'Pedagógico',
+                    'tag_raw': 'RJ - F2',
+                    'lider_raw': 'Reinaldo Silva',
+                    'nota_final': overall_avg,
+                    'media': overall_avg,
+                    'autoavaliação': None,
+                    'do_líder': None,
+                    'outros': None,
+                    'colegas': None,
+                    'dos_pares': None,
+                    'dos_subordinados': overall_avg,
+                    'topicos': topicos,
+                    'questoes': q_dict,
+                    'ambitos_por_avaliador': amb_por_av,
+                    'indicadores': ind_list,
+                    'unidade': 'Rio de Janeiro',
+                    'segmento': 'EFII',
+                    'sexo': infer_gender(raw_name),
+                    'cargo': 'Docentes',
+                    'nivel': get_performance_level(overall_avg)
+                })
+    except (PermissionError, FileNotFoundError):
+        print("Carregando base de Docentes a partir do dashboard_data.json existente...")
+        with open(OUTPUT_JSON, 'r', encoding='utf-8') as f_existing:
+            existing_payload = json.load(f_existing)
+        q_map = {q['id']: q for q in existing_payload['metadata']['questoes_meta']}
+        final_rows = []
+        for r in existing_payload['avaliados']:
+            amb_por_av, ind_list = build_individual_details(
+                r.get('questoes', {}),
+                list(q_map.values()),
+                ambitos,
+                r.get('topicos', {}),
+                mode='docentes'
+            )
+            r['ambitos_por_avaliador'] = amb_por_av
+            r['indicadores'] = ind_list
+            final_rows.append(r)
 
     # 2. Parse Leadership & Specialists files
     coords_parsed = parse_generic_instrument(COORD_XLSX, COORD_MAP, 'coordenadores_ciclo')
