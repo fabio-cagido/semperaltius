@@ -11,7 +11,6 @@ import {
 import {
   Search,
   Printer,
-  Files,
   ChevronLeft,
   ChevronRight,
   ChevronDown,
@@ -21,7 +20,8 @@ import {
   TrendingDown,
   FileText,
   Download,
-  Loader2
+  Loader2,
+  FolderArchive
 } from 'lucide-react';
 
 interface RelatoriosIndividuaisViewProps {
@@ -39,6 +39,7 @@ export interface UnifiedColaborador {
   cargo: string;
   grupo: 'Docentes' | 'Gestão & Especialistas';
   lider: string;
+  lider_raw: string | null;
   nota_final: number | null;
   nivel: PerformanceLevel | null;
   autoavaliacao: number | null;
@@ -48,6 +49,23 @@ export interface UnifiedColaborador {
   ambitos_order: string[];
   ambitos_por_avaliador: Record<string, AmbitoPorAvaliador>;
   indicadores: IndicadorIndividual[];
+}
+
+function sanitizePathSegment(str: string): string {
+  return str
+    .replace(/[<>:"/\\|?*\x00-\x1F]+/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function normalizeKey(str: string): string {
+  return str
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-zA-Z0-9\s]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .toLowerCase();
 }
 
 function getInstitutionalMessage(nivel: PerformanceLevel | null, grupo: string) {
@@ -1149,20 +1167,31 @@ export default function RelatoriosIndividuaisView({ data, unidade }: RelatoriosI
   const [batchPrintMode, setBatchPrintMode] = useState<boolean>(false);
   const [isGeneratingPdf, setIsGeneratingPdf] = useState<boolean>(false);
   const [pdfProgressText, setPdfProgressText] = useState<string>('');
+  const [zipProgress, setZipProgress] = useState<{
+    active: boolean;
+    current: number;
+    total: number;
+    colabName: string;
+    unidade: string;
+    leaderFolder: string;
+    stage: 'rendering' | 'compressing';
+  } | null>(null);
 
   // Build unified list of all collaborators (Docentes + Gestão & Especialistas)
   const allColaboradores = useMemo<UnifiedColaborador[]>(() => {
     const list: UnifiedColaborador[] = [];
 
     // 1. Docentes & Equipe in data.avaliados
-    for (const av of data.avaliados) {
+    data.avaliados.forEach((av, idx) => {
       const paresVal =
         av.dos_pares !== null && av.outros !== null
           ? Number(((av.dos_pares + av.outros) / 2).toFixed(2))
           : av.dos_pares ?? av.outros ?? null;
 
+      const rawLider = av.lider_raw && av.lider_raw.trim() && av.lider_raw.trim() !== '-' ? av.lider_raw.trim() : null;
+
       list.push({
-        id: `docente::${av.email || av.nome}`,
+        id: `docente::${idx}::${av.email || av.nome}`,
         nome: av.nome,
         email: av.email,
         unidade: av.unidade,
@@ -1170,7 +1199,8 @@ export default function RelatoriosIndividuaisView({ data, unidade }: RelatoriosI
         segmentos_list: [av.segmento],
         cargo: av.cargo,
         grupo: 'Docentes',
-        lider: av.lider_raw || 'Coordenação Pedagógica',
+        lider: rawLider || 'Coordenação Pedagógica',
+        lider_raw: rawLider,
         nota_final: av.nota_final,
         nivel: av.nivel,
         autoavaliacao: av.autoavaliação,
@@ -1181,7 +1211,7 @@ export default function RelatoriosIndividuaisView({ data, unidade }: RelatoriosI
         ambitos_por_avaliador: av.ambitos_por_avaliador || {},
         indicadores: av.indicadores || []
       });
-    }
+    });
 
     // 2. Gestão & Especialistas in data.gestao_especialistas
     if (data.gestao_especialistas) {
@@ -1210,7 +1240,7 @@ export default function RelatoriosIndividuaisView({ data, unidade }: RelatoriosI
 
       for (const pool of pools) {
         const recs = data.gestao_especialistas[pool.key] || [];
-        for (const rec of recs) {
+        recs.forEach((rec, idx) => {
           const paresCandidates = [rec.outros, rec.dos_pares, rec.dos_subordinados].filter(
             (v): v is number => v !== null && v !== undefined && v > 0
           );
@@ -1222,8 +1252,10 @@ export default function RelatoriosIndividuaisView({ data, unidade }: RelatoriosI
           const ambitosOrder =
             pool.ambitos.length > 0 ? pool.ambitos : Object.keys(rec.topicos || {});
 
+          const rawLider = rec.lider && rec.lider.trim() && rec.lider.trim() !== '-' ? rec.lider.trim() : null;
+
           list.push({
-            id: `gestao::${pool.key}::${rec.email || rec.nome}`,
+            id: `gestao::${pool.key}::${idx}::${rec.email || rec.nome}`,
             nome: rec.nome,
             email: rec.email,
             unidade: rec.unidade,
@@ -1231,7 +1263,8 @@ export default function RelatoriosIndividuaisView({ data, unidade }: RelatoriosI
             segmentos_list: rec.segmentos_list || [rec.segmento],
             cargo: rec.cargo,
             grupo: 'Gestão & Especialistas',
-            lider: rec.lider || 'Direção Escolar',
+            lider: rawLider || 'Direção Escolar',
+            lider_raw: rawLider,
             nota_final: rec.nota_final,
             nivel: rec.nivel,
             autoavaliacao: rec.autoavaliacao,
@@ -1242,7 +1275,7 @@ export default function RelatoriosIndividuaisView({ data, unidade }: RelatoriosI
             ambitos_por_avaliador: rec.ambitos_por_avaliador || {},
             indicadores: rec.indicadores || []
           });
-        }
+        });
       }
     }
 
@@ -1424,51 +1457,137 @@ export default function RelatoriosIndividuaisView({ data, unidade }: RelatoriosI
     }
   };
 
-  // Direct A4 Portrait PDF Download (Batch - All Filtered Collaborators)
-  const handleDownloadBatchPdf = async () => {
+  // Export structured ZIP organized by {Unidade}/{Líder}/{Nome_do_Colaborador}_2026.pdf
+  const handleExportZipByUnitAndLeader = async () => {
     if (filteredColaboradores.length === 0 || isGeneratingPdf) return;
     setIsGeneratingPdf(true);
     setBatchPrintMode(true);
-    setPdfProgressText(`Preparando ${filteredColaboradores.length} relatórios...`);
+
+    // Build canonical leader folder dictionary per unit so spelling/accent variations merge into 1 folder
+    const canonicalLeadersByUnit: Record<string, Record<string, string>> = {
+      Curitiba: {},
+      'Rio de Janeiro': {}
+    };
+
+    const getLeaderFolderForColab = (c: UnifiedColaborador): string => {
+      if (!c.lider_raw || !c.lider_raw.trim()) {
+        return 'Direção_ou_Sem_Lider';
+      }
+      const cleanRaw = sanitizePathSegment(c.lider_raw);
+      if (!cleanRaw) {
+        return 'Direção_ou_Sem_Lider';
+      }
+      const norm = normalizeKey(cleanRaw);
+      const unitMap = canonicalLeadersByUnit[c.unidade] || (canonicalLeadersByUnit[c.unidade] = {});
+      if (!unitMap[norm]) {
+        unitMap[norm] = cleanRaw;
+      }
+      return unitMap[norm];
+    };
+
+    setZipProgress({
+      active: true,
+      current: 0,
+      total: filteredColaboradores.length,
+      colabName: 'Inicializando renderização em lote...',
+      unidade: unidade === 'Todas' ? 'Curitiba & Rio de Janeiro' : unidade,
+      leaderFolder: '',
+      stage: 'rendering'
+    });
 
     try {
-      // Wait for React to render all batch sheets in the DOM
-      await new Promise((r) => setTimeout(r, 350));
+      // Allow React to mount all filtered collaborator sheets
+      await new Promise((r) => setTimeout(r, 300));
 
-      const [{ jsPDF }, html2canvasModule] = await Promise.all([
+      const [{ jsPDF }, html2canvasModule, JSZipModule] = await Promise.all([
         import('jspdf'),
-        import('html2canvas')
+        import('html2canvas'),
+        import('jszip')
       ]);
       const html2canvasFn = html2canvasModule.default;
+      const JSZip = JSZipModule.default;
+      const zip = new JSZip();
 
-      const pdf = new jsPDF({
-        orientation: 'portrait',
-        unit: 'mm',
-        format: 'a4',
-        compress: true
-      });
+      // Track used file paths to prevent collisions if a collaborator appears in two sheets
+      const usedFilePaths = new Map<string, number>();
 
       for (let i = 0; i < filteredColaboradores.length; i++) {
         const colab = filteredColaboradores[i];
-        setPdfProgressText(
-          `Gerando PDF (${i + 1} de ${filteredColaboradores.length}): ${colab.nome}...`
-        );
+        const leaderFolder = getLeaderFolderForColab(colab);
+
+        setZipProgress({
+          active: true,
+          current: i + 1,
+          total: filteredColaboradores.length,
+          colabName: colab.nome,
+          unidade: colab.unidade,
+          leaderFolder,
+          stage: 'rendering'
+        });
+
+        // Yield to main thread so browser UI and progress bar update smoothly
+        await new Promise((r) => setTimeout(r, 15));
+
         const el = document.querySelector<HTMLElement>(
           `article[data-report-sheet="${CSS.escape(colab.id)}"]`
         );
-        if (el) {
-          await captureElementToA4PortraitPdf(el, pdf, html2canvasFn, i === 0);
-        }
+        if (!el) continue;
+
+        const pdf = new jsPDF({
+          orientation: 'portrait',
+          unit: 'mm',
+          format: 'a4',
+          compress: true
+        });
+
+        await captureElementToA4PortraitPdf(el, pdf, html2canvasFn, true);
+
+        const safeColabName = sanitizePathSegment(colab.nome).replace(/\s+/g, '_');
+        const baseFolderPath = `${colab.unidade}/${leaderFolder}`;
+        const baseFileKey = `${baseFolderPath}/${safeColabName}`;
+        const prevCount = usedFilePaths.get(baseFileKey) || 0;
+        usedFilePaths.set(baseFileKey, prevCount + 1);
+
+        const finalFileName =
+          prevCount === 0
+            ? `${safeColabName}_2026.pdf`
+            : `${safeColabName}_${colab.segmento}_2026.pdf`;
+
+        const pdfBuffer = pdf.output('arraybuffer');
+        zip.file(`${baseFolderPath}/${finalFileName}`, pdfBuffer);
       }
 
-      const unitSlug = unidade.toLowerCase().replace(/\s+/g, '_');
-      pdf.save(`Relatorios_Individuais_Everest_${unitSlug}_2026.pdf`);
+      setZipProgress((prev) =>
+        prev
+          ? {
+              ...prev,
+              stage: 'compressing',
+              colabName: 'Compactando estrutura de pastas no arquivo .ZIP...'
+            }
+          : null
+      );
+      await new Promise((r) => setTimeout(r, 20));
+
+      const zipBlob = await zip.generateAsync({
+        type: 'blob',
+        compression: 'DEFLATE',
+        compressionOptions: { level: 6 }
+      });
+
+      const downloadUrl = URL.createObjectURL(zipBlob);
+      const link = document.createElement('a');
+      link.href = downloadUrl;
+      link.download = 'Relatorios_Everest_2026_Por_Lider.zip';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      setTimeout(() => URL.revokeObjectURL(downloadUrl), 5000);
     } catch (err) {
-      console.error('Erro ao gerar PDF em lote:', err);
-      window.print();
+      console.error('Erro ao exportar ZIP por Unidade e Líder:', err);
     } finally {
       setIsGeneratingPdf(false);
       setPdfProgressText('');
+      setZipProgress(null);
       setBatchPrintMode(false);
     }
   };
@@ -1482,6 +1601,73 @@ export default function RelatoriosIndividuaisView({ data, unidade }: RelatoriosI
 
   return (
     <div className="space-y-6 pb-16 print:space-y-0 print:pb-0">
+      {/* MODAL DE PROGRESSO EM TEMPO REAL (EXPORTAÇÃO ZIP POR UNIDADE E LÍDER) */}
+      {zipProgress && (
+        <div className="no-print fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-7 shadow-2xl border border-slate-200 space-y-5">
+            <div className="flex items-center gap-3.5">
+              <div className="w-12 h-12 rounded-2xl bg-rose-50 border border-rose-200 flex items-center justify-center shrink-0">
+                <FolderArchive className="w-6 h-6 text-[#991B1B] animate-pulse" />
+              </div>
+              <div>
+                <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#991B1B] bg-rose-50 px-2 py-0.5 rounded border border-rose-200">
+                  Exportação Estruturada em Lote (.ZIP)
+                </span>
+                <h3 className="text-lg font-extrabold text-slate-900 mt-1">
+                  {zipProgress.stage === 'compressing'
+                    ? 'Finalizando e Compactando Arquivo ZIP...'
+                    : 'Gerando Relatórios PDF por Unidade e Líder'}
+                </h3>
+              </div>
+            </div>
+
+            <div className="bg-slate-50 rounded-2xl p-4 border border-slate-200/80 space-y-2">
+              <div className="flex items-center justify-between text-xs font-bold text-slate-700">
+                <span>
+                  Processando {zipProgress.current} de {zipProgress.total}
+                </span>
+                <span className="text-[#991B1B] font-extrabold">
+                  {zipProgress.total > 0
+                    ? `${Math.round((zipProgress.current / zipProgress.total) * 100)}%`
+                    : '0%'}
+                </span>
+              </div>
+
+              {/* Barra de Progresso */}
+              <div className="w-full h-3 bg-slate-200 rounded-full overflow-hidden">
+                <div
+                  className="h-full transition-all duration-150 rounded-full"
+                  style={{
+                    width: `${
+                      zipProgress.total > 0
+                        ? Math.round((zipProgress.current / zipProgress.total) * 100)
+                        : 0
+                    }%`,
+                    background: 'linear-gradient(90deg, #991B1B 0%, #1E56A0 100%)'
+                  }}
+                />
+              </div>
+
+              <div className="pt-1 text-xs text-slate-800 font-bold truncate">
+                {zipProgress.colabName}
+              </div>
+              {zipProgress.leaderFolder && (
+                <div className="text-[11px] font-mono text-slate-500 truncate">
+                  Pasta: <span className="font-semibold text-slate-700">{zipProgress.unidade}/{zipProgress.leaderFolder}/</span>
+                </div>
+              )}
+            </div>
+
+            <div className="flex items-center gap-2 text-[11px] text-slate-500">
+              <Loader2 className="w-4 h-4 text-everest-blue animate-spin shrink-0" />
+              <span>
+                Cada relatório está sendo renderizado em A4 Retrato (2 páginas) e organizado na pasta do respectivo líder. Aguarde a conclusão automática do download.
+              </span>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* BARRA DE CONTROLE NO TOPO (Oculta na impressão via no-print) */}
       <div className="no-print bg-white rounded-3xl border border-slate-200 shadow-sm p-5 space-y-4">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 border-b border-slate-100 pb-4">
@@ -1498,7 +1684,7 @@ export default function RelatoriosIndividuaisView({ data, unidade }: RelatoriosI
             </p>
           </div>
 
-          {/* Botões de Download PDF A4 Vertical Direto e Impressão */}
+          {/* Botões de Download PDF Individual, Exportação ZIP por Unidade e Líder, e Impressora */}
           <div className="flex flex-wrap items-center gap-2.5 shrink-0">
             <button
               type="button"
@@ -1506,26 +1692,26 @@ export default function RelatoriosIndividuaisView({ data, unidade }: RelatoriosI
               disabled={!activeColaborador || isGeneratingPdf}
               className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-everest-navy hover:bg-slate-800 disabled:opacity-50 text-white font-bold text-xs shadow-sm transition-all cursor-pointer"
             >
-              {isGeneratingPdf ? (
+              {isGeneratingPdf && !zipProgress ? (
                 <Loader2 className="w-4 h-4 text-amber-300 animate-spin" />
               ) : (
                 <Download className="w-4 h-4 text-amber-300" />
               )}
-              Imprimir / Salvar PDF Individual
+              Baixar PDF Individual
             </button>
 
             <button
               type="button"
-              onClick={handleDownloadBatchPdf}
+              onClick={handleExportZipByUnitAndLeader}
               disabled={filteredColaboradores.length === 0 || isGeneratingPdf}
               className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#991B1B] hover:bg-[#7F1D1D] disabled:opacity-50 text-white font-bold text-xs shadow-sm transition-all cursor-pointer"
             >
-              {isGeneratingPdf ? (
+              {zipProgress ? (
                 <Loader2 className="w-4 h-4 text-amber-200 animate-spin" />
               ) : (
-                <Files className="w-4 h-4 text-amber-200" />
+                <FolderArchive className="w-4 h-4 text-amber-200" />
               )}
-              Imprimir Todos em Lote ({filteredColaboradores.length} PDF)
+              Exportar ZIP por Unidade e Líder ({filteredColaboradores.length} PDFs)
             </button>
 
             <button
@@ -1541,7 +1727,7 @@ export default function RelatoriosIndividuaisView({ data, unidade }: RelatoriosI
           </div>
         </div>
 
-        {isGeneratingPdf && pdfProgressText && (
+        {isGeneratingPdf && pdfProgressText && !zipProgress && (
           <div className="bg-blue-50 border border-blue-200 text-blue-950 px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2.5">
             <Loader2 className="w-4 h-4 text-everest-blue animate-spin shrink-0" />
             <span>{pdfProgressText}</span>
