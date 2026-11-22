@@ -452,12 +452,10 @@ function SvgRadarChart({
  */
 function RelatorioIndividualSheet({
   colab,
-  includeFullTableInPrint,
   isBatchItem = false,
   isLastBatchItem = false
 }: {
   colab: UnifiedColaborador;
-  includeFullTableInPrint: boolean;
   isBatchItem?: boolean;
   isLastBatchItem?: boolean;
 }) {
@@ -1012,12 +1010,8 @@ function RelatorioIndividualSheet({
         </div>
       </section>
 
-      {/* SEÇÃO 6: PAINEL DETALHADO DE TODOS OS INDICADORES (EXPANSÍVEL PARA COORDENADORES) */}
-      <section
-        className={`space-y-3 break-inside-avoid ${
-          !includeFullTableInPrint ? 'print:hidden' : ''
-        }`}
-      >
+      {/* SEÇÃO 6: PAINEL DETALHADO DE TODOS OS INDICADORES (SOMENTE NO DASHBOARD / OCULTO NA IMPRESSÃO PDF) */}
+      <section className="no-print space-y-3">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-2 flex-1">
             <div
@@ -1026,13 +1020,16 @@ function RelatorioIndividualSheet({
             >
               6. Painel Detalhado de Todos os Indicadores ({colab.indicadores.length} Quesitos)
             </div>
+            <span className="text-[10px] font-semibold text-slate-400 bg-slate-100 px-2 py-0.5 rounded-md border border-slate-200">
+              Exclusivo em Tela (Oculto no PDF)
+            </span>
             <div className="h-px flex-1 bg-slate-200" />
           </div>
 
           <button
             type="button"
             onClick={() => setIsTableExpanded((prev) => !prev)}
-            className="no-print inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold transition-colors"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold transition-colors"
           >
             {isTableExpanded ? (
               <>
@@ -1048,8 +1045,8 @@ function RelatorioIndividualSheet({
           </button>
         </div>
 
-        {(isTableExpanded || includeFullTableInPrint) && (
-          <div className={`${!isTableExpanded ? 'hidden print:block' : ''} rounded-2xl border border-slate-200 overflow-hidden`}>
+        {isTableExpanded && (
+          <div className="rounded-2xl border border-slate-200 overflow-hidden">
             <table className="min-w-full divide-y divide-slate-200 text-xs">
               <thead className="bg-slate-100 text-slate-700 font-extrabold uppercase tracking-wider text-[10px]">
                 <tr>
@@ -1112,7 +1109,6 @@ export default function RelatoriosIndividuaisView({ data, unidade }: RelatoriosI
   const [grupoCargoFilter, setGrupoCargoFilter] = useState('TODOS');
   const [cicloFilter, setCicloFilter] = useState('TODOS');
   const [selectedId, setSelectedId] = useState<string>('');
-  const [includeFullTableInPrint, setIncludeFullTableInPrint] = useState<boolean>(true);
   const [batchPrintMode, setBatchPrintMode] = useState<boolean>(false);
 
   // Build unified list of all collaborators (Docentes + Gestão & Especialistas)
@@ -1459,22 +1455,9 @@ export default function RelatoriosIndividuaisView({ data, unidade }: RelatoriosI
           </div>
         </div>
 
-        {/* Opções de Impressão e Modo de Visualização */}
-        <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-slate-100 text-xs">
-          <button
-            type="button"
-            onClick={() => setIncludeFullTableInPrint((v) => !v)}
-            className="inline-flex items-center gap-2 text-slate-700 hover:text-slate-950 font-semibold cursor-pointer"
-          >
-            {includeFullTableInPrint ? (
-              <CheckSquare className="w-4 h-4 text-everest-blue" />
-            ) : (
-              <Square className="w-4 h-4 text-slate-400" />
-            )}
-            <span>Incluir Seção 6 (Tabela Completa de Todos os Indicadores) na impressão PDF</span>
-          </button>
-
-          {batchPrintMode && (
+        {/* Aviso de Modo de Visualização em Lote */}
+        {batchPrintMode && (
+          <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-slate-100 text-xs">
             <div className="flex items-center gap-2 bg-amber-50 border border-amber-200 text-amber-900 px-3 py-1 rounded-lg text-[11px] font-bold">
               <span>Modo de Impressão em Lote Ativo ({filteredColaboradores.length} relatórios renderizados)</span>
               <button
@@ -1485,8 +1468,8 @@ export default function RelatoriosIndividuaisView({ data, unidade }: RelatoriosI
                 Voltar à visão individual
               </button>
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
 
       {/* ÁREA DE RENDERIZAÇÃO DAS FOLHAS A4 */}
@@ -1505,7 +1488,6 @@ export default function RelatoriosIndividuaisView({ data, unidade }: RelatoriosI
             <RelatorioIndividualSheet
               key={colab.id}
               colab={colab}
-              includeFullTableInPrint={includeFullTableInPrint}
               isBatchItem={true}
               isLastBatchItem={idx === filteredColaboradores.length - 1}
             />
@@ -1516,7 +1498,6 @@ export default function RelatoriosIndividuaisView({ data, unidade }: RelatoriosI
           <RelatorioIndividualSheet
             key={activeColaborador.id}
             colab={activeColaborador}
-            includeFullTableInPrint={includeFullTableInPrint}
             isBatchItem={false}
           />
         )
