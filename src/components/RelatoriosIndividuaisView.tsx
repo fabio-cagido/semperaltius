@@ -559,7 +559,7 @@ function RelatorioIndividualSheet({
 
   return (
     <article
-      className={`bg-white rounded-3xl border border-slate-200/90 shadow-md p-6 sm:p-8 space-y-7 print:shadow-none print:border-0 print:p-0 print:rounded-none print:w-full print:max-w-full print:overflow-hidden ${
+      className={`print-report-sheet bg-white rounded-3xl border border-slate-200/90 shadow-md p-6 sm:p-8 space-y-7 print:shadow-none print:border-0 print:p-0 print:rounded-none print:w-full print:max-w-full print:overflow-hidden ${
         isBatchItem && !isLastBatchItem ? 'break-after-page mb-10 print:mb-0' : ''
       }`}
     >
@@ -795,9 +795,9 @@ function RelatorioIndividualSheet({
           <div className="h-px flex-1 bg-slate-200" />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 print:grid-cols-2 gap-4 print:w-full print:max-w-full">
           {/* Top 5 */}
-          <div className="rounded-2xl border border-emerald-200 bg-emerald-50/30 overflow-hidden">
+          <div className="rounded-2xl border border-emerald-200 bg-emerald-50/30 overflow-hidden print:w-full print:max-w-full">
             <div className="bg-emerald-700 text-white px-4 py-2.5 flex items-center justify-between">
               <div className="flex items-center gap-2 font-extrabold text-xs uppercase tracking-wider">
                 <TrendingUp className="w-4 h-4 text-emerald-200" />
@@ -807,7 +807,7 @@ function RelatorioIndividualSheet({
                 Fortalezas Consolidadas
               </span>
             </div>
-            <table className="min-w-full divide-y divide-emerald-100 text-xs">
+            <table className="w-full print:w-full print:max-w-full divide-y divide-emerald-100 text-xs">
               <thead className="bg-emerald-50/80 text-emerald-950 font-bold">
                 <tr>
                   <th className="py-2 px-3 text-left">Âmbito</th>
@@ -833,7 +833,7 @@ function RelatorioIndividualSheet({
           </div>
 
           {/* Bottom 5 */}
-          <div className="rounded-2xl border border-amber-200 bg-amber-50/30 overflow-hidden">
+          <div className="rounded-2xl border border-amber-200 bg-amber-50/30 overflow-hidden print:w-full print:max-w-full">
             <div className="bg-amber-700 text-white px-4 py-2.5 flex items-center justify-between">
               <div className="flex items-center gap-2 font-extrabold text-xs uppercase tracking-wider">
                 <TrendingDown className="w-4 h-4 text-amber-200" />
@@ -843,7 +843,7 @@ function RelatorioIndividualSheet({
                 Oportunidades para PDI
               </span>
             </div>
-            <table className="min-w-full divide-y divide-amber-100 text-xs">
+            <table className="w-full print:w-full print:max-w-full divide-y divide-amber-100 text-xs">
               <thead className="bg-amber-50/80 text-amber-950 font-bold">
                 <tr>
                   <th className="py-2 px-3 text-left">Âmbito</th>
@@ -895,8 +895,8 @@ function RelatorioIndividualSheet({
           />
 
           {/* Mini-tabela de apoio do Radar 1 */}
-          <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white">
-            <table className="min-w-full divide-y divide-slate-200 text-[11px]">
+          <div className="rounded-xl border border-slate-200 bg-white overflow-hidden print:w-full print:max-w-full">
+            <table className="w-full print:w-full print:max-w-full divide-y divide-slate-200 text-[11px]">
               <thead className="bg-slate-100 text-slate-700 font-bold">
                 <tr>
                   <th className="py-1.5 px-2.5 text-left">Âmbito</th>
@@ -959,8 +959,8 @@ function RelatorioIndividualSheet({
           />
 
           {/* Mini-tabela de alinhamento e Gap (Auto - Líder) */}
-          <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white">
-            <table className="min-w-full divide-y divide-slate-200 text-[11px]">
+          <div className="rounded-xl border border-slate-200 bg-white overflow-hidden print:w-full print:max-w-full">
+            <table className="w-full print:w-full print:max-w-full divide-y divide-slate-200 text-[11px]">
               <thead className="bg-slate-100 text-slate-700 font-bold">
                 <tr>
                   <th className="py-1.5 px-2.5 text-left">Âmbito</th>
