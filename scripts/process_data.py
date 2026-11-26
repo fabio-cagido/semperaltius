@@ -228,6 +228,29 @@ def infer_role(nome, dept, leader, email):
 
     return 'Docentes'
 
+def compute_weighted_final_score_with_students(auto, do_lider, dos_pares, outros, dos_subord):
+    """
+    Official 2026 weighting incorporating student evaluations (EFII / EM):
+    - 25% Autoavaliação
+    - 45% Líder
+    - 10% Alunos (dos_subordinados)
+    - 10% Pares
+    - 10% Outros (Psicólogo)
+    Redistributes weights proportionally if any profile is None.
+    """
+    weights = [
+        (auto, 0.25),
+        (do_lider, 0.45),
+        (dos_subord, 0.10),
+        (dos_pares, 0.10),
+        (outros, 0.10),
+    ]
+    num = sum(val * w for val, w in weights if val is not None)
+    den = sum(w for val, w in weights if val is not None)
+    if den == 0:
+        return None
+    return round(float(num / den), 2)
+
 def get_performance_level(score):
     if score is None:
         return None
@@ -456,16 +479,33 @@ def build_individual_details(questoes_dict, meta_list, ambitos_list, topicos_dic
             elif mapped == 'alunos':
                 amb_alunos.append(val)
 
+        v_lider = round(float(np.mean(amb_lider)), 2) if amb_lider else None
+        v_auto = round(float(np.mean(amb_auto)), 2) if amb_auto else None
+        v_pares = round(float(np.mean(amb_pares)), 2) if amb_pares else None
+        v_alunos = round(float(np.mean(amb_alunos)), 2) if amb_alunos else None
+
         geral_val = topicos_dict.get(amb)
-        if geral_val is None:
+        if mode == 'docentes' and v_alunos is not None:
+            # Incorporate student score into the ambito average using official weights (25% Auto, 45% Líder, 20% Pares/Outros, 10% Alunos)
+            w_amb = [
+                (v_auto, 0.25),
+                (v_lider, 0.45),
+                (v_pares, 0.20),
+                (v_alunos, 0.10),
+            ]
+            num_a = sum(v * w for v, w in w_amb if v is not None)
+            den_a = sum(w for v, w in w_amb if v is not None)
+            if den_a > 0:
+                geral_val = round(float(num_a / den_a), 2)
+        elif geral_val is None:
             combined = amb_lider + amb_auto + (amb_pares if mode != 'psicologos' else []) + amb_alunos
             geral_val = round(float(np.mean(combined)), 2) if combined else None
 
         ambitos_por_avaliador[amb] = {
-            'lider': round(float(np.mean(amb_lider)), 2) if amb_lider else None,
-            'autoavaliacao': round(float(np.mean(amb_auto)), 2) if amb_auto else None,
-            'pares_psicologos': round(float(np.mean(amb_pares)), 2) if amb_pares else None,
-            'alunos': round(float(np.mean(amb_alunos)), 2) if amb_alunos else None,
+            'lider': v_lider,
+            'autoavaliacao': v_auto,
+            'pares_psicologos': v_pares,
+            'alunos': v_alunos,
             'geral': geral_val
         }
 
@@ -770,7 +810,7 @@ def run():
                     questoes[meta['key']] = val
 
                 norm_n = norm_person_name(nome)
-                if norm_n in student_data:
+                if norm_n in student_data and segmento not in ('EI', 'EFI'):
                     sdata = student_data[norm_n]
                     matched_students.add(norm_n)
                     scores = sdata['all_scores']
@@ -781,6 +821,14 @@ def run():
                         scores_q = sdata['by_q'][qi]
                         questoes[sq_meta['key']] = round(float(np.mean(scores_q)), 2) if scores_q else None
 
+                if src_label == 'EI_F1' or dos_subord is not None:
+                    weighted_nf = compute_weighted_final_score_with_students(
+                        auto, do_lider, dos_pares, outros, dos_subord
+                    )
+                    if weighted_nf is not None:
+                        nota_final = weighted_nf
+                        media = weighted_nf
+
                 amb_por_av, ind_list = build_individual_details(
                     questoes,
                     list(q_map.values()),
@@ -788,6 +836,9 @@ def run():
                     topicos,
                     mode='docentes'
                 )
+                for amb_k, amb_v in amb_por_av.items():
+                    if amb_v.get('geral') is not None:
+                        topicos[amb_k] = amb_v['geral']
 
                 final_rows.append({
                     'src': src_label,
@@ -899,7 +950,22 @@ def run():
                 if r.get('segmento') in ('EI', 'EFI')
                 else list(q_map.values())
             )
-            # Recompute topicos for custom-corrected EFI rows or keep Qulture topicos
+
+            # Incorporate official student-weighted formula (25% Auto, 45% Líder, 10% Alunos, 10% Pares, 10% Outros)
+            # for EFII/EM teachers (src == 'EI_F1' or records with dos_subordinados)
+            if (r.get('src') in ('EI_F1', 'Alunos_Forms') or r.get('dos_subordinados') is not None) and r.get('segmento') not in ('EI', 'EFI'):
+                weighted_nf = compute_weighted_final_score_with_students(
+                    r.get('autoavaliação'),
+                    r.get('do_líder'),
+                    r.get('dos_pares'),
+                    r.get('outros'),
+                    r.get('dos_subordinados')
+                )
+                if weighted_nf is not None:
+                    r['nota_final'] = weighted_nf
+                    r['media'] = weighted_nf
+                    r['nivel'] = get_performance_level(weighted_nf)
+
             amb_por_av, ind_list = build_individual_details(
                 r.get('questoes', {}),
                 meta_for_row,
@@ -907,6 +973,10 @@ def run():
                 r.get('topicos', {}),
                 mode='docentes'
             )
+            if r.get('dos_subordinados') is not None and r.get('segmento') not in ('EI', 'EFI'):
+                for amb_k, amb_v in amb_por_av.items():
+                    if amb_v.get('geral') is not None:
+                        r['topicos'][amb_k] = amb_v['geral']
             r['ambitos_por_avaliador'] = amb_por_av
             r['indicadores'] = ind_list
             final_rows.append(r)

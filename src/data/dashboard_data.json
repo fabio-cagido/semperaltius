@@ -2422,7 +2422,7 @@
     "Todas": {
       "kpis": {
         "total_avaliados": 137,
-        "media_geral": 3.1,
+        "media_geral": 3.04,
         "mulheres_count": 100,
         "homens_count": 37,
         "mulheres_pct": 73.0,
@@ -2482,13 +2482,13 @@
         },
         "EFII": {
           "Inicial": {
-            "count": 0,
-            "pct": 0.0,
+            "count": 1,
+            "pct": 3.4,
             "total_ciclo": 29
           },
           "Em Desenvolvimento": {
-            "count": 11,
-            "pct": 37.9,
+            "count": 14,
+            "pct": 48.3,
             "total_ciclo": 29
           },
           "Atuação Adequada": {
@@ -2497,42 +2497,42 @@
             "total_ciclo": 29
           },
           "Referência": {
-            "count": 5,
-            "pct": 17.2,
+            "count": 1,
+            "pct": 3.4,
             "total_ciclo": 29
           }
         },
         "EM": {
           "Inicial": {
-            "count": 1,
-            "pct": 4.0,
+            "count": 2,
+            "pct": 8.0,
             "total_ciclo": 25
           },
           "Em Desenvolvimento": {
+            "count": 14,
+            "pct": 56.0,
+            "total_ciclo": 25
+          },
+          "Atuação Adequada": {
             "count": 9,
             "pct": 36.0,
             "total_ciclo": 25
           },
-          "Atuação Adequada": {
-            "count": 13,
-            "pct": 52.0,
-            "total_ciclo": 25
-          },
           "Referência": {
-            "count": 2,
-            "pct": 8.0,
+            "count": 0,
+            "pct": 0.0,
             "total_ciclo": 25
           }
         },
         "Geral / Transversal": {
           "Inicial": {
-            "count": 1,
-            "pct": 14.3,
+            "count": 2,
+            "pct": 28.6,
             "total_ciclo": 7
           },
           "Em Desenvolvimento": {
-            "count": 2,
-            "pct": 28.6,
+            "count": 1,
+            "pct": 14.3,
             "total_ciclo": 7
           },
           "Atuação Adequada": {
@@ -2548,23 +2548,23 @@
         },
         "Total": {
           "Inicial": {
-            "count": 5,
-            "pct": 3.6,
+            "count": 8,
+            "pct": 5.8,
             "total_ciclo": 137
           },
           "Em Desenvolvimento": {
-            "count": 39,
-            "pct": 28.5,
+            "count": 46,
+            "pct": 33.6,
             "total_ciclo": 137
           },
           "Atuação Adequada": {
-            "count": 82,
-            "pct": 59.9,
+            "count": 78,
+            "pct": 56.9,
             "total_ciclo": 137
           },
           "Referência": {
-            "count": 10,
-            "pct": 7.3,
+            "count": 4,
+            "pct": 2.9,
             "total_ciclo": 137
           }
         }
@@ -2572,13 +2572,13 @@
       "cargos_resumo": {
         "Docentes": {
           "total": 132,
-          "media_geral": 3.1,
+          "media_geral": 3.04,
           "ambitos": {
-            "Compromisso com a aprendizagem": 2.8,
-            "Compromisso com ensino": 2.96,
+            "Compromisso com a aprendizagem": 2.74,
+            "Compromisso com ensino": 2.9,
             "Crescimento pessoal e profissional": 3.35,
             "Integração com a instituição": 3.25,
-            "Papel como formador": 3.21
+            "Papel como formador": 3.16
           },
           "rankings": {
             "todos": [
@@ -3482,13 +3482,13 @@
         },
         "Psicólogos": {
           "total": 4,
-          "media_geral": 3.07,
+          "media_geral": 3.05,
           "ambitos": {
-            "Compromisso com a aprendizagem": 2.76,
-            "Compromisso com ensino": 2.78,
+            "Compromisso com a aprendizagem": 2.73,
+            "Compromisso com ensino": 2.79,
             "Crescimento pessoal e profissional": 3.12,
             "Integração com a instituição": 3.41,
-            "Papel como formador": 3.28
+            "Papel como formador": 3.26
           },
           "rankings": {
             "todos": [
@@ -4656,11 +4656,11 @@
         }
       },
       "ambitos_gerais": {
-        "Compromisso com a aprendizagem": 2.8,
-        "Compromisso com ensino": 2.96,
+        "Compromisso com a aprendizagem": 2.74,
+        "Compromisso com ensino": 2.91,
         "Crescimento pessoal e profissional": 3.35,
         "Integração com a instituição": 3.26,
-        "Papel como formador": 3.22
+        "Papel como formador": 3.17
       },
       "perfis_avaliadores_geral": {
         "coordenador": 2.82,
@@ -5767,9 +5767,9 @@
             "Coordenação": {
               "Compromisso com a Aprendizagem": 2.92,
               "Gestão do Ciclo Escolar": 2.87,
+              "Integração com a Instituição": 3.22,
               "Papel como Formador": 3.08,
               "Compromisso com o ensino": 3.04,
-              "Integração com a Instituição": 3.22,
               "Compromisso com ensino": 3.04,
               "Compromisso com a aprendizagem": 2.92,
               "Integração com a instituição": 3.22,
@@ -5777,17 +5777,17 @@
               "Crescimento pessoal e profissional": 2.87
             },
             "Psicólogos": {
-              "Atuação Técnica": 2.54,
-              "Atuação Preventiva": 2.55,
               "Integração com a Instituição": 2.71,
+              "Atuação Preventiva": 2.55,
+              "Atuação Técnica": 2.54,
               "Integração com a instituição": 2.71
             },
             "Supervisão de Inglês": {
               "Compromisso com a Aprendizagem": 2.62,
               "Gestão do Ciclo Escolar": 2.7,
+              "Integração com a Instituição": 2.42,
               "Papel como Formador": 3.06,
               "Compromisso com o ensino": 2.52,
-              "Integração com a Instituição": 2.42,
               "Compromisso com ensino": 2.52,
               "Compromisso com a aprendizagem": 2.62,
               "Integração com a instituição": 2.42,
@@ -6341,9 +6341,9 @@
             "Coordenação": {
               "Compromisso com a Aprendizagem": 2.84,
               "Gestão do Ciclo Escolar": 3.0,
+              "Integração com a Instituição": 3.25,
               "Papel como Formador": 3.49,
               "Compromisso com o ensino": 2.35,
-              "Integração com a Instituição": 3.25,
               "Compromisso com ensino": 2.35,
               "Compromisso com a aprendizagem": 2.84,
               "Integração com a instituição": 3.25,
@@ -6351,17 +6351,17 @@
               "Crescimento pessoal e profissional": 3.0
             },
             "Psicólogos": {
-              "Atuação Técnica": 3.05,
-              "Atuação Preventiva": 2.72,
               "Integração com a Instituição": 3.32,
+              "Atuação Preventiva": 2.72,
+              "Atuação Técnica": 3.05,
               "Integração com a instituição": 3.32
             },
             "Supervisão de Inglês": {
               "Compromisso com a Aprendizagem": 3.01,
               "Gestão do Ciclo Escolar": 3.41,
+              "Integração com a Instituição": 2.61,
               "Papel como Formador": 3.51,
               "Compromisso com o ensino": 3.16,
-              "Integração com a Instituição": 2.61,
               "Compromisso com ensino": 3.16,
               "Compromisso com a aprendizagem": 3.01,
               "Integração com a instituição": 2.61,
@@ -6372,13 +6372,13 @@
         },
         "EFII": {
           "total": 29,
-          "media_geral": 3.15,
+          "media_geral": 3.0,
           "ambitos": {
-            "Compromisso com a aprendizagem": 2.89,
-            "Compromisso com ensino": 3.08,
+            "Compromisso com a aprendizagem": 2.76,
+            "Compromisso com ensino": 2.95,
             "Crescimento pessoal e profissional": 3.28,
             "Integração com a instituição": 3.38,
-            "Papel como formador": 3.23
+            "Papel como formador": 3.11
           },
           "ambitos_por_avaliador": {
             "Compromisso com a aprendizagem": {
@@ -6386,14 +6386,14 @@
               "autoavaliacao": 3.22,
               "pares_psicologos": 2.99,
               "alunos": 2.31,
-              "geral": 2.89
+              "geral": 2.76
             },
             "Compromisso com ensino": {
               "lider": 2.77,
               "autoavaliacao": 3.32,
               "pares_psicologos": 3.12,
               "alunos": 2.44,
-              "geral": 3.08
+              "geral": 2.95
             },
             "Crescimento pessoal e profissional": {
               "lider": 3.13,
@@ -6414,7 +6414,7 @@
               "autoavaliacao": 3.57,
               "pares_psicologos": 3.08,
               "alunos": 2.79,
-              "geral": 3.23
+              "geral": 3.11
             }
           },
           "perfis_avaliadores": {
@@ -6994,18 +6994,18 @@
           },
           "cargos": {
             "Docentes": {
-              "Compromisso com a aprendizagem": 2.89,
-              "Compromisso com ensino": 3.08,
+              "Compromisso com a aprendizagem": 2.76,
+              "Compromisso com ensino": 2.95,
               "Crescimento pessoal e profissional": 3.28,
               "Integração com a instituição": 3.38,
-              "Papel como formador": 3.23
+              "Papel como formador": 3.11
             },
             "Coordenação": {
               "Compromisso com a Aprendizagem": 2.81,
               "Gestão do Ciclo Escolar": 3.35,
+              "Integração com a Instituição": 3.05,
               "Papel como Formador": 3.44,
               "Compromisso com o ensino": 2.71,
-              "Integração com a Instituição": 3.05,
               "Compromisso com ensino": 2.71,
               "Compromisso com a aprendizagem": 2.81,
               "Integração com a instituição": 3.05,
@@ -7013,17 +7013,17 @@
               "Crescimento pessoal e profissional": 3.35
             },
             "Psicólogos": {
-              "Atuação Técnica": 3.27,
-              "Atuação Preventiva": 3.0,
               "Integração com a Instituição": 3.53,
+              "Atuação Preventiva": 3.0,
+              "Atuação Técnica": 3.27,
               "Integração com a instituição": 3.53
             },
             "Supervisão de Inglês": {
               "Compromisso com a Aprendizagem": 2.98,
               "Gestão do Ciclo Escolar": 3.39,
+              "Integração com a Instituição": 3.04,
               "Papel como Formador": 3.7,
               "Compromisso com o ensino": 2.64,
-              "Integração com a Instituição": 3.04,
               "Compromisso com ensino": 2.64,
               "Compromisso com a aprendizagem": 2.98,
               "Integração com a instituição": 3.04,
@@ -7034,13 +7034,13 @@
         },
         "EM": {
           "total": 25,
-          "media_geral": 3.07,
+          "media_geral": 2.91,
           "ambitos": {
-            "Compromisso com a aprendizagem": 2.79,
-            "Compromisso com ensino": 2.94,
+            "Compromisso com a aprendizagem": 2.62,
+            "Compromisso com ensino": 2.8,
             "Crescimento pessoal e profissional": 3.27,
             "Integração com a instituição": 3.22,
-            "Papel como formador": 3.12
+            "Papel como formador": 3.01
           },
           "ambitos_por_avaliador": {
             "Compromisso com a aprendizagem": {
@@ -7048,14 +7048,14 @@
               "autoavaliacao": 3.27,
               "pares_psicologos": 2.88,
               "alunos": 2.3,
-              "geral": 2.79
+              "geral": 2.62
             },
             "Compromisso com ensino": {
               "lider": 2.36,
               "autoavaliacao": 3.43,
               "pares_psicologos": 3.09,
               "alunos": 2.62,
-              "geral": 2.94
+              "geral": 2.8
             },
             "Crescimento pessoal e profissional": {
               "lider": 2.8,
@@ -7076,7 +7076,7 @@
               "autoavaliacao": 3.61,
               "pares_psicologos": 3.1,
               "alunos": 2.91,
-              "geral": 3.12
+              "geral": 3.01
             }
           },
           "perfis_avaliadores": {
@@ -7656,18 +7656,18 @@
           },
           "cargos": {
             "Docentes": {
-              "Compromisso com a aprendizagem": 2.79,
-              "Compromisso com ensino": 2.94,
+              "Compromisso com a aprendizagem": 2.62,
+              "Compromisso com ensino": 2.8,
               "Crescimento pessoal e profissional": 3.27,
               "Integração com a instituição": 3.22,
-              "Papel como formador": 3.12
+              "Papel como formador": 3.01
             },
             "Coordenação": {
               "Compromisso com a Aprendizagem": 2.47,
               "Gestão do Ciclo Escolar": 2.54,
+              "Integração com a Instituição": 2.7,
               "Papel como Formador": 3.03,
               "Compromisso com o ensino": 2.05,
-              "Integração com a Instituição": 2.7,
               "Compromisso com ensino": 2.05,
               "Compromisso com a aprendizagem": 2.47,
               "Integração com a instituição": 2.7,
@@ -7678,9 +7678,9 @@
             "Supervisão de Inglês": {
               "Compromisso com a Aprendizagem": 2.98,
               "Gestão do Ciclo Escolar": 3.39,
+              "Integração com a Instituição": 3.04,
               "Papel como Formador": 3.7,
               "Compromisso com o ensino": 2.64,
-              "Integração com a Instituição": 3.04,
               "Compromisso com ensino": 2.64,
               "Compromisso com a aprendizagem": 2.98,
               "Integração com a instituição": 3.04,
@@ -7691,13 +7691,13 @@
         },
         "Geral / Transversal": {
           "total": 7,
-          "media_geral": 2.93,
+          "media_geral": 2.86,
           "ambitos": {
-            "Compromisso com a aprendizagem": 2.63,
-            "Compromisso com ensino": 2.65,
+            "Compromisso com a aprendizagem": 2.56,
+            "Compromisso com ensino": 2.62,
             "Crescimento pessoal e profissional": 3.14,
             "Integração com a instituição": 3.09,
-            "Papel como formador": 3.14
+            "Papel como formador": 3.09
           },
           "ambitos_por_avaliador": {
             "Compromisso com a aprendizagem": {
@@ -7705,14 +7705,14 @@
               "autoavaliacao": 2.83,
               "pares_psicologos": 2.65,
               "alunos": 1.94,
-              "geral": 2.63
+              "geral": 2.56
             },
             "Compromisso com ensino": {
               "lider": 2.23,
               "autoavaliacao": 2.8,
               "pares_psicologos": 2.9,
               "alunos": 1.98,
-              "geral": 2.65
+              "geral": 2.62
             },
             "Crescimento pessoal e profissional": {
               "lider": 3.08,
@@ -7733,7 +7733,7 @@
               "autoavaliacao": 3.46,
               "pares_psicologos": 3.08,
               "alunos": 2.29,
-              "geral": 3.14
+              "geral": 3.09
             }
           },
           "perfis_avaliadores": {
@@ -8313,11 +8313,11 @@
           },
           "cargos": {
             "Docentes": {
-              "Compromisso com a aprendizagem": 2.46,
-              "Compromisso com ensino": 2.48,
+              "Compromisso com a aprendizagem": 2.33,
+              "Compromisso com ensino": 2.39,
               "Crescimento pessoal e profissional": 3.17,
               "Integração com a instituição": 2.67,
-              "Papel como formador": 2.95
+              "Papel como formador": 2.86
             },
             "Coordenação": {},
             "Psicólogos": {},
@@ -8342,34 +8342,34 @@
             "Papel como formador": 3.25
           },
           "EFII": {
-            "Compromisso com a aprendizagem": 2.89,
-            "Compromisso com ensino": 3.08,
+            "Compromisso com a aprendizagem": 2.76,
+            "Compromisso com ensino": 2.95,
             "Crescimento pessoal e profissional": 3.28,
             "Integração com a instituição": 3.38,
-            "Papel como formador": 3.23
+            "Papel como formador": 3.11
           },
           "EM": {
-            "Compromisso com a aprendizagem": 2.79,
-            "Compromisso com ensino": 2.94,
+            "Compromisso com a aprendizagem": 2.62,
+            "Compromisso com ensino": 2.8,
             "Crescimento pessoal e profissional": 3.27,
             "Integração com a instituição": 3.22,
-            "Papel como formador": 3.12
+            "Papel como formador": 3.01
           },
           "Total Geral": {
-            "Compromisso com a aprendizagem": 2.8,
-            "Compromisso com ensino": 2.96,
+            "Compromisso com a aprendizagem": 2.74,
+            "Compromisso com ensino": 2.9,
             "Crescimento pessoal e profissional": 3.35,
             "Integração com a instituição": 3.25,
-            "Papel como formador": 3.21
+            "Papel como formador": 3.16
           }
         },
         "Coordenação": {
           "EI": {
             "Compromisso com a Aprendizagem": 2.92,
             "Gestão do Ciclo Escolar": 2.87,
+            "Integração com a Instituição": 3.22,
             "Papel como Formador": 3.08,
             "Compromisso com o ensino": 3.04,
-            "Integração com a Instituição": 3.22,
             "Compromisso com ensino": 3.04,
             "Compromisso com a aprendizagem": 2.92,
             "Integração com a instituição": 3.22,
@@ -8379,9 +8379,9 @@
           "EFI": {
             "Compromisso com a Aprendizagem": 2.84,
             "Gestão do Ciclo Escolar": 3.0,
+            "Integração com a Instituição": 3.25,
             "Papel como Formador": 3.49,
             "Compromisso com o ensino": 2.35,
-            "Integração com a Instituição": 3.25,
             "Compromisso com ensino": 2.35,
             "Compromisso com a aprendizagem": 2.84,
             "Integração com a instituição": 3.25,
@@ -8391,9 +8391,9 @@
           "EFII": {
             "Compromisso com a Aprendizagem": 2.81,
             "Gestão do Ciclo Escolar": 3.35,
+            "Integração com a Instituição": 3.05,
             "Papel como Formador": 3.44,
             "Compromisso com o ensino": 2.71,
-            "Integração com a Instituição": 3.05,
             "Compromisso com ensino": 2.71,
             "Compromisso com a aprendizagem": 2.81,
             "Integração com a instituição": 3.05,
@@ -8403,9 +8403,9 @@
           "EM": {
             "Compromisso com a Aprendizagem": 2.47,
             "Gestão do Ciclo Escolar": 2.54,
+            "Integração com a Instituição": 2.7,
             "Papel como Formador": 3.03,
             "Compromisso com o ensino": 2.05,
-            "Integração com a Instituição": 2.7,
             "Compromisso com ensino": 2.05,
             "Compromisso com a aprendizagem": 2.47,
             "Integração com a instituição": 2.7,
@@ -8415,9 +8415,9 @@
           "Total Geral": {
             "Compromisso com a Aprendizagem": 2.8,
             "Gestão do Ciclo Escolar": 3.0,
+            "Integração com a Instituição": 3.11,
             "Papel como Formador": 3.29,
             "Compromisso com o ensino": 2.61,
-            "Integração com a Instituição": 3.11,
             "Compromisso com ensino": 2.61,
             "Compromisso com a aprendizagem": 2.8,
             "Integração com a instituição": 3.11,
@@ -8427,28 +8427,28 @@
         },
         "Psicólogos": {
           "EI": {
-            "Atuação Técnica": 2.54,
-            "Atuação Preventiva": 2.55,
             "Integração com a Instituição": 2.71,
+            "Atuação Preventiva": 2.55,
+            "Atuação Técnica": 2.54,
             "Integração com a instituição": 2.71
           },
           "EFI": {
-            "Atuação Técnica": 3.05,
-            "Atuação Preventiva": 2.72,
             "Integração com a Instituição": 3.32,
+            "Atuação Preventiva": 2.72,
+            "Atuação Técnica": 3.05,
             "Integração com a instituição": 3.32
           },
           "EFII": {
-            "Atuação Técnica": 3.27,
-            "Atuação Preventiva": 3.0,
             "Integração com a Instituição": 3.53,
+            "Atuação Preventiva": 3.0,
+            "Atuação Técnica": 3.27,
             "Integração com a instituição": 3.53
           },
           "EM": {},
           "Total Geral": {
-            "Atuação Técnica": 2.96,
-            "Atuação Preventiva": 2.76,
             "Integração com a Instituição": 3.19,
+            "Atuação Preventiva": 2.76,
+            "Atuação Técnica": 2.96,
             "Integração com a instituição": 3.19
           }
         }
@@ -10585,7 +10585,7 @@
     "Curitiba": {
       "kpis": {
         "total_avaliados": 75,
-        "media_geral": 3.2,
+        "media_geral": 3.13,
         "mulheres_count": 53,
         "homens_count": 22,
         "mulheres_pct": 70.7,
@@ -10650,8 +10650,8 @@
             "total_ciclo": 16
           },
           "Em Desenvolvimento": {
-            "count": 5,
-            "pct": 31.2,
+            "count": 8,
+            "pct": 50.0,
             "total_ciclo": 16
           },
           "Atuação Adequada": {
@@ -10660,30 +10660,30 @@
             "total_ciclo": 16
           },
           "Referência": {
-            "count": 4,
-            "pct": 25.0,
+            "count": 1,
+            "pct": 6.2,
             "total_ciclo": 16
           }
         },
         "EM": {
           "Inicial": {
-            "count": 0,
-            "pct": 0.0,
+            "count": 1,
+            "pct": 7.7,
             "total_ciclo": 13
           },
           "Em Desenvolvimento": {
-            "count": 5,
-            "pct": 38.5,
+            "count": 6,
+            "pct": 46.2,
             "total_ciclo": 13
           },
           "Atuação Adequada": {
-            "count": 7,
-            "pct": 53.8,
+            "count": 6,
+            "pct": 46.2,
             "total_ciclo": 13
           },
           "Referência": {
-            "count": 1,
-            "pct": 7.7,
+            "count": 0,
+            "pct": 0.0,
             "total_ciclo": 13
           }
         },
@@ -10711,23 +10711,23 @@
         },
         "Total": {
           "Inicial": {
-            "count": 0,
-            "pct": 0.0,
+            "count": 1,
+            "pct": 1.3,
             "total_ciclo": 75
           },
           "Em Desenvolvimento": {
-            "count": 17,
-            "pct": 22.7,
+            "count": 21,
+            "pct": 28.0,
             "total_ciclo": 75
           },
           "Atuação Adequada": {
-            "count": 49,
-            "pct": 65.3,
+            "count": 48,
+            "pct": 64.0,
             "total_ciclo": 75
           },
           "Referência": {
-            "count": 8,
-            "pct": 10.7,
+            "count": 4,
+            "pct": 5.3,
             "total_ciclo": 75
           }
         }
@@ -10735,13 +10735,13 @@
       "cargos_resumo": {
         "Docentes": {
           "total": 74,
-          "media_geral": 3.19,
+          "media_geral": 3.13,
           "ambitos": {
-            "Compromisso com a aprendizagem": 2.96,
-            "Compromisso com ensino": 3.05,
+            "Compromisso com a aprendizagem": 2.9,
+            "Compromisso com ensino": 2.99,
             "Crescimento pessoal e profissional": 3.38,
             "Integração com a instituição": 3.3,
-            "Papel como formador": 3.29
+            "Papel como formador": 3.23
           },
           "rankings": {
             "todos": [
@@ -12256,11 +12256,11 @@
         }
       },
       "ambitos_gerais": {
-        "Compromisso com a aprendizagem": 2.96,
-        "Compromisso com ensino": 3.06,
+        "Compromisso com a aprendizagem": 2.89,
+        "Compromisso com ensino": 3.0,
         "Crescimento pessoal e profissional": 3.38,
         "Integração com a instituição": 3.31,
-        "Papel como formador": 3.29
+        "Papel como formador": 3.24
       },
       "perfis_avaliadores_geral": {
         "coordenador": 2.99,
@@ -13367,9 +13367,9 @@
             "Coordenação": {
               "Compromisso com a Aprendizagem": 3.27,
               "Gestão do Ciclo Escolar": 2.86,
+              "Integração com a Instituição": 3.02,
               "Papel como Formador": 2.89,
               "Compromisso com o ensino": 3.44,
-              "Integração com a Instituição": 3.02,
               "Compromisso com ensino": 3.44,
               "Compromisso com a aprendizagem": 3.27,
               "Integração com a instituição": 3.02,
@@ -13377,17 +13377,17 @@
               "Crescimento pessoal e profissional": 2.86
             },
             "Psicólogos": {
-              "Atuação Técnica": 1.92,
-              "Atuação Preventiva": 2.21,
               "Integração com a Instituição": 2.22,
+              "Atuação Preventiva": 2.21,
+              "Atuação Técnica": 1.92,
               "Integração com a instituição": 2.22
             },
             "Supervisão de Inglês": {
               "Compromisso com a Aprendizagem": 2.58,
               "Gestão do Ciclo Escolar": 2.38,
+              "Integração com a Instituição": 2.63,
               "Papel como Formador": 2.75,
               "Compromisso com o ensino": 2.44,
-              "Integração com a Instituição": 2.63,
               "Compromisso com ensino": 2.44,
               "Compromisso com a aprendizagem": 2.58,
               "Integração com a instituição": 2.63,
@@ -13933,9 +13933,9 @@
             "Coordenação": {
               "Compromisso com a Aprendizagem": 3.24,
               "Gestão do Ciclo Escolar": 3.15,
+              "Integração com a Instituição": 3.31,
               "Papel como Formador": 3.41,
               "Compromisso com o ensino": 2.75,
-              "Integração com a Instituição": 3.31,
               "Compromisso com ensino": 2.75,
               "Compromisso com a aprendizagem": 3.24,
               "Integração com a instituição": 3.31,
@@ -13943,17 +13943,17 @@
               "Crescimento pessoal e profissional": 3.15
             },
             "Psicólogos": {
-              "Atuação Técnica": 3.65,
-              "Atuação Preventiva": 3.28,
               "Integração com a Instituição": 3.59,
+              "Atuação Preventiva": 3.28,
+              "Atuação Técnica": 3.65,
               "Integração com a instituição": 3.59
             },
             "Supervisão de Inglês": {
               "Compromisso com a Aprendizagem": 3.36,
               "Gestão do Ciclo Escolar": 3.79,
+              "Integração com a Instituição": 3.01,
               "Papel como Formador": 3.65,
               "Compromisso com o ensino": 3.71,
-              "Integração com a Instituição": 3.01,
               "Compromisso com ensino": 3.71,
               "Compromisso com a aprendizagem": 3.36,
               "Integração com a instituição": 3.01,
@@ -13964,13 +13964,13 @@
         },
         "EFII": {
           "total": 16,
-          "media_geral": 3.22,
+          "media_geral": 3.06,
           "ambitos": {
-            "Compromisso com a aprendizagem": 2.98,
-            "Compromisso com ensino": 3.17,
+            "Compromisso com a aprendizagem": 2.86,
+            "Compromisso com ensino": 3.02,
             "Crescimento pessoal e profissional": 3.32,
             "Integração com a instituição": 3.37,
-            "Papel como formador": 3.26
+            "Papel como formador": 3.14
           },
           "ambitos_por_avaliador": {
             "Compromisso com a aprendizagem": {
@@ -13978,14 +13978,14 @@
               "autoavaliacao": 3.13,
               "pares_psicologos": 2.98,
               "alunos": 2.24,
-              "geral": 2.98
+              "geral": 2.86
             },
             "Compromisso com ensino": {
               "lider": 2.85,
               "autoavaliacao": 3.43,
               "pares_psicologos": 3.16,
               "alunos": 2.5,
-              "geral": 3.17
+              "geral": 3.02
             },
             "Crescimento pessoal e profissional": {
               "lider": 3.3,
@@ -14006,7 +14006,7 @@
               "autoavaliacao": 3.65,
               "pares_psicologos": 3.02,
               "alunos": 2.88,
-              "geral": 3.26
+              "geral": 3.14
             }
           },
           "perfis_avaliadores": {
@@ -14586,18 +14586,18 @@
           },
           "cargos": {
             "Docentes": {
-              "Compromisso com a aprendizagem": 2.98,
-              "Compromisso com ensino": 3.17,
+              "Compromisso com a aprendizagem": 2.86,
+              "Compromisso com ensino": 3.02,
               "Crescimento pessoal e profissional": 3.32,
               "Integração com a instituição": 3.37,
-              "Papel como formador": 3.26
+              "Papel como formador": 3.14
             },
             "Coordenação": {
               "Compromisso com a Aprendizagem": 3.02,
               "Gestão do Ciclo Escolar": 3.22,
+              "Integração com a Instituição": 3.1,
               "Papel como Formador": 3.27,
               "Compromisso com o ensino": 2.83,
-              "Integração com a Instituição": 3.1,
               "Compromisso com ensino": 2.83,
               "Compromisso com a aprendizagem": 3.02,
               "Integração com a instituição": 3.1,
@@ -14605,17 +14605,17 @@
               "Crescimento pessoal e profissional": 3.22
             },
             "Psicólogos": {
-              "Atuação Técnica": 3.32,
-              "Atuação Preventiva": 3.22,
               "Integração com a Instituição": 3.62,
+              "Atuação Preventiva": 3.22,
+              "Atuação Técnica": 3.32,
               "Integração com a instituição": 3.62
             },
             "Supervisão de Inglês": {
               "Compromisso com a Aprendizagem": 3.08,
               "Gestão do Ciclo Escolar": 3.36,
+              "Integração com a Instituição": 3.11,
               "Papel como Formador": 3.63,
               "Compromisso com o ensino": 2.87,
-              "Integração com a Instituição": 3.11,
               "Compromisso com ensino": 2.87,
               "Compromisso com a aprendizagem": 3.08,
               "Integração com a instituição": 3.11,
@@ -14626,13 +14626,13 @@
         },
         "EM": {
           "total": 13,
-          "media_geral": 3.11,
+          "media_geral": 2.93,
           "ambitos": {
-            "Compromisso com a aprendizagem": 2.97,
-            "Compromisso com ensino": 3.03,
+            "Compromisso com a aprendizagem": 2.73,
+            "Compromisso com ensino": 2.87,
             "Crescimento pessoal e profissional": 3.23,
             "Integração com a instituição": 3.16,
-            "Papel como formador": 3.16
+            "Papel como formador": 3.01
           },
           "ambitos_por_avaliador": {
             "Compromisso com a aprendizagem": {
@@ -14640,14 +14640,14 @@
               "autoavaliacao": 3.56,
               "pares_psicologos": 3.06,
               "alunos": 2.06,
-              "geral": 2.97
+              "geral": 2.73
             },
             "Compromisso com ensino": {
               "lider": 2.38,
               "autoavaliacao": 3.6,
               "pares_psicologos": 3.14,
               "alunos": 2.69,
-              "geral": 3.03
+              "geral": 2.87
             },
             "Crescimento pessoal e profissional": {
               "lider": 2.73,
@@ -14668,7 +14668,7 @@
               "autoavaliacao": 3.73,
               "pares_psicologos": 3.21,
               "alunos": 2.82,
-              "geral": 3.16
+              "geral": 3.01
             }
           },
           "perfis_avaliadores": {
@@ -15248,18 +15248,18 @@
           },
           "cargos": {
             "Docentes": {
-              "Compromisso com a aprendizagem": 2.97,
-              "Compromisso com ensino": 3.03,
+              "Compromisso com a aprendizagem": 2.73,
+              "Compromisso com ensino": 2.87,
               "Crescimento pessoal e profissional": 3.23,
               "Integração com a instituição": 3.16,
-              "Papel como formador": 3.16
+              "Papel como formador": 3.01
             },
             "Coordenação": {
               "Compromisso com a Aprendizagem": 2.47,
               "Gestão do Ciclo Escolar": 2.54,
+              "Integração com a Instituição": 2.7,
               "Papel como Formador": 3.03,
               "Compromisso com o ensino": 2.05,
-              "Integração com a Instituição": 2.7,
               "Compromisso com ensino": 2.05,
               "Compromisso com a aprendizagem": 2.47,
               "Integração com a instituição": 2.7,
@@ -15270,9 +15270,9 @@
             "Supervisão de Inglês": {
               "Compromisso com a Aprendizagem": 3.08,
               "Gestão do Ciclo Escolar": 3.36,
+              "Integração com a Instituição": 3.11,
               "Papel como Formador": 3.63,
               "Compromisso com o ensino": 2.87,
-              "Integração com a Instituição": 3.11,
               "Compromisso com ensino": 2.87,
               "Compromisso com a aprendizagem": 3.08,
               "Integração com a instituição": 3.11,
@@ -15371,34 +15371,34 @@
             "Papel como formador": 3.4
           },
           "EFII": {
-            "Compromisso com a aprendizagem": 2.98,
-            "Compromisso com ensino": 3.17,
+            "Compromisso com a aprendizagem": 2.86,
+            "Compromisso com ensino": 3.02,
             "Crescimento pessoal e profissional": 3.32,
             "Integração com a instituição": 3.37,
-            "Papel como formador": 3.26
+            "Papel como formador": 3.14
           },
           "EM": {
-            "Compromisso com a aprendizagem": 2.97,
-            "Compromisso com ensino": 3.03,
+            "Compromisso com a aprendizagem": 2.73,
+            "Compromisso com ensino": 2.87,
             "Crescimento pessoal e profissional": 3.23,
             "Integração com a instituição": 3.16,
-            "Papel como formador": 3.16
+            "Papel como formador": 3.01
           },
           "Total Geral": {
-            "Compromisso com a aprendizagem": 2.96,
-            "Compromisso com ensino": 3.05,
+            "Compromisso com a aprendizagem": 2.9,
+            "Compromisso com ensino": 2.99,
             "Crescimento pessoal e profissional": 3.38,
             "Integração com a instituição": 3.3,
-            "Papel como formador": 3.29
+            "Papel como formador": 3.23
           }
         },
         "Coordenação": {
           "EI": {
             "Compromisso com a Aprendizagem": 3.27,
             "Gestão do Ciclo Escolar": 2.86,
+            "Integração com a Instituição": 3.02,
             "Papel como Formador": 2.89,
             "Compromisso com o ensino": 3.44,
-            "Integração com a Instituição": 3.02,
             "Compromisso com ensino": 3.44,
             "Compromisso com a aprendizagem": 3.27,
             "Integração com a instituição": 3.02,
@@ -15408,9 +15408,9 @@
           "EFI": {
             "Compromisso com a Aprendizagem": 3.24,
             "Gestão do Ciclo Escolar": 3.15,
+            "Integração com a Instituição": 3.31,
             "Papel como Formador": 3.41,
             "Compromisso com o ensino": 2.75,
-            "Integração com a Instituição": 3.31,
             "Compromisso com ensino": 2.75,
             "Compromisso com a aprendizagem": 3.24,
             "Integração com a instituição": 3.31,
@@ -15420,9 +15420,9 @@
           "EFII": {
             "Compromisso com a Aprendizagem": 3.02,
             "Gestão do Ciclo Escolar": 3.22,
+            "Integração com a Instituição": 3.1,
             "Papel como Formador": 3.27,
             "Compromisso com o ensino": 2.83,
-            "Integração com a Instituição": 3.1,
             "Compromisso com ensino": 2.83,
             "Compromisso com a aprendizagem": 3.02,
             "Integração com a instituição": 3.1,
@@ -15432,9 +15432,9 @@
           "EM": {
             "Compromisso com a Aprendizagem": 2.47,
             "Gestão do Ciclo Escolar": 2.54,
+            "Integração com a Instituição": 2.7,
             "Papel como Formador": 3.03,
             "Compromisso com o ensino": 2.05,
-            "Integração com a Instituição": 2.7,
             "Compromisso com ensino": 2.05,
             "Compromisso com a aprendizagem": 2.47,
             "Integração com a instituição": 2.7,
@@ -15444,9 +15444,9 @@
           "Total Geral": {
             "Compromisso com a Aprendizagem": 3.0,
             "Gestão do Ciclo Escolar": 2.94,
+            "Integração com a Instituição": 3.03,
             "Papel como Formador": 3.15,
             "Compromisso com o ensino": 2.77,
-            "Integração com a Instituição": 3.03,
             "Compromisso com ensino": 2.77,
             "Compromisso com a aprendizagem": 3.0,
             "Integração com a instituição": 3.03,
@@ -15456,28 +15456,28 @@
         },
         "Psicólogos": {
           "EI": {
-            "Atuação Técnica": 1.92,
-            "Atuação Preventiva": 2.21,
             "Integração com a Instituição": 2.22,
+            "Atuação Preventiva": 2.21,
+            "Atuação Técnica": 1.92,
             "Integração com a instituição": 2.22
           },
           "EFI": {
-            "Atuação Técnica": 3.65,
-            "Atuação Preventiva": 3.28,
             "Integração com a Instituição": 3.59,
+            "Atuação Preventiva": 3.28,
+            "Atuação Técnica": 3.65,
             "Integração com a instituição": 3.59
           },
           "EFII": {
-            "Atuação Técnica": 3.32,
-            "Atuação Preventiva": 3.22,
             "Integração com a Instituição": 3.62,
+            "Atuação Preventiva": 3.22,
+            "Atuação Técnica": 3.32,
             "Integração com a instituição": 3.62
           },
           "EM": {},
           "Total Geral": {
-            "Atuação Técnica": 2.96,
-            "Atuação Preventiva": 2.9,
             "Integração com a Instituição": 3.14,
+            "Atuação Preventiva": 2.9,
+            "Atuação Técnica": 2.96,
             "Integração com a instituição": 3.14
           }
         }
@@ -17614,7 +17614,7 @@
     "Rio de Janeiro": {
       "kpis": {
         "total_avaliados": 62,
-        "media_geral": 2.99,
+        "media_geral": 2.93,
         "mulheres_count": 47,
         "homens_count": 15,
         "mulheres_pct": 75.8,
@@ -17674,8 +17674,8 @@
         },
         "EFII": {
           "Inicial": {
-            "count": 0,
-            "pct": 0.0,
+            "count": 1,
+            "pct": 7.7,
             "total_ciclo": 13
           },
           "Em Desenvolvimento": {
@@ -17689,8 +17689,8 @@
             "total_ciclo": 13
           },
           "Referência": {
-            "count": 1,
-            "pct": 7.7,
+            "count": 0,
+            "pct": 0.0,
             "total_ciclo": 13
           }
         },
@@ -17701,30 +17701,30 @@
             "total_ciclo": 12
           },
           "Em Desenvolvimento": {
-            "count": 4,
-            "pct": 33.3,
+            "count": 8,
+            "pct": 66.7,
             "total_ciclo": 12
           },
           "Atuação Adequada": {
-            "count": 6,
-            "pct": 50.0,
+            "count": 3,
+            "pct": 25.0,
             "total_ciclo": 12
           },
           "Referência": {
-            "count": 1,
-            "pct": 8.3,
+            "count": 0,
+            "pct": 0.0,
             "total_ciclo": 12
           }
         },
         "Geral / Transversal": {
           "Inicial": {
-            "count": 1,
-            "pct": 14.3,
+            "count": 2,
+            "pct": 28.6,
             "total_ciclo": 7
           },
           "Em Desenvolvimento": {
-            "count": 2,
-            "pct": 28.6,
+            "count": 1,
+            "pct": 14.3,
             "total_ciclo": 7
           },
           "Atuação Adequada": {
@@ -17740,23 +17740,23 @@
         },
         "Total": {
           "Inicial": {
-            "count": 5,
-            "pct": 8.1,
+            "count": 7,
+            "pct": 11.3,
             "total_ciclo": 62
           },
           "Em Desenvolvimento": {
-            "count": 22,
-            "pct": 35.5,
+            "count": 25,
+            "pct": 40.3,
             "total_ciclo": 62
           },
           "Atuação Adequada": {
-            "count": 33,
-            "pct": 53.2,
+            "count": 30,
+            "pct": 48.4,
             "total_ciclo": 62
           },
           "Referência": {
-            "count": 2,
-            "pct": 3.2,
+            "count": 0,
+            "pct": 0.0,
             "total_ciclo": 62
           }
         }
@@ -17764,13 +17764,13 @@
       "cargos_resumo": {
         "Docentes": {
           "total": 58,
-          "media_geral": 2.98,
+          "media_geral": 2.92,
           "ambitos": {
-            "Compromisso com a aprendizagem": 2.6,
-            "Compromisso com ensino": 2.84,
+            "Compromisso com a aprendizagem": 2.54,
+            "Compromisso com ensino": 2.79,
             "Crescimento pessoal e profissional": 3.33,
             "Integração com a instituição": 3.18,
-            "Papel como formador": 3.12
+            "Papel como formador": 3.07
           },
           "rankings": {
             "todos": [
@@ -18359,13 +18359,13 @@
         },
         "Psicólogos": {
           "total": 4,
-          "media_geral": 3.07,
+          "media_geral": 3.05,
           "ambitos": {
-            "Compromisso com a aprendizagem": 2.76,
-            "Compromisso com ensino": 2.78,
+            "Compromisso com a aprendizagem": 2.73,
+            "Compromisso com ensino": 2.79,
             "Crescimento pessoal e profissional": 3.12,
             "Integração com a instituição": 3.41,
-            "Papel como formador": 3.28
+            "Papel como formador": 3.26
           },
           "rankings": {
             "todos": [
@@ -19533,11 +19533,11 @@
         }
       },
       "ambitos_gerais": {
-        "Compromisso com a aprendizagem": 2.61,
-        "Compromisso com ensino": 2.84,
+        "Compromisso com a aprendizagem": 2.55,
+        "Compromisso com ensino": 2.79,
         "Crescimento pessoal e profissional": 3.31,
         "Integração com a instituição": 3.2,
-        "Papel como formador": 3.13
+        "Papel como formador": 3.09
       },
       "perfis_avaliadores_geral": {
         "coordenador": 2.61,
@@ -20644,9 +20644,9 @@
             "Coordenação": {
               "Compromisso com a Aprendizagem": 2.57,
               "Gestão do Ciclo Escolar": 2.88,
+              "Integração com a Instituição": 3.42,
               "Papel como Formador": 3.27,
               "Compromisso com o ensino": 2.64,
-              "Integração com a Instituição": 3.42,
               "Compromisso com ensino": 2.64,
               "Compromisso com a aprendizagem": 2.57,
               "Integração com a instituição": 3.42,
@@ -20654,17 +20654,17 @@
               "Crescimento pessoal e profissional": 2.88
             },
             "Psicólogos": {
-              "Atuação Técnica": 3.17,
-              "Atuação Preventiva": 2.89,
               "Integração com a Instituição": 3.2,
+              "Atuação Preventiva": 2.89,
+              "Atuação Técnica": 3.17,
               "Integração com a instituição": 3.2
             },
             "Supervisão de Inglês": {
               "Compromisso com a Aprendizagem": 2.66,
               "Gestão do Ciclo Escolar": 3.02,
+              "Integração com a Instituição": 2.21,
               "Papel como Formador": 3.38,
               "Compromisso com o ensino": 2.6,
-              "Integração com a Instituição": 2.21,
               "Compromisso com ensino": 2.6,
               "Compromisso com a aprendizagem": 2.66,
               "Integração com a instituição": 2.21,
@@ -21218,9 +21218,9 @@
             "Coordenação": {
               "Compromisso com a Aprendizagem": 2.44,
               "Gestão do Ciclo Escolar": 2.84,
+              "Integração com a Instituição": 3.19,
               "Papel como Formador": 3.57,
               "Compromisso com o ensino": 1.95,
-              "Integração com a Instituição": 3.19,
               "Compromisso com ensino": 1.95,
               "Compromisso com a aprendizagem": 2.44,
               "Integração com a instituição": 3.19,
@@ -21228,17 +21228,17 @@
               "Crescimento pessoal e profissional": 2.84
             },
             "Psicólogos": {
-              "Atuação Técnica": 2.45,
-              "Atuação Preventiva": 2.16,
               "Integração com a Instituição": 3.05,
+              "Atuação Preventiva": 2.16,
+              "Atuação Técnica": 2.45,
               "Integração com a instituição": 3.05
             },
             "Supervisão de Inglês": {
               "Compromisso com a Aprendizagem": 2.66,
               "Gestão do Ciclo Escolar": 3.02,
+              "Integração com a Instituição": 2.21,
               "Papel como Formador": 3.38,
               "Compromisso com o ensino": 2.6,
-              "Integração com a Instituição": 2.21,
               "Compromisso com ensino": 2.6,
               "Compromisso com a aprendizagem": 2.66,
               "Integração com a instituição": 2.21,
@@ -21249,13 +21249,13 @@
         },
         "EFII": {
           "total": 13,
-          "media_geral": 3.05,
+          "media_geral": 2.93,
           "ambitos": {
-            "Compromisso com a aprendizagem": 2.78,
-            "Compromisso com ensino": 2.96,
+            "Compromisso com a aprendizagem": 2.63,
+            "Compromisso com ensino": 2.86,
             "Crescimento pessoal e profissional": 3.23,
             "Integração com a instituição": 3.39,
-            "Papel como formador": 3.18
+            "Papel como formador": 3.09
           },
           "ambitos_por_avaliador": {
             "Compromisso com a aprendizagem": {
@@ -21263,14 +21263,14 @@
               "autoavaliacao": 3.33,
               "pares_psicologos": 3.0,
               "alunos": 2.39,
-              "geral": 2.78
+              "geral": 2.63
             },
             "Compromisso com ensino": {
               "lider": 2.65,
               "autoavaliacao": 3.16,
               "pares_psicologos": 3.06,
               "alunos": 2.36,
-              "geral": 2.96
+              "geral": 2.86
             },
             "Crescimento pessoal e profissional": {
               "lider": 2.91,
@@ -21291,7 +21291,7 @@
               "autoavaliacao": 3.45,
               "pares_psicologos": 3.17,
               "alunos": 2.68,
-              "geral": 3.18
+              "geral": 3.09
             }
           },
           "perfis_avaliadores": {
@@ -21871,18 +21871,18 @@
           },
           "cargos": {
             "Docentes": {
-              "Compromisso com a aprendizagem": 2.78,
-              "Compromisso com ensino": 2.96,
+              "Compromisso com a aprendizagem": 2.63,
+              "Compromisso com ensino": 2.86,
               "Crescimento pessoal e profissional": 3.23,
               "Integração com a instituição": 3.39,
-              "Papel como formador": 3.18
+              "Papel como formador": 3.09
             },
             "Coordenação": {
               "Compromisso com a Aprendizagem": 2.6,
               "Gestão do Ciclo Escolar": 3.48,
+              "Integração com a Instituição": 3.01,
               "Papel como Formador": 3.61,
               "Compromisso com o ensino": 2.59,
-              "Integração com a Instituição": 3.01,
               "Compromisso com ensino": 2.59,
               "Compromisso com a aprendizagem": 2.6,
               "Integração com a instituição": 3.01,
@@ -21890,17 +21890,17 @@
               "Crescimento pessoal e profissional": 3.48
             },
             "Psicólogos": {
-              "Atuação Técnica": 3.22,
-              "Atuação Preventiva": 2.77,
               "Integração com a Instituição": 3.44,
+              "Atuação Preventiva": 2.77,
+              "Atuação Técnica": 3.22,
               "Integração com a instituição": 3.44
             },
             "Supervisão de Inglês": {
               "Compromisso com a Aprendizagem": 2.88,
               "Gestão do Ciclo Escolar": 3.42,
+              "Integração com a Instituição": 2.98,
               "Papel como Formador": 3.77,
               "Compromisso com o ensino": 2.41,
-              "Integração com a Instituição": 2.98,
               "Compromisso com ensino": 2.41,
               "Compromisso com a aprendizagem": 2.88,
               "Integração com a instituição": 2.98,
@@ -21911,13 +21911,13 @@
         },
         "EM": {
           "total": 12,
-          "media_geral": 3.02,
+          "media_geral": 2.88,
           "ambitos": {
-            "Compromisso com a aprendizagem": 2.59,
-            "Compromisso com ensino": 2.85,
+            "Compromisso com a aprendizagem": 2.49,
+            "Compromisso com ensino": 2.73,
             "Crescimento pessoal e profissional": 3.31,
             "Integração com a instituição": 3.27,
-            "Papel como formador": 3.09
+            "Papel como formador": 3.0
           },
           "ambitos_por_avaliador": {
             "Compromisso com a aprendizagem": {
@@ -21925,14 +21925,14 @@
               "autoavaliacao": 2.94,
               "pares_psicologos": 2.7,
               "alunos": 2.55,
-              "geral": 2.59
+              "geral": 2.49
             },
             "Compromisso com ensino": {
               "lider": 2.33,
               "autoavaliacao": 3.25,
               "pares_psicologos": 3.04,
               "alunos": 2.55,
-              "geral": 2.85
+              "geral": 2.73
             },
             "Crescimento pessoal e profissional": {
               "lider": 2.88,
@@ -21953,7 +21953,7 @@
               "autoavaliacao": 3.48,
               "pares_psicologos": 2.97,
               "alunos": 3.0,
-              "geral": 3.09
+              "geral": 3.0
             }
           },
           "perfis_avaliadores": {
@@ -22533,20 +22533,20 @@
           },
           "cargos": {
             "Docentes": {
-              "Compromisso com a aprendizagem": 2.59,
-              "Compromisso com ensino": 2.85,
+              "Compromisso com a aprendizagem": 2.49,
+              "Compromisso com ensino": 2.73,
               "Crescimento pessoal e profissional": 3.31,
               "Integração com a instituição": 3.27,
-              "Papel como formador": 3.09
+              "Papel como formador": 3.0
             },
             "Coordenação": {},
             "Psicólogos": {},
             "Supervisão de Inglês": {
               "Compromisso com a Aprendizagem": 2.88,
               "Gestão do Ciclo Escolar": 3.42,
+              "Integração com a Instituição": 2.98,
               "Papel como Formador": 3.77,
               "Compromisso com o ensino": 2.41,
-              "Integração com a Instituição": 2.98,
               "Compromisso com ensino": 2.41,
               "Compromisso com a aprendizagem": 2.88,
               "Integração com a instituição": 2.98,
@@ -22557,13 +22557,13 @@
         },
         "Geral / Transversal": {
           "total": 7,
-          "media_geral": 2.93,
+          "media_geral": 2.86,
           "ambitos": {
-            "Compromisso com a aprendizagem": 2.63,
-            "Compromisso com ensino": 2.65,
+            "Compromisso com a aprendizagem": 2.56,
+            "Compromisso com ensino": 2.62,
             "Crescimento pessoal e profissional": 3.14,
             "Integração com a instituição": 3.09,
-            "Papel como formador": 3.14
+            "Papel como formador": 3.09
           },
           "ambitos_por_avaliador": {
             "Compromisso com a aprendizagem": {
@@ -22571,14 +22571,14 @@
               "autoavaliacao": 2.83,
               "pares_psicologos": 2.65,
               "alunos": 1.94,
-              "geral": 2.63
+              "geral": 2.56
             },
             "Compromisso com ensino": {
               "lider": 2.23,
               "autoavaliacao": 2.8,
               "pares_psicologos": 2.9,
               "alunos": 1.98,
-              "geral": 2.65
+              "geral": 2.62
             },
             "Crescimento pessoal e profissional": {
               "lider": 3.08,
@@ -22599,7 +22599,7 @@
               "autoavaliacao": 3.46,
               "pares_psicologos": 3.08,
               "alunos": 2.29,
-              "geral": 3.14
+              "geral": 3.09
             }
           },
           "perfis_avaliadores": {
@@ -23179,11 +23179,11 @@
           },
           "cargos": {
             "Docentes": {
-              "Compromisso com a aprendizagem": 2.46,
-              "Compromisso com ensino": 2.48,
+              "Compromisso com a aprendizagem": 2.33,
+              "Compromisso com ensino": 2.39,
               "Crescimento pessoal e profissional": 3.17,
               "Integração com a instituição": 2.67,
-              "Papel como formador": 2.95
+              "Papel como formador": 2.86
             },
             "Coordenação": {},
             "Psicólogos": {},
@@ -23208,34 +23208,34 @@
             "Papel como formador": 3.04
           },
           "EFII": {
-            "Compromisso com a aprendizagem": 2.78,
-            "Compromisso com ensino": 2.96,
+            "Compromisso com a aprendizagem": 2.63,
+            "Compromisso com ensino": 2.86,
             "Crescimento pessoal e profissional": 3.23,
             "Integração com a instituição": 3.39,
-            "Papel como formador": 3.18
-          },
-          "EM": {
-            "Compromisso com a aprendizagem": 2.59,
-            "Compromisso com ensino": 2.85,
-            "Crescimento pessoal e profissional": 3.31,
-            "Integração com a instituição": 3.27,
             "Papel como formador": 3.09
           },
+          "EM": {
+            "Compromisso com a aprendizagem": 2.49,
+            "Compromisso com ensino": 2.73,
+            "Crescimento pessoal e profissional": 3.31,
+            "Integração com a instituição": 3.27,
+            "Papel como formador": 3.0
+          },
           "Total Geral": {
-            "Compromisso com a aprendizagem": 2.6,
-            "Compromisso com ensino": 2.84,
+            "Compromisso com a aprendizagem": 2.54,
+            "Compromisso com ensino": 2.79,
             "Crescimento pessoal e profissional": 3.33,
             "Integração com a instituição": 3.18,
-            "Papel como formador": 3.12
+            "Papel como formador": 3.07
           }
         },
         "Coordenação": {
           "EI": {
             "Compromisso com a Aprendizagem": 2.57,
             "Gestão do Ciclo Escolar": 2.88,
+            "Integração com a Instituição": 3.42,
             "Papel como Formador": 3.27,
             "Compromisso com o ensino": 2.64,
-            "Integração com a Instituição": 3.42,
             "Compromisso com ensino": 2.64,
             "Compromisso com a aprendizagem": 2.57,
             "Integração com a instituição": 3.42,
@@ -23245,9 +23245,9 @@
           "EFI": {
             "Compromisso com a Aprendizagem": 2.44,
             "Gestão do Ciclo Escolar": 2.84,
+            "Integração com a Instituição": 3.19,
             "Papel como Formador": 3.57,
             "Compromisso com o ensino": 1.95,
-            "Integração com a Instituição": 3.19,
             "Compromisso com ensino": 1.95,
             "Compromisso com a aprendizagem": 2.44,
             "Integração com a instituição": 3.19,
@@ -23257,9 +23257,9 @@
           "EFII": {
             "Compromisso com a Aprendizagem": 2.6,
             "Gestão do Ciclo Escolar": 3.48,
+            "Integração com a Instituição": 3.01,
             "Papel como Formador": 3.61,
             "Compromisso com o ensino": 2.59,
-            "Integração com a Instituição": 3.01,
             "Compromisso com ensino": 2.59,
             "Compromisso com a aprendizagem": 2.6,
             "Integração com a instituição": 3.01,
@@ -23270,9 +23270,9 @@
           "Total Geral": {
             "Compromisso com a Aprendizagem": 2.54,
             "Gestão do Ciclo Escolar": 3.07,
+            "Integração com a Instituição": 3.21,
             "Papel como Formador": 3.48,
             "Compromisso com o ensino": 2.39,
-            "Integração com a Instituição": 3.21,
             "Compromisso com ensino": 2.39,
             "Compromisso com a aprendizagem": 2.54,
             "Integração com a instituição": 3.21,
@@ -23282,28 +23282,28 @@
         },
         "Psicólogos": {
           "EI": {
-            "Atuação Técnica": 3.17,
-            "Atuação Preventiva": 2.89,
             "Integração com a Instituição": 3.2,
+            "Atuação Preventiva": 2.89,
+            "Atuação Técnica": 3.17,
             "Integração com a instituição": 3.2
           },
           "EFI": {
-            "Atuação Técnica": 2.45,
-            "Atuação Preventiva": 2.16,
             "Integração com a Instituição": 3.05,
+            "Atuação Preventiva": 2.16,
+            "Atuação Técnica": 2.45,
             "Integração com a instituição": 3.05
           },
           "EFII": {
-            "Atuação Técnica": 3.22,
-            "Atuação Preventiva": 2.77,
             "Integração com a Instituição": 3.44,
+            "Atuação Preventiva": 2.77,
+            "Atuação Técnica": 3.22,
             "Integração com a instituição": 3.44
           },
           "EM": {},
           "Total Geral": {
-            "Atuação Técnica": 2.95,
-            "Atuação Preventiva": 2.61,
             "Integração com a Instituição": 3.23,
+            "Atuação Preventiva": 2.61,
+            "Atuação Técnica": 2.95,
             "Integração com a instituição": 3.23
           }
         }
@@ -24903,8 +24903,8 @@
       "area_raw": null,
       "tag_raw": "RJ - Fernanda Macena Siqueira",
       "lider_raw": "Rafael Fantini",
-      "nota_final": 3.2,
-      "media": 3.2,
+      "nota_final": 3.14,
+      "media": 3.14,
       "autoavaliação": 2.74,
       "do_líder": 3.41,
       "outros": null,
@@ -24912,11 +24912,11 @@
       "dos_pares": 3.85,
       "dos_subordinados": 2.18,
       "topicos": {
-        "Compromisso com a aprendizagem": 3.28,
-        "Compromisso com ensino": 3.0,
+        "Compromisso com a aprendizagem": 3.17,
+        "Compromisso com ensino": 3.04,
         "Crescimento pessoal e profissional": 3.5,
         "Integração com a instituição": 3.0,
-        "Papel como formador": 3.2
+        "Papel como formador": 3.12
       },
       "questoes": {
         "Coordenadores::Instrução diferenciada": 3.0,
@@ -24991,14 +24991,14 @@
           "autoavaliacao": 3.0,
           "pares_psicologos": 3.88,
           "alunos": 2.14,
-          "geral": 3.28
+          "geral": 3.17
         },
         "Compromisso com ensino": {
           "lider": 3.4,
           "autoavaliacao": 2.2,
           "pares_psicologos": 3.67,
           "alunos": 2.24,
-          "geral": 3.0
+          "geral": 3.04
         },
         "Crescimento pessoal e profissional": {
           "lider": 4.0,
@@ -25019,7 +25019,7 @@
           "autoavaliacao": 3.0,
           "pares_psicologos": 4.0,
           "alunos": 2.21,
-          "geral": 3.2
+          "geral": 3.12
         }
       },
       "indicadores": [
@@ -25223,8 +25223,8 @@
       "area_raw": null,
       "tag_raw": "CTBA - Reinaldo - F2",
       "lider_raw": "Reinaldo Rodrigues dos Santos",
-      "nota_final": 2.6,
-      "media": 2.6,
+      "nota_final": 2.63,
+      "media": 2.63,
       "autoavaliação": 2.44,
       "do_líder": 2.55,
       "outros": 2.39,
@@ -25232,11 +25232,11 @@
       "dos_pares": 3.76,
       "dos_subordinados": 2.55,
       "topicos": {
-        "Compromisso com a aprendizagem": 2.38,
-        "Compromisso com ensino": 2.58,
+        "Compromisso com a aprendizagem": 2.25,
+        "Compromisso com ensino": 2.72,
         "Crescimento pessoal e profissional": 2.25,
         "Integração com a instituição": 3.0,
-        "Papel como formador": 2.78
+        "Papel como formador": 2.75
       },
       "questoes": {
         "Coordenadores::Instrução diferenciada": 2.0,
@@ -25311,14 +25311,14 @@
           "autoavaliacao": 2.0,
           "pares_psicologos": 2.96,
           "alunos": 1.83,
-          "geral": 2.38
+          "geral": 2.25
         },
         "Compromisso com ensino": {
           "lider": 2.6,
           "autoavaliacao": 2.2,
           "pares_psicologos": 3.17,
           "alunos": 3.67,
-          "geral": 2.58
+          "geral": 2.72
         },
         "Crescimento pessoal e profissional": {
           "lider": 2.5,
@@ -25339,7 +25339,7 @@
           "autoavaliacao": 3.0,
           "pares_psicologos": 2.88,
           "alunos": 3.0,
-          "geral": 2.78
+          "geral": 2.75
         }
       },
       "indicadores": [
@@ -25543,8 +25543,8 @@
       "area_raw": "Inglês",
       "tag_raw": "RJ - Fernanda Macena Siqueira",
       "lider_raw": "Fernanda Macena Siqueira",
-      "nota_final": 3.48,
-      "media": 3.48,
+      "nota_final": 3.31,
+      "media": 3.31,
       "autoavaliação": 3.58,
       "do_líder": 3.32,
       "outros": 3.28,
@@ -25552,11 +25552,11 @@
       "dos_pares": 3.39,
       "dos_subordinados": 2.57,
       "topicos": {
-        "Compromisso com a aprendizagem": 3.0,
-        "Compromisso com ensino": 3.25,
+        "Compromisso com a aprendizagem": 2.88,
+        "Compromisso com ensino": 3.14,
         "Crescimento pessoal e profissional": 3.75,
         "Integração com a instituição": 4.0,
-        "Papel como formador": 3.38
+        "Papel como formador": 3.3
       },
       "questoes": {
         "Coordenadores::Instrução diferenciada": 3.0,
@@ -25631,14 +25631,14 @@
           "autoavaliacao": 3.0,
           "pares_psicologos": 3.33,
           "alunos": 2.62,
-          "geral": 3.0
+          "geral": 2.88
         },
         "Compromisso com ensino": {
           "lider": 3.2,
           "autoavaliacao": 3.4,
           "pares_psicologos": 3.08,
           "alunos": 2.3,
-          "geral": 3.25
+          "geral": 3.14
         },
         "Crescimento pessoal e profissional": {
           "lider": 3.5,
@@ -25659,7 +25659,7 @@
           "autoavaliacao": 3.5,
           "pares_psicologos": 3.38,
           "alunos": 2.85,
-          "geral": 3.38
+          "geral": 3.3
         }
       },
       "indicadores": [
@@ -25863,8 +25863,8 @@
       "area_raw": null,
       "tag_raw": "CTBA - Reinaldo - F2",
       "lider_raw": "Reinaldo Rodrigues dos Santos",
-      "nota_final": 3.8,
-      "media": 3.8,
+      "nota_final": 3.65,
+      "media": 3.65,
       "autoavaliação": 3.79,
       "do_líder": 3.81,
       "outros": 3.33,
@@ -25872,11 +25872,11 @@
       "dos_pares": 4.0,
       "dos_subordinados": 2.52,
       "topicos": {
-        "Compromisso com a aprendizagem": 3.5,
-        "Compromisso com ensino": 3.65,
+        "Compromisso com a aprendizagem": 3.38,
+        "Compromisso com ensino": 3.53,
         "Crescimento pessoal e profissional": 4.0,
         "Integração com a instituição": 4.0,
-        "Papel como formador": 3.85
+        "Papel como formador": 3.77
       },
       "questoes": {
         "Coordenadores::Instrução diferenciada": 4.0,
@@ -25951,14 +25951,14 @@
           "autoavaliacao": 3.33,
           "pares_psicologos": 3.67,
           "alunos": 2.39,
-          "geral": 3.5
+          "geral": 3.38
         },
         "Compromisso com ensino": {
           "lider": 3.8,
           "autoavaliacao": 3.6,
           "pares_psicologos": 3.5,
           "alunos": 2.22,
-          "geral": 3.65
+          "geral": 3.53
         },
         "Crescimento pessoal e profissional": {
           "lider": 4.0,
@@ -25979,7 +25979,7 @@
           "autoavaliacao": 4.0,
           "pares_psicologos": 3.75,
           "alunos": 3.33,
-          "geral": 3.85
+          "geral": 3.77
         }
       },
       "indicadores": [
@@ -26183,8 +26183,8 @@
       "area_raw": "Português",
       "tag_raw": "RJ - Margareth R Paraguassu",
       "lider_raw": "Margareth R Paraguassu",
-      "nota_final": 2.75,
-      "media": 2.75,
+      "nota_final": 2.53,
+      "media": 2.53,
       "autoavaliação": 3.4,
       "do_líder": 2.15,
       "outros": 1.5,
@@ -26192,11 +26192,11 @@
       "dos_pares": 3.25,
       "dos_subordinados": 2.42,
       "topicos": {
-        "Compromisso com a aprendizagem": 2.06,
-        "Compromisso com ensino": 2.67,
+        "Compromisso com a aprendizagem": 1.97,
+        "Compromisso com ensino": 2.49,
         "Crescimento pessoal e profissional": 3.0,
         "Integração com a instituição": 3.25,
-        "Papel como formador": 2.78
+        "Papel como formador": 2.7
       },
       "questoes": {
         "Coordenadores::Instrução diferenciada": 1.0,
@@ -26271,14 +26271,14 @@
           "autoavaliacao": 2.33,
           "pares_psicologos": 2.33,
           "alunos": 2.44,
-          "geral": 2.06
+          "geral": 1.97
         },
         "Compromisso com ensino": {
           "lider": 2.0,
           "autoavaliacao": 3.4,
           "pares_psicologos": 2.58,
           "alunos": 2.21,
-          "geral": 2.67
+          "geral": 2.49
         },
         "Crescimento pessoal e profissional": {
           "lider": 2.0,
@@ -26299,7 +26299,7 @@
           "autoavaliacao": 3.25,
           "pares_psicologos": 1.88,
           "alunos": 2.69,
-          "geral": 2.78
+          "geral": 2.7
         }
       },
       "indicadores": [
@@ -26503,8 +26503,8 @@
       "area_raw": "Português",
       "tag_raw": "RJ - Margareth R Paraguassu",
       "lider_raw": "Margareth R Paraguassu",
-      "nota_final": 2.94,
-      "media": 2.94,
+      "nota_final": 2.71,
+      "media": 2.71,
       "autoavaliação": 3.59,
       "do_líder": 2.42,
       "outros": 1.5,
@@ -26512,11 +26512,11 @@
       "dos_pares": 3.69,
       "dos_subordinados": 2.06,
       "topicos": {
-        "Compromisso com a aprendizagem": 2.58,
-        "Compromisso com ensino": 2.58,
+        "Compromisso com a aprendizagem": 2.37,
+        "Compromisso com ensino": 2.4,
         "Crescimento pessoal e profissional": 3.25,
         "Integração com a instituição": 3.0,
-        "Papel como formador": 3.3
+        "Papel como formador": 3.15
       },
       "questoes": {
         "Coordenadores::Instrução diferenciada": 2.0,
@@ -26591,14 +26591,14 @@
           "autoavaliacao": 3.5,
           "pares_psicologos": 2.42,
           "alunos": 1.92,
-          "geral": 2.58
+          "geral": 2.37
         },
         "Compromisso com ensino": {
           "lider": 2.0,
           "autoavaliacao": 3.2,
           "pares_psicologos": 2.5,
           "alunos": 2.04,
-          "geral": 2.58
+          "geral": 2.4
         },
         "Crescimento pessoal e profissional": {
           "lider": 2.5,
@@ -26619,7 +26619,7 @@
           "autoavaliacao": 3.75,
           "pares_psicologos": 2.5,
           "alunos": 2.5,
-          "geral": 3.3
+          "geral": 3.15
         }
       },
       "indicadores": [
@@ -26823,8 +26823,8 @@
       "area_raw": "Português",
       "tag_raw": "RJ - Margareth R Paraguassu",
       "lider_raw": "Margareth R Paraguassu",
-      "nota_final": 3.23,
-      "media": 3.23,
+      "nota_final": 3.16,
+      "media": 3.16,
       "autoavaliação": 3.33,
       "do_líder": 3.0,
       "outros": 3.72,
@@ -26832,11 +26832,11 @@
       "dos_pares": 3.43,
       "dos_subordinados": 2.67,
       "topicos": {
-        "Compromisso com a aprendizagem": 3.07,
-        "Compromisso com ensino": 3.08,
+        "Compromisso com a aprendizagem": 2.87,
+        "Compromisso com ensino": 2.91,
         "Crescimento pessoal e profissional": 3.0,
         "Integração com a instituição": 3.5,
-        "Papel como formador": 3.5
+        "Papel como formador": 3.39
       },
       "questoes": {
         "Coordenadores::Instrução diferenciada": 3.0,
@@ -26911,14 +26911,14 @@
           "autoavaliacao": 3.5,
           "pares_psicologos": 3.38,
           "alunos": 2.71,
-          "geral": 3.07
+          "geral": 2.87
         },
         "Compromisso com ensino": {
           "lider": 2.4,
           "autoavaliacao": 3.4,
           "pares_psicologos": 3.67,
           "alunos": 2.45,
-          "geral": 3.08
+          "geral": 2.91
         },
         "Crescimento pessoal e profissional": {
           "lider": 3.0,
@@ -26939,7 +26939,7 @@
           "autoavaliacao": 3.75,
           "pares_psicologos": 3.5,
           "alunos": 2.86,
-          "geral": 3.5
+          "geral": 3.39
         }
       },
       "indicadores": [
@@ -27143,8 +27143,8 @@
       "area_raw": null,
       "tag_raw": "CTBA - Tatiana - EM",
       "lider_raw": "Tatiana Salomão Eulalio de Souza",
-      "nota_final": 2.78,
-      "media": 2.78,
+      "nota_final": 2.57,
+      "media": 2.57,
       "autoavaliação": 3.72,
       "do_líder": 1.79,
       "outros": 2.17,
@@ -27152,11 +27152,11 @@
       "dos_pares": 4.0,
       "dos_subordinados": 2.18,
       "topicos": {
-        "Compromisso com a aprendizagem": 2.89,
-        "Compromisso com ensino": 2.77,
+        "Compromisso com a aprendizagem": 2.55,
+        "Compromisso com ensino": 2.53,
         "Crescimento pessoal e profissional": 2.75,
         "Integração com a instituição": 2.5,
-        "Papel como formador": 3.0
+        "Papel como formador": 2.79
       },
       "questoes": {
         "Coordenadores::Instrução diferenciada": 2.0,
@@ -27231,14 +27231,14 @@
           "autoavaliacao": 4.0,
           "pares_psicologos": 3.0,
           "alunos": 1.96,
-          "geral": 2.89
+          "geral": 2.55
         },
         "Compromisso com ensino": {
           "lider": 1.8,
           "autoavaliacao": 3.6,
           "pares_psicologos": 3.0,
           "alunos": 2.17,
-          "geral": 2.77
+          "geral": 2.53
         },
         "Crescimento pessoal e profissional": {
           "lider": 1.5,
@@ -27259,7 +27259,7 @@
           "autoavaliacao": 4.0,
           "pares_psicologos": 3.0,
           "alunos": 2.88,
-          "geral": 3.0
+          "geral": 2.79
         }
       },
       "indicadores": [
@@ -27463,8 +27463,8 @@
       "area_raw": "Português",
       "tag_raw": "RJ - Margareth R Paraguassu",
       "lider_raw": "Margareth R Paraguassu",
-      "nota_final": 3.26,
-      "media": 3.26,
+      "nota_final": 3.05,
+      "media": 3.05,
       "autoavaliação": 3.75,
       "do_líder": 2.83,
       "outros": 2.67,
@@ -27472,11 +27472,11 @@
       "dos_pares": 3.25,
       "dos_subordinados": 2.44,
       "topicos": {
-        "Compromisso com a aprendizagem": 2.86,
-        "Compromisso com ensino": 2.92,
+        "Compromisso com a aprendizagem": 2.65,
+        "Compromisso com ensino": 2.72,
         "Crescimento pessoal e profissional": 3.25,
         "Integração com a instituição": 3.75,
-        "Papel como formador": 3.5
+        "Papel como formador": 3.45
       },
       "questoes": {
         "Coordenadores::Instrução diferenciada": 3.0,
@@ -27551,14 +27551,14 @@
           "autoavaliacao": 3.67,
           "pares_psicologos": 2.92,
           "alunos": 2.47,
-          "geral": 2.86
+          "geral": 2.65
         },
         "Compromisso com ensino": {
           "lider": 2.4,
           "autoavaliacao": 3.6,
           "pares_psicologos": 2.67,
           "alunos": 2.06,
-          "geral": 2.92
+          "geral": 2.72
         },
         "Crescimento pessoal e profissional": {
           "lider": 2.5,
@@ -27579,7 +27579,7 @@
           "autoavaliacao": 3.5,
           "pares_psicologos": 3.0,
           "alunos": 2.92,
-          "geral": 3.5
+          "geral": 3.45
         }
       },
       "indicadores": [
@@ -27783,8 +27783,8 @@
       "area_raw": "Português",
       "tag_raw": "RJ - Margareth R Paraguassu",
       "lider_raw": "Margareth R Paraguassu",
-      "nota_final": 2.61,
-      "media": 2.61,
+      "nota_final": 2.46,
+      "media": 2.46,
       "autoavaliação": 3.28,
       "do_líder": 1.95,
       "outros": 2.67,
@@ -27792,11 +27792,11 @@
       "dos_pares": 2.29,
       "dos_subordinados": 2.68,
       "topicos": {
-        "Compromisso com a aprendizagem": 2.32,
-        "Compromisso com ensino": 2.19,
+        "Compromisso com a aprendizagem": 2.21,
+        "Compromisso com ensino": 2.1,
         "Crescimento pessoal e profissional": 2.5,
         "Integração com a instituição": 3.0,
-        "Papel como formador": 3.05
+        "Papel como formador": 2.93
       },
       "questoes": {
         "Coordenadores::Instrução diferenciada": 2.0,
@@ -27864,21 +27864,21 @@
       "segmento": "EFII",
       "sexo": "Feminino",
       "cargo": "Docentes",
-      "nivel": "Em Desenvolvimento",
+      "nivel": "Inicial",
       "ambitos_por_avaliador": {
         "Compromisso com a aprendizagem": {
           "lider": 1.67,
           "autoavaliacao": 2.83,
           "pares_psicologos": 2.46,
           "alunos": 2.6,
-          "geral": 2.32
+          "geral": 2.21
         },
         "Compromisso com ensino": {
           "lider": 1.6,
           "autoavaliacao": 2.8,
           "pares_psicologos": 2.17,
           "alunos": 2.49,
-          "geral": 2.19
+          "geral": 2.1
         },
         "Crescimento pessoal e profissional": {
           "lider": 1.5,
@@ -27899,7 +27899,7 @@
           "autoavaliacao": 3.75,
           "pares_psicologos": 2.75,
           "alunos": 3.2,
-          "geral": 3.05
+          "geral": 2.93
         }
       },
       "indicadores": [
@@ -28103,8 +28103,8 @@
       "area_raw": null,
       "tag_raw": "CTBA - Reinaldo - F2",
       "lider_raw": "Reinaldo Rodrigues dos Santos",
-      "nota_final": 2.8,
-      "media": 2.8,
+      "nota_final": 2.6,
+      "media": 2.6,
       "autoavaliação": 3.13,
       "do_líder": 2.38,
       "outros": 2.11,
@@ -28112,11 +28112,11 @@
       "dos_pares": 3.63,
       "dos_subordinados": 1.73,
       "topicos": {
-        "Compromisso com a aprendizagem": 2.54,
-        "Compromisso com ensino": 2.25,
+        "Compromisso com a aprendizagem": 2.34,
+        "Compromisso com ensino": 2.03,
         "Crescimento pessoal e profissional": 3.75,
         "Integração com a instituição": 2.5,
-        "Papel como formador": 2.95
+        "Papel como formador": 2.75
       },
       "questoes": {
         "Coordenadores::Instrução diferenciada": 2.0,
@@ -28191,14 +28191,14 @@
           "autoavaliacao": 2.83,
           "pares_psicologos": 2.79,
           "alunos": 1.75,
-          "geral": 2.54
+          "geral": 2.34
         },
         "Compromisso com ensino": {
           "lider": 1.4,
           "autoavaliacao": 2.8,
           "pares_psicologos": 2.75,
           "alunos": 1.5,
-          "geral": 2.25
+          "geral": 2.03
         },
         "Crescimento pessoal e profissional": {
           "lider": 4.0,
@@ -28219,7 +28219,7 @@
           "autoavaliacao": 3.5,
           "pares_psicologos": 2.75,
           "alunos": 2.0,
-          "geral": 2.95
+          "geral": 2.75
         }
       },
       "indicadores": [
@@ -28423,8 +28423,8 @@
       "area_raw": "Português",
       "tag_raw": "RJ - Margareth R Paraguassu",
       "lider_raw": "Margareth R Paraguassu",
-      "nota_final": 3.26,
-      "media": 3.26,
+      "nota_final": 3.1,
+      "media": 3.1,
       "autoavaliação": 3.44,
       "do_líder": 3.13,
       "outros": 2.56,
@@ -28432,11 +28432,11 @@
       "dos_pares": 2.89,
       "dos_subordinados": 2.9,
       "topicos": {
-        "Compromisso com a aprendizagem": 2.5,
-        "Compromisso com ensino": 2.73,
+        "Compromisso com a aprendizagem": 2.55,
+        "Compromisso com ensino": 2.65,
         "Crescimento pessoal e profissional": 4.0,
         "Integração com a instituição": 3.75,
-        "Papel como formador": 3.3
+        "Papel como formador": 3.23
       },
       "questoes": {
         "Coordenadores::Instrução diferenciada": 3.0,
@@ -28511,14 +28511,14 @@
           "autoavaliacao": 2.5,
           "pares_psicologos": 2.5,
           "alunos": 3.0,
-          "geral": 2.5
+          "geral": 2.55
         },
         "Compromisso com ensino": {
           "lider": 2.4,
           "autoavaliacao": 3.2,
           "pares_psicologos": 2.5,
           "alunos": 2.67,
-          "geral": 2.73
+          "geral": 2.65
         },
         "Crescimento pessoal e profissional": {
           "lider": 4.0,
@@ -28539,7 +28539,7 @@
           "autoavaliacao": 3.5,
           "pares_psicologos": 3.0,
           "alunos": 2.94,
-          "geral": 3.3
+          "geral": 3.23
         }
       },
       "indicadores": [
@@ -28743,8 +28743,8 @@
       "area_raw": "Inglês",
       "tag_raw": "RJ - Fernanda Macena Siqueira",
       "lider_raw": "Fernanda Macena Siqueira",
-      "nota_final": 3.06,
-      "media": 3.06,
+      "nota_final": 2.89,
+      "media": 2.89,
       "autoavaliação": 3.79,
       "do_líder": 2.4,
       "outros": 2.11,
@@ -28752,11 +28752,11 @@
       "dos_pares": 4.0,
       "dos_subordinados": 2.49,
       "topicos": {
-        "Compromisso com a aprendizagem": 2.75,
-        "Compromisso com ensino": 3.12,
+        "Compromisso com a aprendizagem": 2.67,
+        "Compromisso com ensino": 2.89,
         "Crescimento pessoal e profissional": 3.5,
         "Integração com a instituição": 3.0,
-        "Papel como formador": 2.95
+        "Papel como formador": 2.69
       },
       "questoes": {
         "Coordenadores::Instrução diferenciada": 3.0,
@@ -28824,21 +28824,21 @@
       "segmento": "EM",
       "sexo": "Feminino",
       "cargo": "Docentes",
-      "nivel": "Atuação Adequada",
+      "nivel": "Em Desenvolvimento",
       "ambitos_por_avaliador": {
         "Compromisso com a aprendizagem": {
           "lider": 2.33,
           "autoavaliacao": 3.67,
           "pares_psicologos": 2.25,
           "alunos": 2.59,
-          "geral": 2.75
+          "geral": 2.67
         },
         "Compromisso com ensino": {
           "lider": 2.4,
           "autoavaliacao": 3.8,
           "pares_psicologos": 3.17,
           "alunos": 2.3,
-          "geral": 3.12
+          "geral": 2.89
         },
         "Crescimento pessoal e profissional": {
           "lider": 3.0,
@@ -28859,7 +28859,7 @@
           "autoavaliacao": 4.0,
           "pares_psicologos": 3.25,
           "alunos": 2.5,
-          "geral": 2.95
+          "geral": 2.69
         }
       },
       "indicadores": [
@@ -29063,8 +29063,8 @@
       "area_raw": null,
       "tag_raw": "CTBA - Tatiana - EM",
       "lider_raw": "Tatiana Salomão Eulalio de Souza",
-      "nota_final": 3.39,
-      "media": 3.39,
+      "nota_final": 3.1,
+      "media": 3.1,
       "autoavaliação": 3.97,
       "do_líder": 2.81,
       "outros": 2.33,
@@ -29072,11 +29072,11 @@
       "dos_pares": 4.0,
       "dos_subordinados": 2.12,
       "topicos": {
-        "Compromisso com a aprendizagem": 2.97,
-        "Compromisso com ensino": 2.96,
+        "Compromisso com a aprendizagem": 2.66,
+        "Compromisso com ensino": 2.66,
         "Crescimento pessoal e profissional": 3.5,
         "Integração com a instituição": 4.0,
-        "Papel como formador": 3.5
+        "Papel como formador": 3.35
       },
       "questoes": {
         "Coordenadores::Instrução diferenciada": 2.0,
@@ -29151,14 +29151,14 @@
           "autoavaliacao": 3.83,
           "pares_psicologos": 3.08,
           "alunos": 1.89,
-          "geral": 2.97
+          "geral": 2.66
         },
         "Compromisso com ensino": {
           "lider": 1.8,
           "autoavaliacao": 4.0,
           "pares_psicologos": 3.17,
           "alunos": 2.11,
-          "geral": 2.96
+          "geral": 2.66
         },
         "Crescimento pessoal e profissional": {
           "lider": 3.0,
@@ -29179,7 +29179,7 @@
           "autoavaliacao": 4.0,
           "pares_psicologos": 3.0,
           "alunos": 2.83,
-          "geral": 3.5
+          "geral": 3.35
         }
       },
       "indicadores": [
@@ -29383,8 +29383,8 @@
       "area_raw": "Português",
       "tag_raw": "RJ - Margareth R Paraguassu",
       "lider_raw": "Margareth R Paraguassu",
-      "nota_final": 3.12,
-      "media": 3.12,
+      "nota_final": 2.95,
+      "media": 2.95,
       "autoavaliação": 3.39,
       "do_líder": 2.75,
       "outros": 3.11,
@@ -29392,11 +29392,11 @@
       "dos_pares": 3.58,
       "dos_subordinados": 1.97,
       "topicos": {
-        "Compromisso com a aprendizagem": 2.69,
-        "Compromisso com ensino": 2.94,
+        "Compromisso com a aprendizagem": 2.48,
+        "Compromisso com ensino": 2.8,
         "Crescimento pessoal e profissional": 3.25,
         "Integração com a instituição": 3.25,
-        "Papel como formador": 3.45
+        "Papel como formador": 3.29
       },
       "questoes": {
         "Coordenadores::Instrução diferenciada": 3.0,
@@ -29464,21 +29464,21 @@
       "segmento": "EM",
       "sexo": "Masculino",
       "cargo": "Docentes",
-      "nivel": "Atuação Adequada",
+      "nivel": "Em Desenvolvimento",
       "ambitos_por_avaliador": {
         "Compromisso com a aprendizagem": {
           "lider": 2.17,
           "autoavaliacao": 3.0,
           "pares_psicologos": 2.92,
           "alunos": 1.69,
-          "geral": 2.69
+          "geral": 2.48
         },
         "Compromisso com ensino": {
           "lider": 2.6,
           "autoavaliacao": 3.2,
           "pares_psicologos": 3.08,
           "alunos": 2.18,
-          "geral": 2.94
+          "geral": 2.8
         },
         "Crescimento pessoal e profissional": {
           "lider": 3.0,
@@ -29499,7 +29499,7 @@
           "autoavaliacao": 3.75,
           "pares_psicologos": 3.75,
           "alunos": 2.5,
-          "geral": 3.45
+          "geral": 3.29
         }
       },
       "indicadores": [
@@ -29703,8 +29703,8 @@
       "area_raw": null,
       "tag_raw": "CTBA - Tatiana - EM",
       "lider_raw": "Tatiana Salomão Eulalio de Souza",
-      "nota_final": 2.73,
-      "media": 2.73,
+      "nota_final": 2.37,
+      "media": 2.37,
       "autoavaliação": 4.0,
       "do_líder": 1.53,
       "outros": 2.11,
@@ -29712,11 +29712,11 @@
       "dos_pares": 2.99,
       "dos_subordinados": 1.76,
       "topicos": {
-        "Compromisso com a aprendizagem": 2.65,
-        "Compromisso com ensino": 2.79,
+        "Compromisso com a aprendizagem": 2.29,
+        "Compromisso com ensino": 2.48,
         "Crescimento pessoal e profissional": 2.75,
         "Integração com a instituição": 2.75,
-        "Papel como formador": 2.7
+        "Papel como formador": 2.36
       },
       "questoes": {
         "Coordenadores::Instrução diferenciada": 1.0,
@@ -29784,21 +29784,21 @@
       "segmento": "EM",
       "sexo": "Masculino",
       "cargo": "Docentes",
-      "nivel": "Em Desenvolvimento",
+      "nivel": "Inicial",
       "ambitos_por_avaliador": {
         "Compromisso com a aprendizagem": {
           "lider": 1.33,
           "autoavaliacao": 4.0,
           "pares_psicologos": 2.62,
           "alunos": 1.67,
-          "geral": 2.65
+          "geral": 2.29
         },
         "Compromisso com ensino": {
           "lider": 1.8,
           "autoavaliacao": 4.0,
           "pares_psicologos": 2.42,
           "alunos": 1.89,
-          "geral": 2.79
+          "geral": 2.48
         },
         "Crescimento pessoal e profissional": {
           "lider": 1.5,
@@ -29819,7 +29819,7 @@
           "autoavaliacao": 4.0,
           "pares_psicologos": 2.5,
           "alunos": 1.83,
-          "geral": 2.7
+          "geral": 2.36
         }
       },
       "indicadores": [
@@ -30023,8 +30023,8 @@
       "area_raw": "Inglês",
       "tag_raw": "RJ - Fernanda Macena Siqueira",
       "lider_raw": "Fernanda Macena Siqueira",
-      "nota_final": 3.62,
-      "media": 3.62,
+      "nota_final": 3.52,
+      "media": 3.52,
       "autoavaliação": 3.72,
       "do_líder": 3.5,
       "outros": 3.61,
@@ -30032,11 +30032,11 @@
       "dos_pares": 3.46,
       "dos_subordinados": 3.12,
       "topicos": {
-        "Compromisso com a aprendizagem": 3.1,
-        "Compromisso com ensino": 3.44,
+        "Compromisso com a aprendizagem": 3.03,
+        "Compromisso com ensino": 3.43,
         "Crescimento pessoal e profissional": 4.0,
         "Integração com a instituição": 4.0,
-        "Papel como formador": 3.55
+        "Papel como formador": 3.46
       },
       "questoes": {
         "Coordenadores::Instrução diferenciada": 3.0,
@@ -30104,21 +30104,21 @@
       "segmento": "EFII",
       "sexo": "Feminino",
       "cargo": "Docentes",
-      "nivel": "Referência",
+      "nivel": "Atuação Adequada",
       "ambitos_por_avaliador": {
         "Compromisso com a aprendizagem": {
           "lider": 2.67,
           "autoavaliacao": 3.67,
           "pares_psicologos": 2.96,
           "alunos": 3.22,
-          "geral": 3.1
+          "geral": 3.03
         },
         "Compromisso com ensino": {
           "lider": 3.6,
           "autoavaliacao": 3.2,
           "pares_psicologos": 3.58,
           "alunos": 2.95,
-          "geral": 3.44
+          "geral": 3.43
         },
         "Crescimento pessoal e profissional": {
           "lider": 4.0,
@@ -30139,7 +30139,7 @@
           "autoavaliacao": 3.75,
           "pares_psicologos": 3.75,
           "alunos": 3.08,
-          "geral": 3.55
+          "geral": 3.46
         }
       },
       "indicadores": [
@@ -30343,8 +30343,8 @@
       "area_raw": "Português",
       "tag_raw": "RJ - Margareth R Paraguassu",
       "lider_raw": "Margareth R Paraguassu",
-      "nota_final": 2.73,
-      "media": 2.73,
+      "nota_final": 2.72,
+      "media": 2.72,
       "autoavaliação": 2.71,
       "do_líder": 2.58,
       "outros": 3.11,
@@ -30352,11 +30352,11 @@
       "dos_pares": 3.5,
       "dos_subordinados": 2.17,
       "topicos": {
-        "Compromisso com a aprendizagem": 2.81,
-        "Compromisso com ensino": 2.56,
+        "Compromisso com a aprendizagem": 2.62,
+        "Compromisso com ensino": 2.54,
         "Crescimento pessoal e profissional": 2.75,
         "Integração com a instituição": 2.5,
-        "Papel como formador": 3.05
+        "Papel como formador": 3.0
       },
       "questoes": {
         "Coordenadores::Instrução diferenciada": 3.0,
@@ -30431,14 +30431,14 @@
           "autoavaliacao": 2.83,
           "pares_psicologos": 3.25,
           "alunos": 2.19,
-          "geral": 2.81
+          "geral": 2.62
         },
         "Compromisso com ensino": {
           "lider": 2.8,
           "autoavaliacao": 2.2,
           "pares_psicologos": 2.75,
           "alunos": 1.85,
-          "geral": 2.56
+          "geral": 2.54
         },
         "Crescimento pessoal e profissional": {
           "lider": 2.5,
@@ -30459,7 +30459,7 @@
           "autoavaliacao": 3.0,
           "pares_psicologos": 3.75,
           "alunos": 2.61,
-          "geral": 3.05
+          "geral": 3.0
         }
       },
       "indicadores": [
@@ -30663,8 +30663,8 @@
       "area_raw": null,
       "tag_raw": "CTBA - Reinaldo - F2",
       "lider_raw": "Reinaldo Rodrigues dos Santos",
-      "nota_final": 3.43,
-      "media": 3.43,
+      "nota_final": 3.32,
+      "media": 3.32,
       "autoavaliação": 3.58,
       "do_líder": 3.38,
       "outros": 2.33,
@@ -30672,11 +30672,11 @@
       "dos_pares": 3.74,
       "dos_subordinados": 2.95,
       "topicos": {
-        "Compromisso com a aprendizagem": 3.24,
-        "Compromisso com ensino": 3.17,
+        "Compromisso com a aprendizagem": 3.19,
+        "Compromisso com ensino": 3.08,
         "Crescimento pessoal e profissional": 3.5,
         "Integração com a instituição": 4.0,
-        "Papel como formador": 3.25
+        "Papel como formador": 3.26
       },
       "questoes": {
         "Coordenadores::Instrução diferenciada": 3.0,
@@ -30751,14 +30751,14 @@
           "autoavaliacao": 3.5,
           "pares_psicologos": 3.04,
           "alunos": 2.83,
-          "geral": 3.24
+          "geral": 3.19
         },
         "Compromisso com ensino": {
           "lider": 3.0,
           "autoavaliacao": 3.4,
           "pares_psicologos": 3.08,
           "alunos": 2.67,
-          "geral": 3.17
+          "geral": 3.08
         },
         "Crescimento pessoal e profissional": {
           "lider": 3.5,
@@ -30779,7 +30779,7 @@
           "autoavaliacao": 3.5,
           "pares_psicologos": 2.75,
           "alunos": 3.75,
-          "geral": 3.25
+          "geral": 3.26
         }
       },
       "indicadores": [
@@ -30983,8 +30983,8 @@
       "area_raw": "Português",
       "tag_raw": "RJ - Margareth R Paraguassu",
       "lider_raw": "Margareth R Paraguassu",
-      "nota_final": 3.34,
-      "media": 3.34,
+      "nota_final": 3.21,
+      "media": 3.21,
       "autoavaliação": 3.35,
       "do_líder": 3.15,
       "outros": 3.5,
@@ -30992,11 +30992,11 @@
       "dos_pares": 3.63,
       "dos_subordinados": 2.47,
       "topicos": {
-        "Compromisso com a aprendizagem": 2.9,
-        "Compromisso com ensino": 3.21,
+        "Compromisso com a aprendizagem": 2.74,
+        "Compromisso com ensino": 3.08,
         "Crescimento pessoal e profissional": 3.5,
         "Integração com a instituição": 4.0,
-        "Papel como formador": 3.08
+        "Papel como formador": 3.1
       },
       "questoes": {
         "Coordenadores::Instrução diferenciada": 3.0,
@@ -31071,14 +31071,14 @@
           "autoavaliacao": 2.83,
           "pares_psicologos": 3.38,
           "alunos": 2.27,
-          "geral": 2.9
+          "geral": 2.74
         },
         "Compromisso com ensino": {
           "lider": 3.0,
           "autoavaliacao": 3.4,
           "pares_psicologos": 3.25,
           "alunos": 2.25,
-          "geral": 3.21
+          "geral": 3.08
         },
         "Crescimento pessoal e profissional": {
           "lider": 3.5,
@@ -31099,7 +31099,7 @@
           "autoavaliacao": 3.0,
           "pares_psicologos": 3.88,
           "alunos": 3.38,
-          "geral": 3.08
+          "geral": 3.1
         }
       },
       "indicadores": [
@@ -31303,8 +31303,8 @@
       "area_raw": null,
       "tag_raw": "CTBA - Reinaldo - F2",
       "lider_raw": "Reinaldo Rodrigues dos Santos",
-      "nota_final": 3.13,
-      "media": 3.13,
+      "nota_final": 2.91,
+      "media": 2.91,
       "autoavaliação": 3.54,
       "do_líder": 2.78,
       "outros": 2.44,
@@ -31312,11 +31312,11 @@
       "dos_pares": 3.51,
       "dos_subordinados": 1.82,
       "topicos": {
-        "Compromisso com a aprendizagem": 2.85,
-        "Compromisso com ensino": 3.31,
+        "Compromisso com a aprendizagem": 2.7,
+        "Compromisso com ensino": 3.13,
         "Crescimento pessoal e profissional": 3.25,
         "Integração com a instituição": 3.0,
-        "Papel como formador": 3.23
+        "Papel como formador": 2.95
       },
       "questoes": {
         "Coordenadores::Instrução diferenciada": 3.0,
@@ -31384,21 +31384,21 @@
       "segmento": "EFII",
       "sexo": "Masculino",
       "cargo": "Docentes",
-      "nivel": "Atuação Adequada",
+      "nivel": "Em Desenvolvimento",
       "ambitos_por_avaliador": {
         "Compromisso com a aprendizagem": {
           "lider": 2.67,
           "autoavaliacao": 3.17,
           "pares_psicologos": 2.71,
           "alunos": 1.67,
-          "geral": 2.85
+          "geral": 2.7
         },
         "Compromisso com ensino": {
           "lider": 3.0,
           "autoavaliacao": 3.8,
           "pares_psicologos": 3.0,
           "alunos": 2.33,
-          "geral": 3.31
+          "geral": 3.13
         },
         "Crescimento pessoal e profissional": {
           "lider": 3.0,
@@ -31419,7 +31419,7 @@
           "autoavaliacao": 3.75,
           "pares_psicologos": 3.12,
           "alunos": 1.5,
-          "geral": 3.23
+          "geral": 2.95
         }
       },
       "indicadores": [
@@ -31623,8 +31623,8 @@
       "area_raw": "Português",
       "tag_raw": "RJ - Margareth R Paraguassu",
       "lider_raw": "Margareth R Paraguassu",
-      "nota_final": 2.96,
-      "media": 2.96,
+      "nota_final": 2.78,
+      "media": 2.78,
       "autoavaliação": 3.71,
       "do_líder": 2.12,
       "outros": 3.0,
@@ -31632,11 +31632,11 @@
       "dos_pares": 3.28,
       "dos_subordinados": 2.73,
       "topicos": {
-        "Compromisso com a aprendizagem": 2.56,
-        "Compromisso com ensino": 2.92,
+        "Compromisso com a aprendizagem": 2.37,
+        "Compromisso com ensino": 2.75,
         "Crescimento pessoal e profissional": 3.0,
         "Integração com a instituição": 3.0,
-        "Papel como formador": 3.3
+        "Papel como formador": 3.2
       },
       "questoes": {
         "Coordenadores::Instrução diferenciada": 2.0,
@@ -31711,14 +31711,14 @@
           "autoavaliacao": 3.17,
           "pares_psicologos": 2.83,
           "alunos": 2.57,
-          "geral": 2.56
+          "geral": 2.37
         },
         "Compromisso com ensino": {
           "lider": 2.2,
           "autoavaliacao": 3.4,
           "pares_psicologos": 3.33,
           "alunos": 2.48,
-          "geral": 2.92
+          "geral": 2.75
         },
         "Crescimento pessoal e profissional": {
           "lider": 2.0,
@@ -31739,7 +31739,7 @@
           "autoavaliacao": 4.0,
           "pares_psicologos": 3.0,
           "alunos": 3.58,
-          "geral": 3.3
+          "geral": 3.2
         }
       },
       "indicadores": [
@@ -31943,8 +31943,8 @@
       "area_raw": null,
       "tag_raw": "CTBA - Reinaldo - F2",
       "lider_raw": "Reinaldo Rodrigues dos Santos",
-      "nota_final": 3.29,
-      "media": 3.29,
+      "nota_final": 3.16,
+      "media": 3.16,
       "autoavaliação": 3.53,
       "do_líder": 3.13,
       "outros": 2.33,
@@ -31952,11 +31952,11 @@
       "dos_pares": 3.72,
       "dos_subordinados": 2.64,
       "topicos": {
-        "Compromisso com a aprendizagem": 3.08,
-        "Compromisso com ensino": 3.08,
+        "Compromisso com a aprendizagem": 2.97,
+        "Compromisso com ensino": 2.94,
         "Crescimento pessoal e profissional": 3.25,
         "Integração com a instituição": 3.75,
-        "Papel como formador": 3.3
+        "Papel como formador": 3.26
       },
       "questoes": {
         "Coordenadores::Instrução diferenciada": 3.0,
@@ -32031,14 +32031,14 @@
           "autoavaliacao": 3.5,
           "pares_psicologos": 2.92,
           "alunos": 2.42,
-          "geral": 3.08
+          "geral": 2.97
         },
         "Compromisso com ensino": {
           "lider": 2.8,
           "autoavaliacao": 3.4,
           "pares_psicologos": 3.0,
           "alunos": 2.33,
-          "geral": 3.08
+          "geral": 2.94
         },
         "Crescimento pessoal e profissional": {
           "lider": 3.5,
@@ -32059,7 +32059,7 @@
           "autoavaliacao": 3.75,
           "pares_psicologos": 3.0,
           "alunos": 3.75,
-          "geral": 3.3
+          "geral": 3.26
         }
       },
       "indicadores": [
@@ -32263,8 +32263,8 @@
       "area_raw": "Português",
       "tag_raw": "RJ - Margareth R Paraguassu",
       "lider_raw": "Margareth R Paraguassu",
-      "nota_final": 2.19,
-      "media": 2.19,
+      "nota_final": 2.12,
+      "media": 2.12,
       "autoavaliação": 2.93,
       "do_líder": 1.62,
       "outros": 1.17,
@@ -32273,10 +32273,10 @@
       "dos_subordinados": 2.93,
       "topicos": {
         "Compromisso com a aprendizagem": 2.0,
-        "Compromisso com ensino": 2.08,
+        "Compromisso com ensino": 2.03,
         "Crescimento pessoal e profissional": 2.0,
         "Integração com a instituição": 2.5,
-        "Papel como formador": 2.38
+        "Papel como formador": 2.36
       },
       "questoes": {
         "Coordenadores::Instrução diferenciada": 2.0,
@@ -32358,7 +32358,7 @@
           "autoavaliacao": 2.8,
           "pares_psicologos": 1.67,
           "alunos": 2.79,
-          "geral": 2.08
+          "geral": 2.03
         },
         "Crescimento pessoal e profissional": {
           "lider": 1.0,
@@ -32379,7 +32379,7 @@
           "autoavaliacao": 3.0,
           "pares_psicologos": 1.88,
           "alunos": 3.38,
-          "geral": 2.38
+          "geral": 2.36
         }
       },
       "indicadores": [
@@ -32583,8 +32583,8 @@
       "area_raw": null,
       "tag_raw": "CTBA - Reinaldo - F2",
       "lider_raw": "Reinaldo Rodrigues dos Santos",
-      "nota_final": 2.97,
-      "media": 2.97,
+      "nota_final": 2.83,
+      "media": 2.83,
       "autoavaliação": 3.23,
       "do_líder": 2.74,
       "outros": 2.39,
@@ -32592,11 +32592,11 @@
       "dos_pares": 3.44,
       "dos_subordinados": 2.07,
       "topicos": {
-        "Compromisso com a aprendizagem": 2.69,
-        "Compromisso com ensino": 3.31,
+        "Compromisso com a aprendizagem": 2.61,
+        "Compromisso com ensino": 3.08,
         "Crescimento pessoal e profissional": 2.5,
         "Integração com a instituição": 3.25,
-        "Papel como formador": 3.08
+        "Papel como formador": 2.82
       },
       "questoes": {
         "Coordenadores::Instrução diferenciada": 3.0,
@@ -32671,14 +32671,14 @@
           "autoavaliacao": 2.67,
           "pares_psicologos": 2.75,
           "alunos": 1.93,
-          "geral": 2.69
+          "geral": 2.61
         },
         "Compromisso com ensino": {
           "lider": 2.8,
           "autoavaliacao": 4.0,
           "pares_psicologos": 3.0,
           "alunos": 2.2,
-          "geral": 3.31
+          "geral": 3.08
         },
         "Crescimento pessoal e profissional": {
           "lider": 3.0,
@@ -32699,7 +32699,7 @@
           "autoavaliacao": 4.0,
           "pares_psicologos": 2.88,
           "alunos": 2.3,
-          "geral": 3.08
+          "geral": 2.82
         }
       },
       "indicadores": [
@@ -32903,8 +32903,8 @@
       "area_raw": null,
       "tag_raw": "CTBA - Reinaldo - F2",
       "lider_raw": "Reinaldo Rodrigues dos Santos",
-      "nota_final": 3.65,
-      "media": 3.65,
+      "nota_final": 3.54,
+      "media": 3.54,
       "autoavaliação": 3.73,
       "do_líder": 3.64,
       "outros": 3.06,
@@ -32912,11 +32912,11 @@
       "dos_pares": 3.82,
       "dos_subordinados": 2.82,
       "topicos": {
-        "Compromisso com a aprendizagem": 3.54,
-        "Compromisso com ensino": 3.63,
+        "Compromisso com a aprendizagem": 3.53,
+        "Compromisso com ensino": 3.5,
         "Crescimento pessoal e profissional": 4.0,
         "Integração com a instituição": 3.5,
-        "Papel como formador": 3.58
+        "Papel como formador": 3.46
       },
       "questoes": {
         "Coordenadores::Instrução diferenciada": 4.0,
@@ -32984,21 +32984,21 @@
       "segmento": "EFII",
       "sexo": "Masculino",
       "cargo": "Docentes",
-      "nivel": "Referência",
+      "nivel": "Atuação Adequada",
       "ambitos_por_avaliador": {
         "Compromisso com a aprendizagem": {
           "lider": 3.83,
           "autoavaliacao": 3.33,
           "pares_psicologos": 3.46,
           "alunos": 2.83,
-          "geral": 3.54
+          "geral": 3.53
         },
         "Compromisso com ensino": {
           "lider": 3.6,
           "autoavaliacao": 3.8,
           "pares_psicologos": 3.42,
           "alunos": 2.5,
-          "geral": 3.63
+          "geral": 3.5
         },
         "Crescimento pessoal e profissional": {
           "lider": 4.0,
@@ -33019,7 +33019,7 @@
           "autoavaliacao": 4.0,
           "pares_psicologos": 3.38,
           "alunos": 3.25,
-          "geral": 3.58
+          "geral": 3.46
         }
       },
       "indicadores": [
@@ -33223,8 +33223,8 @@
       "area_raw": null,
       "tag_raw": "CTBA - Tatiana - EM",
       "lider_raw": "Tatiana Salomão Eulalio de Souza",
-      "nota_final": 2.71,
-      "media": 2.71,
+      "nota_final": 2.66,
+      "media": 2.66,
       "autoavaliação": 2.84,
       "do_líder": 2.33,
       "outros": 2.5,
@@ -33232,11 +33232,11 @@
       "dos_pares": 4.0,
       "dos_subordinados": 2.52,
       "topicos": {
-        "Compromisso com a aprendizagem": 2.42,
-        "Compromisso com ensino": 2.42,
+        "Compromisso com a aprendizagem": 2.23,
+        "Compromisso com ensino": 2.41,
         "Crescimento pessoal e profissional": 3.0,
         "Integração com a instituição": 2.75,
-        "Papel como formador": 2.95
+        "Papel como formador": 2.87
       },
       "questoes": {
         "Coordenadores::Instrução diferenciada": 3.0,
@@ -33311,14 +33311,14 @@
           "autoavaliacao": 2.33,
           "pares_psicologos": 3.08,
           "alunos": 2.11,
-          "geral": 2.42
+          "geral": 2.23
         },
         "Compromisso com ensino": {
           "lider": 1.8,
           "autoavaliacao": 2.6,
           "pares_psicologos": 3.17,
           "alunos": 3.11,
-          "geral": 2.42
+          "geral": 2.41
         },
         "Crescimento pessoal e profissional": {
           "lider": 3.0,
@@ -33339,7 +33339,7 @@
           "autoavaliacao": 3.25,
           "pares_psicologos": 3.25,
           "alunos": 2.83,
-          "geral": 2.95
+          "geral": 2.87
         }
       },
       "indicadores": [
@@ -33543,8 +33543,8 @@
       "area_raw": null,
       "tag_raw": "CTBA - Tatiana - EM",
       "lider_raw": "Tatiana Salomão Eulalio de Souza",
-      "nota_final": 3.02,
-      "media": 3.02,
+      "nota_final": 2.77,
+      "media": 2.77,
       "autoavaliação": 4.0,
       "do_líder": 2.01,
       "outros": 2.56,
@@ -33552,11 +33552,11 @@
       "dos_pares": 3.74,
       "dos_subordinados": 2.36,
       "topicos": {
-        "Compromisso com a aprendizagem": 2.93,
-        "Compromisso com ensino": 3.08,
+        "Compromisso com a aprendizagem": 2.61,
+        "Compromisso com ensino": 2.87,
         "Crescimento pessoal e profissional": 3.0,
         "Integração com a instituição": 3.25,
-        "Papel como formador": 2.85
+        "Papel como formador": 2.62
       },
       "questoes": {
         "Coordenadores::Instrução diferenciada": 1.0,
@@ -33624,21 +33624,21 @@
       "segmento": "EM",
       "sexo": "Masculino",
       "cargo": "Docentes",
-      "nivel": "Atuação Adequada",
+      "nivel": "Em Desenvolvimento",
       "ambitos_por_avaliador": {
         "Compromisso com a aprendizagem": {
           "lider": 1.83,
           "autoavaliacao": 4.0,
           "pares_psicologos": 2.96,
           "alunos": 1.96,
-          "geral": 2.93
+          "geral": 2.61
         },
         "Compromisso com ensino": {
           "lider": 2.2,
           "autoavaliacao": 4.0,
           "pares_psicologos": 3.0,
           "alunos": 2.75,
-          "geral": 3.08
+          "geral": 2.87
         },
         "Crescimento pessoal e profissional": {
           "lider": 2.0,
@@ -33659,7 +33659,7 @@
           "autoavaliacao": 4.0,
           "pares_psicologos": 3.25,
           "alunos": 3.0,
-          "geral": 2.85
+          "geral": 2.62
         }
       },
       "indicadores": [
@@ -33863,8 +33863,8 @@
       "area_raw": null,
       "tag_raw": "RJ - Margareth R Paraguassu",
       "lider_raw": "Margareth R Paraguassu",
-      "nota_final": 3.22,
-      "media": 3.22,
+      "nota_final": 2.91,
+      "media": 2.91,
       "autoavaliação": 4.0,
       "do_líder": 2.45,
       "outros": 3.5,
@@ -33872,11 +33872,11 @@
       "dos_pares": 2.6,
       "dos_subordinados": 1.94,
       "topicos": {
-        "Compromisso com a aprendizagem": 3.01,
-        "Compromisso com ensino": 2.96,
+        "Compromisso com a aprendizagem": 2.7,
+        "Compromisso com ensino": 2.68,
         "Crescimento pessoal e profissional": 3.5,
         "Integração com a instituição": 3.25,
-        "Papel como formador": 3.35
+        "Papel como formador": 3.05
       },
       "questoes": {
         "Coordenadores::Instrução diferenciada": 2.0,
@@ -33944,21 +33944,21 @@
       "segmento": "EFII",
       "sexo": "Feminino",
       "cargo": "Docentes",
-      "nivel": "Atuação Adequada",
+      "nivel": "Em Desenvolvimento",
       "ambitos_por_avaliador": {
         "Compromisso com a aprendizagem": {
           "lider": 2.0,
           "autoavaliacao": 4.0,
           "pares_psicologos": 3.04,
           "alunos": 1.92,
-          "geral": 3.01
+          "geral": 2.7
         },
         "Compromisso com ensino": {
           "lider": 2.0,
           "autoavaliacao": 4.0,
           "pares_psicologos": 2.83,
           "alunos": 2.17,
-          "geral": 2.96
+          "geral": 2.68
         },
         "Crescimento pessoal e profissional": {
           "lider": 3.0,
@@ -33979,7 +33979,7 @@
           "autoavaliacao": 4.0,
           "pares_psicologos": 3.25,
           "alunos": 1.67,
-          "geral": 3.35
+          "geral": 3.05
         }
       },
       "indicadores": [
@@ -34183,8 +34183,8 @@
       "area_raw": null,
       "tag_raw": "CTBA - Tatiana - EM",
       "lider_raw": "Tatiana Salomão Eulalio de Souza",
-      "nota_final": 3.55,
-      "media": 3.55,
+      "nota_final": 3.41,
+      "media": 3.41,
       "autoavaliação": 4.0,
       "do_líder": 3.15,
       "outros": 2.94,
@@ -34192,11 +34192,11 @@
       "dos_pares": 4.0,
       "dos_subordinados": 2.94,
       "topicos": {
-        "Compromisso com a aprendizagem": 3.36,
-        "Compromisso com ensino": 3.58,
+        "Compromisso com a aprendizagem": 3.2,
+        "Compromisso com ensino": 3.5,
         "Crescimento pessoal e profissional": 3.5,
         "Integração com a instituição": 3.75,
-        "Papel como formador": 3.55
+        "Papel como formador": 3.44
       },
       "questoes": {
         "Coordenadores::Instrução diferenciada": 3.0,
@@ -34271,14 +34271,14 @@
           "autoavaliacao": 4.0,
           "pares_psicologos": 3.17,
           "alunos": 2.5,
-          "geral": 3.36
+          "geral": 3.2
         },
         "Compromisso com ensino": {
           "lider": 3.2,
           "autoavaliacao": 4.0,
           "pares_psicologos": 3.5,
           "alunos": 3.56,
-          "geral": 3.58
+          "geral": 3.5
         },
         "Crescimento pessoal e profissional": {
           "lider": 3.0,
@@ -34299,7 +34299,7 @@
           "autoavaliacao": 4.0,
           "pares_psicologos": 3.5,
           "alunos": 3.33,
-          "geral": 3.55
+          "geral": 3.44
         }
       },
       "indicadores": [
@@ -34503,8 +34503,8 @@
       "area_raw": "Inglês",
       "tag_raw": "RJ - Fernanda Macena Siqueira",
       "lider_raw": "Fernanda Macena Siqueira",
-      "nota_final": 3.6,
-      "media": 3.6,
+      "nota_final": 3.48,
+      "media": 3.48,
       "autoavaliação": 3.6,
       "do_líder": 3.6,
       "outros": 2.83,
@@ -34512,11 +34512,11 @@
       "dos_pares": 4.0,
       "dos_subordinados": 2.72,
       "topicos": {
-        "Compromisso com a aprendizagem": 3.14,
-        "Compromisso com ensino": 3.65,
+        "Compromisso com a aprendizagem": 3.11,
+        "Compromisso com ensino": 3.55,
         "Crescimento pessoal e profissional": 4.0,
         "Integração com a instituição": 4.0,
-        "Papel como formador": 3.2
+        "Papel como formador": 3.14
       },
       "questoes": {
         "Coordenadores::Instrução diferenciada": 4.0,
@@ -34584,21 +34584,21 @@
       "segmento": "EM",
       "sexo": "Masculino",
       "cargo": "Docentes",
-      "nivel": "Referência",
+      "nivel": "Atuação Adequada",
       "ambitos_por_avaliador": {
         "Compromisso com a aprendizagem": {
           "lider": 3.17,
           "autoavaliacao": 3.17,
           "pares_psicologos": 3.08,
           "alunos": 2.75,
-          "geral": 3.14
+          "geral": 3.11
         },
         "Compromisso com ensino": {
           "lider": 3.6,
           "autoavaliacao": 3.6,
           "pares_psicologos": 3.83,
           "alunos": 2.67,
-          "geral": 3.65
+          "geral": 3.55
         },
         "Crescimento pessoal e profissional": {
           "lider": 4.0,
@@ -34619,7 +34619,7 @@
           "autoavaliacao": 3.25,
           "pares_psicologos": 3.0,
           "alunos": 2.69,
-          "geral": 3.2
+          "geral": 3.14
         }
       },
       "indicadores": [
@@ -34823,8 +34823,8 @@
       "area_raw": "Português",
       "tag_raw": "RJ - Margareth R Paraguassu",
       "lider_raw": "Margareth R Paraguassu",
-      "nota_final": 2.97,
-      "media": 2.97,
+      "nota_final": 2.96,
+      "media": 2.96,
       "autoavaliação": 2.61,
       "do_líder": 2.96,
       "outros": 3.83,
@@ -34833,10 +34833,10 @@
       "dos_subordinados": 2.97,
       "topicos": {
         "Compromisso com a aprendizagem": 2.33,
-        "Compromisso com ensino": 2.35,
+        "Compromisso com ensino": 2.44,
         "Crescimento pessoal e profissional": 3.5,
         "Integração com a instituição": 3.75,
-        "Papel como formador": 2.9
+        "Papel como formador": 2.98
       },
       "questoes": {
         "Coordenadores::Instrução diferenciada": 2.0,
@@ -34918,7 +34918,7 @@
           "autoavaliacao": 1.8,
           "pares_psicologos": 3.5,
           "alunos": 3.0,
-          "geral": 2.35
+          "geral": 2.44
         },
         "Crescimento pessoal e profissional": {
           "lider": 3.5,
@@ -34939,7 +34939,7 @@
           "autoavaliacao": 2.75,
           "pares_psicologos": 3.5,
           "alunos": 3.54,
-          "geral": 2.9
+          "geral": 2.98
         }
       },
       "indicadores": [
@@ -35143,8 +35143,8 @@
       "area_raw": "Inglês",
       "tag_raw": "RJ - Fernanda Macena Siqueira",
       "lider_raw": "Fernanda Macena Siqueira",
-      "nota_final": 3.19,
-      "media": 3.19,
+      "nota_final": 3.01,
+      "media": 3.01,
       "autoavaliação": 3.27,
       "do_líder": 3.32,
       "outros": 1.5,
@@ -35152,11 +35152,11 @@
       "dos_pares": 3.81,
       "dos_subordinados": 1.71,
       "topicos": {
-        "Compromisso com a aprendizagem": 2.94,
-        "Compromisso com ensino": 3.15,
+        "Compromisso com a aprendizagem": 2.87,
+        "Compromisso com ensino": 3.06,
         "Crescimento pessoal e profissional": 3.25,
         "Integração com a instituição": 3.75,
-        "Papel como formador": 2.88
+        "Papel como formador": 2.74
       },
       "questoes": {
         "Coordenadores::Instrução diferenciada": 3.0,
@@ -35231,14 +35231,14 @@
           "autoavaliacao": 3.33,
           "pares_psicologos": 2.5,
           "alunos": 1.83,
-          "geral": 2.94
+          "geral": 2.87
         },
         "Compromisso com ensino": {
           "lider": 3.6,
           "autoavaliacao": 3.0,
           "pares_psicologos": 2.67,
           "alunos": 1.52,
-          "geral": 3.15
+          "geral": 3.06
         },
         "Crescimento pessoal e profissional": {
           "lider": 3.0,
@@ -35259,7 +35259,7 @@
           "autoavaliacao": 3.0,
           "pares_psicologos": 2.38,
           "alunos": 1.61,
-          "geral": 2.88
+          "geral": 2.74
         }
       },
       "indicadores": [
@@ -35772,8 +35772,8 @@
       "area_raw": null,
       "tag_raw": "CTBA - Reinaldo - F2",
       "lider_raw": "Reinaldo Rodrigues dos Santos",
-      "nota_final": 3.61,
-      "media": 3.61,
+      "nota_final": 3.42,
+      "media": 3.42,
       "autoavaliação": 3.78,
       "do_líder": 3.64,
       "outros": 2.67,
@@ -35781,11 +35781,11 @@
       "dos_pares": 3.53,
       "dos_subordinados": 2.14,
       "topicos": {
-        "Compromisso com a aprendizagem": 3.36,
-        "Compromisso com ensino": 3.79,
+        "Compromisso com a aprendizagem": 3.34,
+        "Compromisso com ensino": 3.59,
         "Crescimento pessoal e profissional": 3.75,
         "Integração com a instituição": 3.75,
-        "Papel como formador": 3.4
+        "Papel como formador": 3.23
       },
       "questoes": {
         "Coordenadores::Instrução diferenciada": 4.0,
@@ -35853,21 +35853,21 @@
       "segmento": "EFII",
       "sexo": "Feminino",
       "cargo": "Docentes",
-      "nivel": "Referência",
+      "nivel": "Atuação Adequada",
       "ambitos_por_avaliador": {
         "Compromisso com a aprendizagem": {
           "lider": 3.67,
           "autoavaliacao": 3.67,
           "pares_psicologos": 2.75,
           "alunos": 2.17,
-          "geral": 3.36
+          "geral": 3.34
         },
         "Compromisso com ensino": {
           "lider": 3.8,
           "autoavaliacao": 4.0,
           "pares_psicologos": 3.42,
           "alunos": 2.0,
-          "geral": 3.79
+          "geral": 3.59
         },
         "Crescimento pessoal e profissional": {
           "lider": 4.0,
@@ -35888,7 +35888,7 @@
           "autoavaliacao": 3.75,
           "pares_psicologos": 3.0,
           "alunos": 2.25,
-          "geral": 3.4
+          "geral": 3.23
         }
       },
       "indicadores": [
@@ -36092,8 +36092,8 @@
       "area_raw": null,
       "tag_raw": "CTBA - Tatiana - EM",
       "lider_raw": "Tatiana Salomão Eulalio de Souza",
-      "nota_final": 3.22,
-      "media": 3.22,
+      "nota_final": 3.21,
+      "media": 3.21,
       "autoavaliação": 3.16,
       "do_líder": 3.21,
       "outros": 3.0,
@@ -36101,11 +36101,11 @@
       "dos_pares": 4.0,
       "dos_subordinados": 2.73,
       "topicos": {
-        "Compromisso com a aprendizagem": 3.39,
-        "Compromisso com ensino": 3.12,
+        "Compromisso com a aprendizagem": 3.21,
+        "Compromisso com ensino": 3.08,
         "Crescimento pessoal e profissional": 3.5,
         "Integração com a instituição": 3.0,
-        "Papel como formador": 3.1
+        "Papel como formador": 3.17
       },
       "questoes": {
         "Coordenadores::Instrução diferenciada": 4.0,
@@ -36180,14 +36180,14 @@
           "autoavaliacao": 3.83,
           "pares_psicologos": 3.33,
           "alunos": 2.33,
-          "geral": 3.39
+          "geral": 3.21
         },
         "Compromisso com ensino": {
           "lider": 2.8,
           "autoavaliacao": 3.2,
           "pares_psicologos": 3.5,
           "alunos": 3.22,
-          "geral": 3.12
+          "geral": 3.08
         },
         "Crescimento pessoal e profissional": {
           "lider": 3.5,
@@ -36208,7 +36208,7 @@
           "autoavaliacao": 2.75,
           "pares_psicologos": 3.5,
           "alunos": 3.17,
-          "geral": 3.1
+          "geral": 3.17
         }
       },
       "indicadores": [
@@ -36412,8 +36412,8 @@
       "area_raw": null,
       "tag_raw": "CTBA - Tatiana - EM",
       "lider_raw": "Tatiana Salomão Eulalio de Souza",
-      "nota_final": 2.92,
-      "media": 2.92,
+      "nota_final": 2.69,
+      "media": 2.69,
       "autoavaliação": 3.5,
       "do_líder": 2.27,
       "outros": 2.39,
@@ -36421,11 +36421,11 @@
       "dos_pares": 3.89,
       "dos_subordinados": 1.67,
       "topicos": {
-        "Compromisso com a aprendizagem": 2.61,
-        "Compromisso com ensino": 2.85,
+        "Compromisso com a aprendizagem": 2.39,
+        "Compromisso com ensino": 2.65,
         "Crescimento pessoal e profissional": 3.25,
         "Integração com a instituição": 2.75,
-        "Papel como formador": 3.15
+        "Papel como formador": 2.9
       },
       "questoes": {
         "Coordenadores::Instrução diferenciada": 2.0,
@@ -36500,14 +36500,14 @@
           "autoavaliacao": 2.83,
           "pares_psicologos": 2.83,
           "alunos": 1.39,
-          "geral": 2.61
+          "geral": 2.39
         },
         "Compromisso com ensino": {
           "lider": 2.2,
           "autoavaliacao": 3.4,
           "pares_psicologos": 3.0,
           "alunos": 2.11,
-          "geral": 2.85
+          "geral": 2.65
         },
         "Crescimento pessoal e profissional": {
           "lider": 2.5,
@@ -36528,7 +36528,7 @@
           "autoavaliacao": 3.75,
           "pares_psicologos": 3.25,
           "alunos": 1.83,
-          "geral": 3.15
+          "geral": 2.9
         }
       },
       "indicadores": [
@@ -36732,8 +36732,8 @@
       "area_raw": null,
       "tag_raw": "CTBA - Tatiana - EM",
       "lider_raw": "Tatiana Salomão Eulalio de Souza",
-      "nota_final": 2.6,
-      "media": 2.6,
+      "nota_final": 2.56,
+      "media": 2.56,
       "autoavaliação": 2.69,
       "do_líder": 2.19,
       "outros": 3.0,
@@ -36741,11 +36741,11 @@
       "dos_pares": 4.0,
       "dos_subordinados": 2.0,
       "topicos": {
-        "Compromisso com a aprendizagem": 2.56,
-        "Compromisso com ensino": 2.65,
+        "Compromisso com a aprendizagem": 2.3,
+        "Compromisso com ensino": 2.57,
         "Crescimento pessoal e profissional": 2.5,
         "Integração com a instituição": 2.5,
-        "Papel como formador": 2.8
+        "Papel como formador": 2.75
       },
       "questoes": {
         "Coordenadores::Instrução diferenciada": 2.0,
@@ -36820,14 +36820,14 @@
           "autoavaliacao": 2.33,
           "pares_psicologos": 3.33,
           "alunos": 1.56,
-          "geral": 2.56
+          "geral": 2.3
         },
         "Compromisso com ensino": {
           "lider": 2.2,
           "autoavaliacao": 2.6,
           "pares_psicologos": 3.5,
           "alunos": 2.33,
-          "geral": 2.65
+          "geral": 2.57
         },
         "Crescimento pessoal e profissional": {
           "lider": 2.5,
@@ -36848,7 +36848,7 @@
           "autoavaliacao": 3.0,
           "pares_psicologos": 3.5,
           "alunos": 2.83,
-          "geral": 2.8
+          "geral": 2.75
         }
       },
       "indicadores": [
@@ -37052,8 +37052,8 @@
       "area_raw": null,
       "tag_raw": "CTBA - Reinaldo - F2",
       "lider_raw": "Reinaldo Rodrigues dos Santos",
-      "nota_final": 2.7,
-      "media": 2.7,
+      "nota_final": 2.6,
+      "media": 2.6,
       "autoavaliação": 2.89,
       "do_líder": 2.44,
       "outros": 2.39,
@@ -37061,11 +37061,11 @@
       "dos_pares": 3.64,
       "dos_subordinados": 1.77,
       "topicos": {
-        "Compromisso com a aprendizagem": 2.58,
-        "Compromisso com ensino": 2.81,
+        "Compromisso com a aprendizagem": 2.42,
+        "Compromisso com ensino": 2.72,
         "Crescimento pessoal e profissional": 2.5,
         "Integração com a instituição": 2.75,
-        "Papel como formador": 2.88
+        "Papel como formador": 2.66
       },
       "questoes": {
         "Coordenadores::Instrução diferenciada": 2.0,
@@ -37140,14 +37140,14 @@
           "autoavaliacao": 2.67,
           "pares_psicologos": 2.75,
           "alunos": 1.5,
-          "geral": 2.58
+          "geral": 2.42
         },
         "Compromisso com ensino": {
           "lider": 2.6,
           "autoavaliacao": 2.8,
           "pares_psicologos": 3.17,
           "alunos": 2.17,
-          "geral": 2.81
+          "geral": 2.72
         },
         "Crescimento pessoal e profissional": {
           "lider": 2.5,
@@ -37168,7 +37168,7 @@
           "autoavaliacao": 3.5,
           "pares_psicologos": 2.88,
           "alunos": 2.0,
-          "geral": 2.88
+          "geral": 2.66
         }
       },
       "indicadores": [
@@ -37372,8 +37372,8 @@
       "area_raw": null,
       "tag_raw": "CTBA - Reinaldo - F2",
       "lider_raw": "Reinaldo Rodrigues dos Santos",
-      "nota_final": 3.25,
-      "media": 3.25,
+      "nota_final": 3.08,
+      "media": 3.08,
       "autoavaliação": 3.73,
       "do_líder": 2.99,
       "outros": 2.22,
@@ -37381,11 +37381,11 @@
       "dos_pares": 3.28,
       "dos_subordinados": 2.5,
       "topicos": {
-        "Compromisso com a aprendizagem": 2.97,
-        "Compromisso com ensino": 3.23,
+        "Compromisso com a aprendizagem": 2.84,
+        "Compromisso com ensino": 3.11,
         "Crescimento pessoal e profissional": 2.5,
         "Integração com a instituição": 4.0,
-        "Papel como formador": 3.53
+        "Papel como formador": 3.42
       },
       "questoes": {
         "Coordenadores::Instrução diferenciada": 3.0,
@@ -37460,14 +37460,14 @@
           "autoavaliacao": 3.83,
           "pares_psicologos": 2.42,
           "alunos": 2.0,
-          "geral": 2.97
+          "geral": 2.84
         },
         "Compromisso com ensino": {
           "lider": 2.8,
           "autoavaliacao": 3.8,
           "pares_psicologos": 3.0,
           "alunos": 3.0,
-          "geral": 3.23
+          "geral": 3.11
         },
         "Crescimento pessoal e profissional": {
           "lider": 2.0,
@@ -37488,7 +37488,7 @@
           "autoavaliacao": 4.0,
           "pares_psicologos": 2.62,
           "alunos": 3.25,
-          "geral": 3.53
+          "geral": 3.42
         }
       },
       "indicadores": [
@@ -37692,8 +37692,8 @@
       "area_raw": null,
       "tag_raw": "RJ - Fernanda Macena Siqueira",
       "lider_raw": "Fernanda Macena Siqueira",
-      "nota_final": 2.22,
-      "media": 2.22,
+      "nota_final": 1.93,
+      "media": 1.93,
       "autoavaliação": 3.37,
       "do_líder": 1.0,
       "outros": 2.06,
@@ -37701,11 +37701,11 @@
       "dos_pares": 2.46,
       "dos_subordinados": 1.9,
       "topicos": {
-        "Compromisso com a aprendizagem": 2.04,
-        "Compromisso com ensino": 1.9,
+        "Compromisso com a aprendizagem": 1.8,
+        "Compromisso com ensino": 1.72,
         "Crescimento pessoal e profissional": 2.5,
         "Integração com a instituição": 2.5,
-        "Papel como formador": 2.18
+        "Papel como formador": 1.98
       },
       "questoes": {
         "Coordenadores::Instrução diferenciada": 1.0,
@@ -37780,14 +37780,14 @@
           "autoavaliacao": 3.0,
           "pares_psicologos": 2.12,
           "alunos": 1.8,
-          "geral": 2.04
+          "geral": 1.8
         },
         "Compromisso com ensino": {
           "lider": 1.0,
           "autoavaliacao": 2.6,
           "pares_psicologos": 2.25,
           "alunos": 1.74,
-          "geral": 1.9
+          "geral": 1.72
         },
         "Crescimento pessoal e profissional": {
           "lider": 1.0,
@@ -37808,7 +37808,7 @@
           "autoavaliacao": 3.25,
           "pares_psicologos": 2.38,
           "alunos": 2.44,
-          "geral": 2.18
+          "geral": 1.98
         }
       },
       "indicadores": [
@@ -38012,8 +38012,8 @@
       "area_raw": null,
       "tag_raw": "CTBA - Tatiana - EM",
       "lider_raw": "Tatiana Salomão Eulalio de Souza",
-      "nota_final": 3.32,
-      "media": 3.32,
+      "nota_final": 3.16,
+      "media": 3.16,
       "autoavaliação": 3.69,
       "do_líder": 3.01,
       "outros": 2.33,
@@ -38021,11 +38021,11 @@
       "dos_pares": 3.72,
       "dos_subordinados": 2.79,
       "topicos": {
-        "Compromisso com a aprendizagem": 2.86,
-        "Compromisso com ensino": 3.17,
+        "Compromisso com a aprendizagem": 2.68,
+        "Compromisso com ensino": 3.1,
         "Crescimento pessoal e profissional": 3.5,
         "Integração com a instituição": 3.63,
-        "Papel como formador": 3.45
+        "Papel como formador": 3.34
       },
       "questoes": {
         "Coordenadores::Instrução diferenciada": 2.0,
@@ -38100,14 +38100,14 @@
           "autoavaliacao": 3.33,
           "pares_psicologos": 3.08,
           "alunos": 2.5,
-          "geral": 2.86
+          "geral": 2.68
         },
         "Compromisso com ensino": {
           "lider": 3.0,
           "autoavaliacao": 3.6,
           "pares_psicologos": 2.75,
           "alunos": 3.0,
-          "geral": 3.17
+          "geral": 3.1
         },
         "Crescimento pessoal e profissional": {
           "lider": 3.5,
@@ -38128,7 +38128,7 @@
           "autoavaliacao": 4.0,
           "pares_psicologos": 3.0,
           "alunos": 3.33,
-          "geral": 3.45
+          "geral": 3.34
         }
       },
       "indicadores": [
@@ -38332,8 +38332,8 @@
       "area_raw": null,
       "tag_raw": "CTBA - Reinaldo - F2",
       "lider_raw": "Reinaldo Rodrigues dos Santos",
-      "nota_final": 3.35,
-      "media": 3.35,
+      "nota_final": 3.37,
+      "media": 3.37,
       "autoavaliação": 3.1,
       "do_líder": 3.56,
       "outros": 2.56,
@@ -38341,11 +38341,11 @@
       "dos_pares": 3.9,
       "dos_subordinados": 3.45,
       "topicos": {
-        "Compromisso com a aprendizagem": 2.85,
-        "Compromisso com ensino": 3.02,
+        "Compromisso com a aprendizagem": 2.92,
+        "Compromisso com ensino": 3.04,
         "Crescimento pessoal e profissional": 3.75,
         "Integração com a instituição": 3.75,
-        "Papel como formador": 3.4
+        "Papel como formador": 3.53
       },
       "questoes": {
         "Coordenadores::Instrução diferenciada": 4.0,
@@ -38420,14 +38420,14 @@
           "autoavaliacao": 2.5,
           "pares_psicologos": 3.04,
           "alunos": 3.33,
-          "geral": 2.85
+          "geral": 2.92
         },
         "Compromisso com ensino": {
           "lider": 2.8,
           "autoavaliacao": 3.0,
           "pares_psicologos": 3.42,
           "alunos": 3.5,
-          "geral": 3.02
+          "geral": 3.04
         },
         "Crescimento pessoal e profissional": {
           "lider": 4.0,
@@ -38448,7 +38448,7 @@
           "autoavaliacao": 3.0,
           "pares_psicologos": 3.0,
           "alunos": 3.75,
-          "geral": 3.4
+          "geral": 3.53
         }
       },
       "indicadores": [
@@ -38652,8 +38652,8 @@
       "area_raw": "Português",
       "tag_raw": "RJ - Margareth R Paraguassu",
       "lider_raw": "Margareth R Paraguassu",
-      "nota_final": 3.08,
-      "media": 3.08,
+      "nota_final": 2.97,
+      "media": 2.97,
       "autoavaliação": 3.5,
       "do_líder": 2.55,
       "outros": 3.11,
@@ -38661,11 +38661,11 @@
       "dos_pares": 3.54,
       "dos_subordinados": 2.84,
       "topicos": {
-        "Compromisso com a aprendizagem": 2.74,
-        "Compromisso com ensino": 2.85,
+        "Compromisso com a aprendizagem": 2.57,
+        "Compromisso com ensino": 2.72,
         "Crescimento pessoal e profissional": 3.5,
         "Integração com a instituição": 3.0,
-        "Papel como formador": 3.3
+        "Papel como formador": 3.2
       },
       "questoes": {
         "Coordenadores::Instrução diferenciada": 3.0,
@@ -38733,21 +38733,21 @@
       "segmento": "EM",
       "sexo": "Feminino",
       "cargo": "Docentes",
-      "nivel": "Atuação Adequada",
+      "nivel": "Em Desenvolvimento",
       "ambitos_por_avaliador": {
         "Compromisso com a aprendizagem": {
           "lider": 2.0,
           "autoavaliacao": 3.33,
           "pares_psicologos": 2.88,
           "alunos": 2.63,
-          "geral": 2.74
+          "geral": 2.57
         },
         "Compromisso com ensino": {
           "lider": 2.0,
           "autoavaliacao": 3.4,
           "pares_psicologos": 3.33,
           "alunos": 3.0,
-          "geral": 2.85
+          "geral": 2.72
         },
         "Crescimento pessoal e profissional": {
           "lider": 3.5,
@@ -38768,7 +38768,7 @@
           "autoavaliacao": 3.75,
           "pares_psicologos": 3.5,
           "alunos": 3.2,
-          "geral": 3.3
+          "geral": 3.2
         }
       },
       "indicadores": [
@@ -38972,8 +38972,8 @@
       "area_raw": "Inglês",
       "tag_raw": null,
       "lider_raw": "Patricia Rezende",
-      "nota_final": 3.49,
-      "media": 3.49,
+      "nota_final": 3.39,
+      "media": 3.39,
       "autoavaliação": 3.41,
       "do_líder": 3.46,
       "outros": 3.56,
@@ -38981,11 +38981,11 @@
       "dos_pares": 3.72,
       "dos_subordinados": 2.55,
       "topicos": {
-        "Compromisso com a aprendizagem": 3.22,
-        "Compromisso com ensino": 3.63,
+        "Compromisso com a aprendizagem": 2.98,
+        "Compromisso com ensino": 3.59,
         "Crescimento pessoal e profissional": 4.0,
         "Integração com a instituição": 3.5,
-        "Papel como formador": 3.1
+        "Papel como formador": 3.07
       },
       "questoes": {
         "Coordenadores::Instrução diferenciada": 3.0,
@@ -39060,14 +39060,14 @@
           "autoavaliacao": 3.67,
           "pares_psicologos": 3.5,
           "alunos": 2.35,
-          "geral": 3.22
+          "geral": 2.98
         },
         "Compromisso com ensino": {
           "lider": 3.8,
           "autoavaliacao": 3.4,
           "pares_psicologos": 3.75,
           "alunos": 2.85,
-          "geral": 3.63
+          "geral": 3.59
         },
         "Crescimento pessoal e profissional": {
           "lider": 4.0,
@@ -39088,7 +39088,7 @@
           "autoavaliacao": 3.0,
           "pares_psicologos": 3.5,
           "alunos": 2.73,
-          "geral": 3.1
+          "geral": 3.07
         }
       },
       "indicadores": [
@@ -39292,8 +39292,8 @@
       "area_raw": null,
       "tag_raw": "CTBA - Tatiana - EM",
       "lider_raw": "Tatiana Salomão Eulalio de Souza",
-      "nota_final": 3.09,
-      "media": 3.09,
+      "nota_final": 2.86,
+      "media": 2.86,
       "autoavaliação": 3.92,
       "do_líder": 2.31,
       "outros": 2.22,
@@ -39301,11 +39301,11 @@
       "dos_pares": 3.89,
       "dos_subordinados": 2.33,
       "topicos": {
-        "Compromisso com a aprendizagem": 3.0,
-        "Compromisso com ensino": 3.08,
+        "Compromisso com a aprendizagem": 2.77,
+        "Compromisso com ensino": 2.85,
         "Crescimento pessoal e profissional": 3.25,
         "Integração com a instituição": 3.0,
-        "Papel como formador": 3.1
+        "Papel como formador": 2.98
       },
       "questoes": {
         "Coordenadores::Instrução diferenciada": 3.0,
@@ -39373,21 +39373,21 @@
       "segmento": "EM",
       "sexo": "Masculino",
       "cargo": "Docentes",
-      "nivel": "Atuação Adequada",
+      "nivel": "Em Desenvolvimento",
       "ambitos_por_avaliador": {
         "Compromisso com a aprendizagem": {
           "lider": 2.33,
           "autoavaliacao": 3.83,
           "pares_psicologos": 2.83,
           "alunos": 1.95,
-          "geral": 3.0
+          "geral": 2.77
         },
         "Compromisso com ensino": {
           "lider": 2.2,
           "autoavaliacao": 4.0,
           "pares_psicologos": 3.0,
           "alunos": 2.56,
-          "geral": 3.08
+          "geral": 2.85
         },
         "Crescimento pessoal e profissional": {
           "lider": 2.5,
@@ -39408,7 +39408,7 @@
           "autoavaliacao": 3.75,
           "pares_psicologos": 3.0,
           "alunos": 3.17,
-          "geral": 3.1
+          "geral": 2.98
         }
       },
       "indicadores": [
@@ -39612,8 +39612,8 @@
       "area_raw": "Português",
       "tag_raw": "RJ - Margareth R Paraguassu",
       "lider_raw": "Margareth R Paraguassu",
-      "nota_final": 2.75,
-      "media": 2.75,
+      "nota_final": 2.73,
+      "media": 2.73,
       "autoavaliação": 2.91,
       "do_líder": 2.22,
       "outros": 3.39,
@@ -39621,8 +39621,8 @@
       "dos_pares": 4.0,
       "dos_subordinados": 2.68,
       "topicos": {
-        "Compromisso com a aprendizagem": 2.56,
-        "Compromisso com ensino": 2.65,
+        "Compromisso com a aprendizagem": 2.39,
+        "Compromisso com ensino": 2.53,
         "Crescimento pessoal e profissional": 2.75,
         "Integração com a instituição": 3.0,
         "Papel como formador": 2.8
@@ -39700,14 +39700,14 @@
           "autoavaliacao": 2.5,
           "pares_psicologos": 3.33,
           "alunos": 2.77,
-          "geral": 2.56
+          "geral": 2.39
         },
         "Compromisso com ensino": {
           "lider": 2.0,
           "autoavaliacao": 2.8,
           "pares_psicologos": 3.5,
           "alunos": 2.31,
-          "geral": 2.65
+          "geral": 2.53
         },
         "Crescimento pessoal e profissional": {
           "lider": 2.5,
@@ -39932,8 +39932,8 @@
       "area_raw": null,
       "tag_raw": "CTBA - Reinaldo - F2",
       "lider_raw": "Reinaldo Rodrigues dos Santos",
-      "nota_final": 2.93,
-      "media": 2.93,
+      "nota_final": 2.88,
+      "media": 2.88,
       "autoavaliação": 3.07,
       "do_líder": 2.72,
       "outros": 2.78,
@@ -39941,11 +39941,11 @@
       "dos_pares": 3.31,
       "dos_subordinados": 2.82,
       "topicos": {
-        "Compromisso com a aprendizagem": 2.78,
-        "Compromisso com ensino": 2.96,
+        "Compromisso com a aprendizagem": 2.65,
+        "Compromisso com ensino": 2.95,
         "Crescimento pessoal e profissional": 3.5,
         "Integração com a instituição": 2.5,
-        "Papel como formador": 2.9
+        "Papel como formador": 2.94
       },
       "questoes": {
         "Coordenadores::Instrução diferenciada": 2.0,
@@ -40020,14 +40020,14 @@
           "autoavaliacao": 2.83,
           "pares_psicologos": 3.17,
           "alunos": 2.58,
-          "geral": 2.78
+          "geral": 2.65
         },
         "Compromisso com ensino": {
           "lider": 3.0,
           "autoavaliacao": 3.0,
           "pares_psicologos": 2.83,
           "alunos": 2.83,
-          "geral": 2.96
+          "geral": 2.95
         },
         "Crescimento pessoal e profissional": {
           "lider": 3.0,
@@ -40048,7 +40048,7 @@
           "autoavaliacao": 3.0,
           "pares_psicologos": 3.0,
           "alunos": 3.5,
-          "geral": 2.9
+          "geral": 2.94
         }
       },
       "indicadores": [
@@ -40252,8 +40252,8 @@
       "area_raw": "Inglês",
       "tag_raw": "RJ - Fernanda Macena Siqueira",
       "lider_raw": "Margareth R Paraguassu",
-      "nota_final": 3.01,
-      "media": 3.01,
+      "nota_final": 2.92,
+      "media": 2.92,
       "autoavaliação": 3.61,
       "do_líder": 2.38,
       "outros": 2.44,
@@ -40261,11 +40261,11 @@
       "dos_pares": 3.9,
       "dos_subordinados": 3.12,
       "topicos": {
-        "Compromisso com a aprendizagem": 2.88,
-        "Compromisso com ensino": 3.1,
+        "Compromisso com a aprendizagem": 2.76,
+        "Compromisso com ensino": 2.9,
         "Crescimento pessoal e profissional": 3.25,
         "Integração com a instituição": 2.75,
-        "Papel como formador": 3.1
+        "Papel como formador": 2.99
       },
       "questoes": {
         "Coordenadores::Instrução diferenciada": 3.0,
@@ -40333,21 +40333,21 @@
       "segmento": "EM",
       "sexo": "Feminino",
       "cargo": "Docentes",
-      "nivel": "Atuação Adequada",
+      "nivel": "Em Desenvolvimento",
       "ambitos_por_avaliador": {
         "Compromisso com a aprendizagem": {
           "lider": 2.17,
           "autoavaliacao": 3.5,
           "pares_psicologos": 2.96,
           "alunos": 3.17,
-          "geral": 2.88
+          "geral": 2.76
         },
         "Compromisso com ensino": {
           "lider": 2.0,
           "autoavaliacao": 3.8,
           "pares_psicologos": 3.75,
           "alunos": 3.0,
-          "geral": 3.1
+          "geral": 2.9
         },
         "Crescimento pessoal e profissional": {
           "lider": 2.5,
@@ -40368,7 +40368,7 @@
           "autoavaliacao": 3.75,
           "pares_psicologos": 2.5,
           "alunos": 3.14,
-          "geral": 3.1
+          "geral": 2.99
         }
       },
       "indicadores": [
@@ -40572,8 +40572,8 @@
       "area_raw": null,
       "tag_raw": "CTBA - Tatiana - EM",
       "lider_raw": "Tatiana Salomão Eulalio de Souza",
-      "nota_final": 3.48,
-      "media": 3.48,
+      "nota_final": 3.3,
+      "media": 3.3,
       "autoavaliação": 4.0,
       "do_líder": 3.03,
       "outros": 2.67,
@@ -40581,11 +40581,11 @@
       "dos_pares": 4.0,
       "dos_subordinados": 2.67,
       "topicos": {
-        "Compromisso com a aprendizagem": 3.42,
-        "Compromisso com ensino": 3.42,
+        "Compromisso com a aprendizagem": 3.26,
+        "Compromisso com ensino": 3.29,
         "Crescimento pessoal e profissional": 3.75,
         "Integração com a instituição": 3.5,
-        "Papel como formador": 3.3
+        "Papel como formador": 3.16
       },
       "questoes": {
         "Coordenadores::Instrução diferenciada": 4.0,
@@ -40660,14 +40660,14 @@
           "autoavaliacao": 4.0,
           "pares_psicologos": 3.08,
           "alunos": 2.22,
-          "geral": 3.42
+          "geral": 3.26
         },
         "Compromisso com ensino": {
           "lider": 3.0,
           "autoavaliacao": 4.0,
           "pares_psicologos": 3.17,
           "alunos": 3.11,
-          "geral": 3.42
+          "geral": 3.29
         },
         "Crescimento pessoal e profissional": {
           "lider": 3.5,
@@ -40688,7 +40688,7 @@
           "autoavaliacao": 4.0,
           "pares_psicologos": 3.5,
           "alunos": 3.33,
-          "geral": 3.3
+          "geral": 3.16
         }
       },
       "indicadores": [
@@ -40892,8 +40892,8 @@
       "area_raw": null,
       "tag_raw": "CTBA - Tatiana - EM",
       "lider_raw": "Tatiana Salomão Eulalio de Souza",
-      "nota_final": 3.61,
-      "media": 3.61,
+      "nota_final": 3.45,
+      "media": 3.45,
       "autoavaliação": 3.96,
       "do_líder": 3.28,
       "outros": 3.11,
@@ -40901,11 +40901,11 @@
       "dos_pares": 4.0,
       "dos_subordinados": 2.73,
       "topicos": {
-        "Compromisso com a aprendizagem": 3.5,
-        "Compromisso com ensino": 3.46,
+        "Compromisso com a aprendizagem": 3.36,
+        "Compromisso com ensino": 3.33,
         "Crescimento pessoal e profissional": 3.75,
         "Integração com a instituição": 3.75,
-        "Papel como formador": 3.6
+        "Papel como formador": 3.4
       },
       "questoes": {
         "Coordenadores::Instrução diferenciada": 4.0,
@@ -40973,21 +40973,21 @@
       "segmento": "EM",
       "sexo": "Feminino",
       "cargo": "Docentes",
-      "nivel": "Referência",
+      "nivel": "Atuação Adequada",
       "ambitos_por_avaliador": {
         "Compromisso com a aprendizagem": {
           "lider": 3.17,
           "autoavaliacao": 4.0,
           "pares_psicologos": 3.33,
           "alunos": 2.72,
-          "geral": 3.5
+          "geral": 3.36
         },
         "Compromisso com ensino": {
           "lider": 3.0,
           "autoavaliacao": 3.8,
           "pares_psicologos": 3.67,
           "alunos": 3.0,
-          "geral": 3.46
+          "geral": 3.33
         },
         "Crescimento pessoal e profissional": {
           "lider": 3.5,
@@ -41008,7 +41008,7 @@
           "autoavaliacao": 4.0,
           "pares_psicologos": 3.5,
           "alunos": 2.33,
-          "geral": 3.6
+          "geral": 3.4
         }
       },
       "indicadores": [
@@ -41212,8 +41212,8 @@
       "area_raw": null,
       "tag_raw": "CTBA - Reinaldo - F2",
       "lider_raw": "Reinaldo Rodrigues dos Santos",
-      "nota_final": 3.6,
-      "media": 3.6,
+      "nota_final": 3.42,
+      "media": 3.42,
       "autoavaliação": 3.86,
       "do_líder": 3.42,
       "outros": 2.72,
@@ -41221,11 +41221,11 @@
       "dos_pares": 3.72,
       "dos_subordinados": 2.68,
       "topicos": {
-        "Compromisso com a aprendizagem": 3.31,
-        "Compromisso com ensino": 3.42,
+        "Compromisso com a aprendizagem": 3.2,
+        "Compromisso com ensino": 3.31,
         "Crescimento pessoal e profissional": 4.0,
         "Integração com a instituição": 3.75,
-        "Papel como formador": 3.53
+        "Papel como formador": 3.39
       },
       "questoes": {
         "Coordenadores::Instrução diferenciada": 3.0,
@@ -41293,21 +41293,21 @@
       "segmento": "EFII",
       "sexo": "Masculino",
       "cargo": "Docentes",
-      "nivel": "Referência",
+      "nivel": "Atuação Adequada",
       "ambitos_por_avaliador": {
         "Compromisso com a aprendizagem": {
           "lider": 3.17,
           "autoavaliacao": 3.5,
           "pares_psicologos": 3.25,
           "alunos": 2.5,
-          "geral": 3.31
+          "geral": 3.2
         },
         "Compromisso com ensino": {
           "lider": 3.2,
           "autoavaliacao": 3.8,
           "pares_psicologos": 3.17,
           "alunos": 2.83,
-          "geral": 3.42
+          "geral": 3.31
         },
         "Crescimento pessoal e profissional": {
           "lider": 4.0,
@@ -41328,7 +41328,7 @@
           "autoavaliacao": 4.0,
           "pares_psicologos": 3.12,
           "alunos": 3.0,
-          "geral": 3.53
+          "geral": 3.39
         }
       },
       "indicadores": [
@@ -41532,8 +41532,8 @@
       "area_raw": "Português",
       "tag_raw": "RJ - Margareth R Paraguassu",
       "lider_raw": "Margareth R Paraguassu",
-      "nota_final": 2.79,
-      "media": 2.79,
+      "nota_final": 2.52,
+      "media": 2.52,
       "autoavaliação": 3.53,
       "do_líder": 2.18,
       "outros": 2.33,
@@ -41541,11 +41541,11 @@
       "dos_pares": 2.4,
       "dos_subordinados": 1.84,
       "topicos": {
-        "Compromisso com a aprendizagem": 2.63,
-        "Compromisso com ensino": 2.54,
+        "Compromisso com a aprendizagem": 2.4,
+        "Compromisso com ensino": 2.32,
         "Crescimento pessoal e profissional": 2.75,
         "Integração com a instituição": 3.0,
-        "Papel como formador": 3.03
+        "Papel como formador": 2.78
       },
       "questoes": {
         "Coordenadores::Instrução diferenciada": 2.0,
@@ -41620,14 +41620,14 @@
           "autoavaliacao": 3.67,
           "pares_psicologos": 2.38,
           "alunos": 1.85,
-          "geral": 2.63
+          "geral": 2.4
         },
         "Compromisso com ensino": {
           "lider": 1.8,
           "autoavaliacao": 3.0,
           "pares_psicologos": 3.0,
           "alunos": 1.59,
-          "geral": 2.54
+          "geral": 2.32
         },
         "Crescimento pessoal e profissional": {
           "lider": 2.5,
@@ -41648,7 +41648,7 @@
           "autoavaliacao": 4.0,
           "pares_psicologos": 1.62,
           "alunos": 2.17,
-          "geral": 3.03
+          "geral": 2.78
         }
       },
       "indicadores": [
@@ -42161,8 +42161,8 @@
       "area_raw": null,
       "tag_raw": "CTBA - Tatiana - EM",
       "lider_raw": "Tatiana Salomão Eulalio de Souza",
-      "nota_final": 3.01,
-      "media": 3.01,
+      "nota_final": 2.74,
+      "media": 2.74,
       "autoavaliação": 3.93,
       "do_líder": 2.12,
       "outros": 2.72,
@@ -42170,11 +42170,11 @@
       "dos_pares": 3.04,
       "dos_subordinados": 2.31,
       "topicos": {
-        "Compromisso com a aprendizagem": 2.79,
-        "Compromisso com ensino": 2.85,
+        "Compromisso com a aprendizagem": 2.56,
+        "Compromisso com ensino": 2.55,
         "Crescimento pessoal e profissional": 3.25,
         "Integração com a instituição": 3.0,
-        "Papel como formador": 3.18
+        "Papel como formador": 3.02
       },
       "questoes": {
         "Coordenadores::Instrução diferenciada": 2.0,
@@ -42242,21 +42242,21 @@
       "segmento": "EFII",
       "sexo": "Masculino",
       "cargo": "Docentes",
-      "nivel": "Atuação Adequada",
+      "nivel": "Em Desenvolvimento",
       "ambitos_por_avaliador": {
         "Compromisso com a aprendizagem": {
           "lider": 2.0,
           "autoavaliacao": 3.67,
           "pares_psicologos": 2.71,
           "alunos": 2.0,
-          "geral": 2.79
+          "geral": 2.56
         },
         "Compromisso com ensino": {
           "lider": 1.6,
           "autoavaliacao": 4.0,
           "pares_psicologos": 3.0,
           "alunos": 2.33,
-          "geral": 2.85
+          "geral": 2.55
         },
         "Crescimento pessoal e profissional": {
           "lider": 2.5,
@@ -42277,7 +42277,7 @@
           "autoavaliacao": 4.0,
           "pares_psicologos": 2.88,
           "alunos": 3.2,
-          "geral": 3.18
+          "geral": 3.02
         }
       },
       "indicadores": [
@@ -42481,8 +42481,8 @@
       "area_raw": null,
       "tag_raw": "RJ - Fernanda Macena Siqueira",
       "lider_raw": "Fernanda Macena Siqueira",
-      "nota_final": 2.51,
-      "media": 2.51,
+      "nota_final": 2.37,
+      "media": 2.37,
       "autoavaliação": null,
       "do_líder": 2.44,
       "outros": 2.67,
@@ -42490,11 +42490,11 @@
       "dos_pares": 2.19,
       "dos_subordinados": 1.96,
       "topicos": {
-        "Compromisso com a aprendizagem": 2.0,
-        "Compromisso com ensino": 2.13,
+        "Compromisso com a aprendizagem": 1.87,
+        "Compromisso com ensino": 2.05,
         "Crescimento pessoal e profissional": 3.5,
         "Integração com a instituição": 2.0,
-        "Papel como formador": 2.92
+        "Papel como formador": 2.85
       },
       "questoes": {
         "Coordenadores::Instrução diferenciada": 2.0,
@@ -42562,21 +42562,21 @@
       "segmento": "Geral / Transversal",
       "sexo": "Masculino",
       "cargo": "Docentes",
-      "nivel": "Em Desenvolvimento",
+      "nivel": "Inicial",
       "ambitos_por_avaliador": {
         "Compromisso com a aprendizagem": {
           "lider": 1.67,
           "autoavaliacao": null,
           "pares_psicologos": 2.33,
           "alunos": 1.87,
-          "geral": 2.0
+          "geral": 1.87
         },
         "Compromisso com ensino": {
           "lider": 1.8,
           "autoavaliacao": null,
           "pares_psicologos": 2.67,
           "alunos": 1.96,
-          "geral": 2.13
+          "geral": 2.05
         },
         "Crescimento pessoal e profissional": {
           "lider": 3.5,
@@ -42597,7 +42597,7 @@
           "autoavaliacao": null,
           "pares_psicologos": 2.25,
           "alunos": 2.22,
-          "geral": 2.92
+          "geral": 2.85
         }
       },
       "indicadores": [
@@ -56099,8 +56099,8 @@
       "area_raw": null,
       "tag_raw": "CTBA - Reinaldo - F2",
       "lider_raw": "Reinaldo Rodrigues dos Santos",
-      "nota_final": 3.41,
-      "media": 3.41,
+      "nota_final": 2.77,
+      "media": 2.77,
       "autoavaliação": null,
       "do_líder": null,
       "outros": 3.41,
@@ -56108,11 +56108,11 @@
       "dos_pares": null,
       "dos_subordinados": 2.14,
       "topicos": {
-        "Compromisso com a aprendizagem": 3.22,
-        "Compromisso com ensino": 3.67,
+        "Compromisso com a aprendizagem": 2.87,
+        "Compromisso com ensino": 3.11,
         "Crescimento pessoal e profissional": null,
         "Integração com a instituição": null,
-        "Papel como formador": 3.33
+        "Papel como formador": 2.97
       },
       "questoes": {
         "Coordenadores::Instrução diferenciada": null,
@@ -56180,21 +56180,21 @@
       "segmento": "EFII",
       "sexo": "Feminino",
       "cargo": "Docentes",
-      "nivel": "Atuação Adequada",
+      "nivel": "Em Desenvolvimento",
       "ambitos_por_avaliador": {
         "Compromisso com a aprendizagem": {
           "lider": null,
           "autoavaliacao": null,
           "pares_psicologos": 3.22,
           "alunos": 2.17,
-          "geral": 3.22
+          "geral": 2.87
         },
         "Compromisso com ensino": {
           "lider": null,
           "autoavaliacao": null,
           "pares_psicologos": 3.67,
           "alunos": 2.0,
-          "geral": 3.67
+          "geral": 3.11
         },
         "Crescimento pessoal e profissional": {
           "lider": null,
@@ -56215,7 +56215,7 @@
           "autoavaliacao": null,
           "pares_psicologos": 3.33,
           "alunos": 2.25,
-          "geral": 3.33
+          "geral": 2.97
         }
       },
       "indicadores": [
