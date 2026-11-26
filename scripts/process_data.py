@@ -931,8 +931,48 @@ def run():
         with open(OUTPUT_JSON, 'r', encoding='utf-8') as f_existing:
             existing_payload = json.load(f_existing)
         q_map = {q['id']: q for q in existing_payload['metadata']['questoes_meta']}
+        raw_avaliados = existing_payload['avaliados']
+
+        # Pre-merge Larissa Souza Rosa Farinazzo if split into 2 rows (EI_F1 + F2_EM)
+        larissa_rows = [x for x in raw_avaliados if x.get('nome') == 'Larissa Souza Rosa Farinazzo']
+        larissa_f_sec = None
+        if len(larissa_rows) > 1:
+            larissa_f_main = next((x for x in larissa_rows if x.get('do_líder') is not None), larissa_rows[0])
+            larissa_f_sec = next((x for x in larissa_rows if x is not larissa_f_main), None)
+            if larissa_f_main and larissa_f_sec:
+                larissa_f_main['outros'] = larissa_f_sec.get('outros', 2.17)
+                for k, v2 in (larissa_f_sec.get('questoes') or {}).items():
+                    if k.startswith('Psicologos e Pares::') and v2 is not None:
+                        v1 = larissa_f_main['questoes'].get(k)
+                        larissa_f_main['questoes'][k] = round((v1 + v2) / 2.0, 2) if v1 is not None else v2
+                nf_lf = round(
+                    0.25 * (larissa_f_main.get('autoavaliação') or 0)
+                    + 0.45 * (larissa_f_main.get('do_líder') or 0)
+                    + 0.15 * (larissa_f_main.get('dos_pares') or 0)
+                    + 0.15 * (larissa_f_main.get('outros') or 0),
+                    2
+                )
+                larissa_f_main['nota_final'] = nf_lf
+                larissa_f_main['media'] = nf_lf
+                larissa_f_main['nivel'] = get_performance_level(nf_lf)
+                larissa_f_main['src'] = 'F2_EM'
+                larissa_f_main['segmento'] = 'EFI'
+
         final_rows = []
-        for r in existing_payload['avaliados']:
+        for r in raw_avaliados:
+            # 1. Skip Viviane's blank duplicate row (nota_final is None)
+            if r.get('nome') == 'Viviane da Silva Moreira Miquelao' and r.get('nota_final') is None:
+                continue
+            # 2. Skip Rayane's redundant second row (already merged into her EFI row)
+            if r.get('nome') == 'Rayane da Costa Padilha Cavalcante' and r.get('segmento') == 'Geral / Transversal':
+                continue
+            # 3. Skip Larissa Souza Rosa Farinazzo's partial second row (already merged above)
+            if r is larissa_f_sec:
+                continue
+            # 4. Skip Larissa de Oliveira Haag's partial orphan row (no leader and no autoavaliação)
+            if r.get('nome') == 'Larissa de Oliveira Haag' and r.get('do_líder') is None and r.get('autoavaliação') is None:
+                continue
+
             # Fix Fernando Pisani Ficha 1 (EI_F1 sheet with Reinaldo & EFII students) -> segment EFII
             if r.get('nome') == 'Fernando Pisani de Azevedo' and r.get('src') == 'EI_F1':
                 r['segmento'] = 'EFII'
@@ -974,6 +1014,10 @@ def run():
                 mode='docentes'
             )
             if r.get('dos_subordinados') is not None and r.get('segmento') not in ('EI', 'EFI'):
+                for amb_k, amb_v in amb_por_av.items():
+                    if amb_v.get('geral') is not None:
+                        r['topicos'][amb_k] = amb_v['geral']
+            elif r.get('nome') == 'Larissa Souza Rosa Farinazzo':
                 for amb_k, amb_v in amb_por_av.items():
                     if amb_v.get('geral') is not None:
                         r['topicos'][amb_k] = amb_v['geral']
@@ -1122,6 +1166,11 @@ def run():
                 cnt = sum(1 for r in sub if r['nivel'] == lvl)
                 pct = round((cnt / total_sub * 100), 1) if total_sub > 0 else 0.0
                 matrix[c][lvl] = {'count': cnt, 'pct': pct, 'total_ciclo': total_sub}
+            if total_sub > 0:
+                diff_pct = round(100.0 - sum(matrix[c][l]['pct'] for l in levels), 1)
+                if diff_pct != 0:
+                    max_lvl = max(levels, key=lambda l: matrix[c][l]['count'])
+                    matrix[c][max_lvl]['pct'] = round(matrix[c][max_lvl]['pct'] + diff_pct, 1)
         return matrix
 
     def compute_cargo_summary(subset):
