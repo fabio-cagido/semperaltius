@@ -136,7 +136,7 @@ PSICO_MAP = {
     'Adriana Pereira do Nascimento': {'unidade': 'Rio de Janeiro', 'segmento': 'EFI', 'segmentos_list': ['EFI'], 'cargo': 'Psicólogo Escolar'},
     'Andrea de Carvalho Constantino': {'unidade': 'Curitiba', 'segmento': 'EFII', 'segmentos_list': ['EFII'], 'cargo': 'Psicólogo Escolar'},
     'Luise Kindel Monteiro': {'unidade': 'Rio de Janeiro', 'segmento': 'EFII', 'segmentos_list': ['EFII'], 'cargo': 'Psicólogo Escolar'},
-    'Quefli Rodrigues da Silva': {'unidade': 'Curitiba', 'segmento': 'EM', 'segmentos_list': ['EM'], 'cargo': 'Psicólogo Escolar'},
+    'Quefli Rodrigues da Silva': {'unidade': 'Curitiba', 'segmento': 'EI', 'segmentos_list': ['EI'], 'cargo': 'Psicólogo Escolar'},
 }
 
 INGLES_MAP = {
@@ -627,9 +627,24 @@ def compute_instrument_analytics(records, p_headers, t_headers):
             })
 
     sorted_desc = sorted(quesito_stats, key=lambda x: x['media'], reverse=True)
-    top5 = sorted_desc[:5]
+    top5 = []
+    seen_top = set()
+    for item in sorted_desc:
+        if item['quesito'] not in seen_top:
+            seen_top.add(item['quesito'])
+            top5.append(item)
+            if len(top5) == 5:
+                break
+
     sorted_asc = sorted(quesito_stats, key=lambda x: x['media'])
-    bottom5 = sorted_asc[:5]
+    bottom5 = []
+    seen_bottom = set()
+    for item in sorted_asc:
+        if item['quesito'] not in seen_bottom:
+            seen_bottom.add(item['quesito'])
+            bottom5.append(item)
+            if len(bottom5) == 5:
+                break
 
     # Distribuição por ciclo
     ciclo_counts = {'EI': 0, 'EFI': 0, 'EFII': 0, 'EM': 0, 'Transversal': 0}
@@ -867,9 +882,27 @@ def run():
         q_map = {q['id']: q for q in existing_payload['metadata']['questoes_meta']}
         final_rows = []
         for r in existing_payload['avaliados']:
+            # Fix Fernando Pisani Ficha 1 (EI_F1 sheet with Reinaldo & EFII students) -> segment EFII
+            if r.get('nome') == 'Fernando Pisani de Azevedo' and r.get('src') == 'EI_F1':
+                r['segmento'] = 'EFII'
+
+            # Strict safeguard: EI and EFI never have student (Alunos) evaluations
+            if r.get('segmento') in ('EI', 'EFI'):
+                r['dos_subordinados'] = None
+                if 'questoes' in r and isinstance(r['questoes'], dict):
+                    for k in list(r['questoes'].keys()):
+                        if k.startswith('Alunos::'):
+                            r['questoes'][k] = None
+
+            meta_for_row = (
+                [m for m in q_map.values() if m['perfil'] != 'Alunos']
+                if r.get('segmento') in ('EI', 'EFI')
+                else list(q_map.values())
+            )
+            # Recompute topicos for custom-corrected EFI rows or keep Qulture topicos
             amb_por_av, ind_list = build_individual_details(
                 r.get('questoes', {}),
-                list(q_map.values()),
+                meta_for_row,
                 ambitos,
                 r.get('topicos', {}),
                 mode='docentes'
@@ -918,9 +951,25 @@ def run():
                     'total_respostas': len(vals)
                 })
         sorted_desc = sorted(quesito_stats, key=lambda x: x['media'], reverse=True)
-        top5 = sorted_desc[:5]
+        top5 = []
+        seen_top = set()
+        for item in sorted_desc:
+            if item['quesito'] not in seen_top:
+                seen_top.add(item['quesito'])
+                top5.append(item)
+                if len(top5) == 5:
+                    break
+
         sorted_asc = sorted(quesito_stats, key=lambda x: x['media'])
-        bottom5 = sorted_asc[:5]
+        bottom5 = []
+        seen_bottom = set()
+        for item in sorted_asc:
+            if item['quesito'] not in seen_bottom:
+                seen_bottom.add(item['quesito'])
+                bottom5.append(item)
+                if len(bottom5) == 5:
+                    break
+
         return {
             'todos': sorted_desc,
             'top5': top5,
@@ -934,6 +983,40 @@ def run():
         for a in ambitos:
             vals = [r['topicos'].get(a) for r in subset if r['topicos'].get(a) is not None]
             res[a] = round(float(np.mean(vals)), 2) if vals else 0.0
+        return res
+
+    def compute_ambito_evaluator_means(subset):
+        res = {}
+        for a in ambitos:
+            l_vals = [
+                r.get('ambitos_por_avaliador', {}).get(a, {}).get('lider')
+                for r in subset
+                if r.get('ambitos_por_avaliador', {}).get(a, {}).get('lider') is not None
+            ]
+            au_vals = [
+                r.get('ambitos_por_avaliador', {}).get(a, {}).get('autoavaliacao')
+                for r in subset
+                if r.get('ambitos_por_avaliador', {}).get(a, {}).get('autoavaliacao') is not None
+            ]
+            p_vals = [
+                r.get('ambitos_por_avaliador', {}).get(a, {}).get('pares_psicologos')
+                for r in subset
+                if r.get('ambitos_por_avaliador', {}).get(a, {}).get('pares_psicologos') is not None
+            ]
+            al_vals = [
+                r.get('ambitos_por_avaliador', {}).get(a, {}).get('alunos')
+                for r in subset
+                if r.get('ambitos_por_avaliador', {}).get(a, {}).get('alunos') is not None
+            ]
+            g_vals = [r['topicos'].get(a) for r in subset if r['topicos'].get(a) is not None]
+
+            res[a] = {
+                'lider': round(float(np.mean(l_vals)), 2) if l_vals else None,
+                'autoavaliacao': round(float(np.mean(au_vals)), 2) if au_vals else None,
+                'pares_psicologos': round(float(np.mean(p_vals)), 2) if p_vals else None,
+                'alunos': round(float(np.mean(al_vals)), 2) if al_vals else None,
+                'geral': round(float(np.mean(g_vals)), 2) if g_vals else None
+            }
         return res
 
     def compute_evaluator_profiles(subset):
@@ -1077,6 +1160,7 @@ def run():
                 'total': len(seg_rows),
                 'media_geral': round(float(np.mean([r['nota_final'] for r in seg_rows if r['nota_final'] is not None])), 2) if seg_rows else 0.0,
                 'ambitos': compute_ambito_means(seg_rows),
+                'ambitos_por_avaliador': compute_ambito_evaluator_means(seg_rows),
                 'perfis_avaliadores': compute_evaluator_profiles(seg_rows),
                 'rankings': compute_rankings(seg_rows),
                 'cargos': {

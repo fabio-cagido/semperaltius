@@ -55,6 +55,7 @@ export interface CicloData {
   total: number;
   media_geral: number;
   ambitos: Record<string, number>;
+  ambitos_por_avaliador?: Record<string, AmbitoPorAvaliador>;
   perfis_avaliadores: EvaluatorProfiles;
   rankings: RankingsData;
   cargos: {

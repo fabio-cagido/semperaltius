@@ -51,9 +51,27 @@ export default function ExploradorQuesitosView({ analytics, metadata, unidade }:
     }
 
     if (viewFilter === 'top5') {
-      return list.slice(0, 5);
+      const uniqueTop: typeof list = [];
+      const seen = new Set<string>();
+      for (const item of [...list].sort((a, b) => b.media - a.media)) {
+        if (!seen.has(item.quesito)) {
+          seen.add(item.quesito);
+          uniqueTop.push(item);
+          if (uniqueTop.length === 5) break;
+        }
+      }
+      return uniqueTop;
     } else if (viewFilter === 'bottom5') {
-      return [...list].sort((a, b) => a.media - b.media).slice(0, 5);
+      const uniqueBottom: typeof list = [];
+      const seen = new Set<string>();
+      for (const item of [...list].sort((a, b) => a.media - b.media)) {
+        if (!seen.has(item.quesito)) {
+          seen.add(item.quesito);
+          uniqueBottom.push(item);
+          if (uniqueBottom.length === 5) break;
+        }
+      }
+      return uniqueBottom;
     }
 
     return list;

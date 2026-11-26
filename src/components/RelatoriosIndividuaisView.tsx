@@ -465,7 +465,7 @@ function SvgRadarChart({
 /**
  * Single Collaborator Report Sheet (used both for Individual view and Batch Print loop)
  */
-function RelatorioIndividualSheet({
+export function RelatorioIndividualSheet({
   colab,
   isBatchItem = false,
   isLastBatchItem = false
@@ -579,7 +579,7 @@ function RelatorioIndividualSheet({
       }`}
     >
       {/* BLOCO PÁGINA 1 DO PDF: CABEÇALHO + SEÇÕES 1, 2 E 3 */}
-      <div data-pdf-page="1" className="space-y-6 bg-white">
+      <div data-pdf-page="1" className="space-y-6 print:space-y-3.5 bg-white">
       {/* CABEÇALHO INSTITUCIONAL (Inspirado no PDF AVALIAÇÃO_DOCENTE_RESULTADOS_CTBA_2024.pdf) */}
       <div className="rounded-2xl overflow-hidden border border-slate-200 break-inside-avoid">
         {/* Top Crimson/Burgundy Institutional Banner */}
@@ -618,7 +618,7 @@ function RelatorioIndividualSheet({
 
         {/* Dados do Avaliado & Carta de Acolhimento */}
         <div className="p-5 bg-slate-50/70 space-y-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 bg-white p-3.5 rounded-xl border border-slate-200/90 shadow-2xs">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 print:grid-cols-4 gap-3 bg-white p-3.5 rounded-xl border border-slate-200/90 shadow-2xs">
             <div>
               <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">
                 Profissional Avaliado(a)
@@ -668,9 +668,9 @@ function RelatorioIndividualSheet({
           <div className="h-px flex-1 bg-slate-200" />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-12 print:grid-cols-12 gap-4 items-stretch">
           {/* Card Principal de Pontuação e Conceito */}
-          <div className="lg:col-span-7 bg-slate-50 rounded-2xl p-5 border border-slate-200 flex flex-col justify-between space-y-4">
+          <div className="lg:col-span-7 print:col-span-7 bg-slate-50 rounded-2xl p-5 border border-slate-200 flex flex-col justify-between space-y-4">
             <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 pb-4">
               <div className="flex items-center gap-3">
                 <span className="px-3 py-1.5 rounded-lg bg-slate-200/80 text-slate-800 font-extrabold text-xs uppercase tracking-wider">
@@ -724,7 +724,7 @@ function RelatorioIndividualSheet({
           </div>
 
           {/* Legenda Visual das 4 Faixas de Corte */}
-          <div className="lg:col-span-5 bg-white rounded-2xl p-4 border border-slate-200 flex flex-col justify-between">
+          <div className="lg:col-span-5 print:col-span-5 bg-white rounded-2xl p-4 border border-slate-200 flex flex-col justify-between">
             <div className="text-xs font-extrabold uppercase tracking-wider text-slate-700 mb-2 flex items-center gap-1.5">
               <Award className="w-4 h-4 text-[#B91C1C]" />
               Legenda Institucional — Faixas de Corte (Escala 1 a 4)
@@ -800,102 +800,15 @@ function RelatorioIndividualSheet({
         </div>
       </section>
 
-      {/* SEÇÃO 3: TABELA COMPARATIVA: TOP 5 MAIS BEM AVALIADOS VS. BOTTOM 5 MENOS BEM AVALIADOS */}
-      <section className="space-y-4 break-inside-avoid">
-        <div className="flex items-center gap-2">
-          <div
-            className="px-3.5 py-1.5 rounded-lg text-white font-extrabold text-xs uppercase tracking-wider shadow-xs"
-            style={{ background: 'linear-gradient(90deg, #991B1B 0%, #B91C1C 100%)' }}
-          >
-            3. Destaques: Top 5 Mais Bem Avaliados vs. Bottom 5 Pontos de Atenção
-          </div>
-          <div className="h-px flex-1 bg-slate-200" />
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 print:grid-cols-2 gap-4 print:w-full print:max-w-full">
-          {/* Top 5 */}
-          <div className="rounded-2xl border border-emerald-200 bg-emerald-50/30 overflow-hidden print:w-full print:max-w-full">
-            <div className="bg-emerald-700 text-white px-4 py-2.5 flex items-center justify-between">
-              <div className="flex items-center gap-2 font-extrabold text-xs uppercase tracking-wider">
-                <TrendingUp className="w-4 h-4 text-emerald-200" />
-                Top 5 Indicadores Mais Bem Avaliados
-              </div>
-              <span className="text-[10px] bg-white/15 px-2 py-0.5 rounded font-semibold">
-                Fortalezas Consolidadas
-              </span>
-            </div>
-            <table className="w-full print:w-full print:max-w-full divide-y divide-emerald-100 text-xs">
-              <thead className="bg-emerald-50/80 text-emerald-950 font-bold">
-                <tr>
-                  <th className="py-2 px-3 text-left">Âmbito</th>
-                  <th className="py-2 px-3 text-left">Indicador / Quesito</th>
-                  <th className="py-2 px-3 text-center w-16">Nota</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-emerald-100/70 bg-white">
-                {top5.map((item) => (
-                  <tr key={item.codigo}>
-                    <td className="py-2 px-3 text-[11px] text-slate-600 font-medium">{item.ambito}</td>
-                    <td className="py-2 px-3 font-bold text-slate-900">
-                      <span className="text-[10px] font-mono text-slate-400 mr-1.5">{item.codigo}</span>
-                      {item.enunciado}
-                    </td>
-                    <td className="py-2 px-3 text-center font-black text-emerald-700 bg-emerald-50/50">
-                      {item.media?.toFixed(2).replace('.', ',')}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          {/* Bottom 5 */}
-          <div className="rounded-2xl border border-amber-200 bg-amber-50/30 overflow-hidden print:w-full print:max-w-full">
-            <div className="bg-amber-700 text-white px-4 py-2.5 flex items-center justify-between">
-              <div className="flex items-center gap-2 font-extrabold text-xs uppercase tracking-wider">
-                <TrendingDown className="w-4 h-4 text-amber-200" />
-                Bottom 5 Indicadores Menos Bem Avaliados
-              </div>
-              <span className="text-[10px] bg-white/15 px-2 py-0.5 rounded font-semibold">
-                Oportunidades para PDI
-              </span>
-            </div>
-            <table className="w-full print:w-full print:max-w-full divide-y divide-amber-100 text-xs">
-              <thead className="bg-amber-50/80 text-amber-950 font-bold">
-                <tr>
-                  <th className="py-2 px-3 text-left">Âmbito</th>
-                  <th className="py-2 px-3 text-left">Indicador / Quesito</th>
-                  <th className="py-2 px-3 text-center w-16">Nota</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-amber-100/70 bg-white">
-                {bottom5.map((item) => (
-                  <tr key={item.codigo}>
-                    <td className="py-2 px-3 text-[11px] text-slate-600 font-medium">{item.ambito}</td>
-                    <td className="py-2 px-3 font-bold text-slate-900">
-                      <span className="text-[10px] font-mono text-slate-400 mr-1.5">{item.codigo}</span>
-                      {item.enunciado}
-                    </td>
-                    <td className="py-2 px-3 text-center font-black text-amber-800 bg-amber-50/50">
-                      {item.media?.toFixed(2).replace('.', ',')}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      {/* Rodapé Página 1 (visível apenas na exportação PDF) */}
+      {/* Rodapé Página 1 */}
       <div className="pt-3 border-t border-slate-200 flex items-center justify-between text-[10px] text-slate-400">
         <span>Rede de Colégios Semper Altius • Colégio Everest {colab.unidade} • Avaliação 360º (2026)</span>
         <span className="font-semibold text-slate-500">{colab.nome} — Página 1 / 2</span>
       </div>
       </div>
 
-      {/* BLOCO PÁGINA 2 DO PDF: SEÇÕES 4 E 5 (GRÁFICOS ARANHA) + RODAPÉ INSTITUCIONAL */}
-      <div data-pdf-page="2" className="space-y-6 bg-white pt-2 print-break">
+      {/* BLOCO PÁGINA 2 DO PDF: SEÇÃO 3 (TOP/BOTTOM 5) + SEÇÕES 4 E 5 (GRÁFICOS ARANHA) + RODAPÉ */}
+      <div data-pdf-page="2" className="space-y-5 print:space-y-3.5 bg-white pt-2 print-break">
         {/* Mini-cabeçalho institucional para a Página 2 */}
         <div
           className="rounded-xl px-5 py-3 text-white flex items-center justify-between gap-4"
@@ -919,9 +832,96 @@ function RelatorioIndividualSheet({
             </div>
           </div>
           <div className="text-right text-[10px] font-bold uppercase tracking-wider text-rose-200 shrink-0">
-            Análise 360º &amp; Alinhamento • Página 2 / 2
+            Destaques &amp; Análise 360º • Página 2 / 2
           </div>
         </div>
+
+      {/* SEÇÃO 3: TABELA COMPARATIVA: TOP 5 MAIS BEM AVALIADOS VS. BOTTOM 5 MENOS BEM AVALIADOS */}
+      <section className="space-y-3 break-inside-avoid">
+        <div className="flex items-center gap-2">
+          <div
+            className="px-3.5 py-1.5 rounded-lg text-white font-extrabold text-xs uppercase tracking-wider shadow-xs"
+            style={{ background: 'linear-gradient(90deg, #991B1B 0%, #B91C1C 100%)' }}
+          >
+            3. Destaques: Top 5 Mais Bem Avaliados vs. Bottom 5 Pontos de Atenção
+          </div>
+          <div className="h-px flex-1 bg-slate-200" />
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 print:grid-cols-2 gap-4 print:gap-3 print:w-full print:max-w-full">
+          {/* Top 5 */}
+          <div className="rounded-2xl border border-emerald-200 bg-emerald-50/30 overflow-hidden print:w-full print:max-w-full">
+            <div className="bg-emerald-700 text-white px-4 py-2 flex items-center justify-between">
+              <div className="flex items-center gap-2 font-extrabold text-xs uppercase tracking-wider">
+                <TrendingUp className="w-4 h-4 text-emerald-200" />
+                Top 5 Indicadores Mais Bem Avaliados
+              </div>
+              <span className="text-[10px] bg-white/15 px-2 py-0.5 rounded font-semibold">
+                Fortalezas Consolidadas
+              </span>
+            </div>
+            <table className="w-full print:w-full print:max-w-full divide-y divide-emerald-100 text-xs">
+              <thead className="bg-emerald-50/80 text-emerald-950 font-bold">
+                <tr>
+                  <th className="py-1.5 px-3 text-left">Âmbito</th>
+                  <th className="py-1.5 px-3 text-left">Indicador / Quesito</th>
+                  <th className="py-1.5 px-3 text-center w-16">Nota</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-emerald-100/70 bg-white">
+                {top5.map((item) => (
+                  <tr key={item.codigo}>
+                    <td className="py-1.5 px-3 text-[11px] text-slate-600 font-medium">{item.ambito}</td>
+                    <td className="py-1.5 px-3 font-bold text-slate-900">
+                      <span className="text-[10px] font-mono text-slate-400 mr-1.5">{item.codigo}</span>
+                      {item.enunciado}
+                    </td>
+                    <td className="py-1.5 px-3 text-center font-black text-emerald-700 bg-emerald-50/50">
+                      {item.media?.toFixed(2).replace('.', ',')}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Bottom 5 */}
+          <div className="rounded-2xl border border-amber-200 bg-amber-50/30 overflow-hidden print:w-full print:max-w-full">
+            <div className="bg-amber-700 text-white px-4 py-2 flex items-center justify-between">
+              <div className="flex items-center gap-2 font-extrabold text-xs uppercase tracking-wider">
+                <TrendingDown className="w-4 h-4 text-amber-200" />
+                Bottom 5 Indicadores Menos Bem Avaliados
+              </div>
+              <span className="text-[10px] bg-white/15 px-2 py-0.5 rounded font-semibold">
+                Oportunidades para PDI
+              </span>
+            </div>
+            <table className="w-full print:w-full print:max-w-full divide-y divide-amber-100 text-xs">
+              <thead className="bg-amber-50/80 text-amber-950 font-bold">
+                <tr>
+                  <th className="py-1.5 px-3 text-left">Âmbito</th>
+                  <th className="py-1.5 px-3 text-left">Indicador / Quesito</th>
+                  <th className="py-1.5 px-3 text-center w-16">Nota</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-amber-100/70 bg-white">
+                {bottom5.map((item) => (
+                  <tr key={item.codigo}>
+                    <td className="py-1.5 px-3 text-[11px] text-slate-600 font-medium">{item.ambito}</td>
+                    <td className="py-1.5 px-3 font-bold text-slate-900">
+                      <span className="text-[10px] font-mono text-slate-400 mr-1.5">{item.codigo}</span>
+                      {item.enunciado}
+                    </td>
+                    <td className="py-1.5 px-3 text-center font-black text-amber-800 bg-amber-50/50">
+                      {item.media?.toFixed(2).replace('.', ',')}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
 
       {/* SEÇÕES 4 E 5: GRÁFICOS ARANHA LADO A LADO (RADAR 1: TODOS OS AVALIADORES | RADAR 2: LÍDER VS. AUTOAVALIAÇÃO) */}
       <section className="grid grid-cols-1 lg:grid-cols-2 print:grid-cols-2 gap-5 print:gap-3 break-inside-avoid">
@@ -1159,6 +1159,110 @@ function RelatorioIndividualSheet({
   );
 }
 
+export function buildUnifiedColaboradoresList(data: DashboardData): UnifiedColaborador[] {
+  const list: UnifiedColaborador[] = [];
+
+  // 1. Docentes & Equipe in data.avaliados
+  data.avaliados.forEach((av, idx) => {
+    const paresVal =
+      av.dos_pares !== null && av.outros !== null
+        ? Number(((av.dos_pares + av.outros) / 2).toFixed(2))
+        : av.dos_pares ?? av.outros ?? null;
+
+    const rawLider = av.lider_raw && av.lider_raw.trim() && av.lider_raw.trim() !== '-' ? av.lider_raw.trim() : null;
+
+    list.push({
+      id: `docente-${idx}`,
+      nome: av.nome,
+      email: av.email,
+      unidade: av.unidade,
+      segmento: av.segmento,
+      segmentos_list: [av.segmento],
+      cargo: av.cargo,
+      grupo: 'Docentes',
+      lider: rawLider || 'Coordenação Pedagógica',
+      lider_raw: rawLider,
+      nota_final: av.nota_final,
+      nivel: av.nivel,
+      autoavaliacao: av.autoavaliação,
+      do_lider: av.do_líder,
+      pares_psicologos: paresVal,
+      alunos: av.dos_subordinados,
+      ambitos_order: data.metadata.ambitos,
+      ambitos_por_avaliador: av.ambitos_por_avaliador || {},
+      indicadores: av.indicadores || []
+    });
+  });
+
+  // 2. Gestão & Especialistas in data.gestao_especialistas
+  if (data.gestao_especialistas) {
+    const metaGestao = data.metadata.gestao_especialistas_meta;
+    const pools: {
+      key: keyof NonNullable<DashboardData['gestao_especialistas']>;
+      ambitos: string[];
+    }[] = [
+      {
+        key: 'coordenadores_ciclo',
+        ambitos: metaGestao?.ambitos_coordenadores || []
+      },
+      {
+        key: 'psicologos',
+        ambitos: metaGestao?.ambitos_psicologos || []
+      },
+      {
+        key: 'gestao_ingles',
+        ambitos: metaGestao?.ambitos_gestao_ingles || []
+      },
+      {
+        key: 'disciplinas_institucionais',
+        ambitos: metaGestao?.ambitos_disciplinas_institucionais || []
+      }
+    ];
+
+    for (const pool of pools) {
+      const recs = data.gestao_especialistas[pool.key] || [];
+      recs.forEach((rec, idx) => {
+        const paresCandidates = [rec.outros, rec.dos_pares, rec.dos_subordinados].filter(
+          (v): v is number => v !== null && v !== undefined && v > 0
+        );
+        const paresAvg =
+          paresCandidates.length > 0
+            ? Number((paresCandidates.reduce((a, b) => a + b, 0) / paresCandidates.length).toFixed(2))
+            : null;
+
+        const ambitosOrder =
+          pool.ambitos.length > 0 ? pool.ambitos : Object.keys(rec.topicos || {});
+
+        const rawLider = rec.lider && rec.lider.trim() && rec.lider.trim() !== '-' ? rec.lider.trim() : null;
+
+        list.push({
+          id: `gestao-${pool.key}-${idx}`,
+          nome: rec.nome,
+          email: rec.email,
+          unidade: rec.unidade,
+          segmento: rec.segmento,
+          segmentos_list: rec.segmentos_list || [rec.segmento],
+          cargo: rec.cargo,
+          grupo: 'Gestão & Especialistas',
+          lider: rawLider || 'Direção Escolar',
+          lider_raw: rawLider,
+          nota_final: rec.nota_final,
+          nivel: rec.nivel,
+          autoavaliacao: rec.autoavaliacao,
+          do_lider: rec.do_lider,
+          pares_psicologos: paresAvg,
+          alunos: null,
+          ambitos_order: ambitosOrder,
+          ambitos_por_avaliador: rec.ambitos_por_avaliador || {},
+          indicadores: rec.indicadores || []
+        });
+      });
+    }
+  }
+
+  return list.sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));
+}
+
 export default function RelatoriosIndividuaisView({ data, unidade }: RelatoriosIndividuaisViewProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [grupoCargoFilter, setGrupoCargoFilter] = useState('TODOS');
@@ -1178,109 +1282,7 @@ export default function RelatoriosIndividuaisView({ data, unidade }: RelatoriosI
   } | null>(null);
 
   // Build unified list of all collaborators (Docentes + Gestão & Especialistas)
-  const allColaboradores = useMemo<UnifiedColaborador[]>(() => {
-    const list: UnifiedColaborador[] = [];
-
-    // 1. Docentes & Equipe in data.avaliados
-    data.avaliados.forEach((av, idx) => {
-      const paresVal =
-        av.dos_pares !== null && av.outros !== null
-          ? Number(((av.dos_pares + av.outros) / 2).toFixed(2))
-          : av.dos_pares ?? av.outros ?? null;
-
-      const rawLider = av.lider_raw && av.lider_raw.trim() && av.lider_raw.trim() !== '-' ? av.lider_raw.trim() : null;
-
-      list.push({
-        id: `docente::${idx}::${av.email || av.nome}`,
-        nome: av.nome,
-        email: av.email,
-        unidade: av.unidade,
-        segmento: av.segmento,
-        segmentos_list: [av.segmento],
-        cargo: av.cargo,
-        grupo: 'Docentes',
-        lider: rawLider || 'Coordenação Pedagógica',
-        lider_raw: rawLider,
-        nota_final: av.nota_final,
-        nivel: av.nivel,
-        autoavaliacao: av.autoavaliação,
-        do_lider: av.do_líder,
-        pares_psicologos: paresVal,
-        alunos: av.dos_subordinados,
-        ambitos_order: data.metadata.ambitos,
-        ambitos_por_avaliador: av.ambitos_por_avaliador || {},
-        indicadores: av.indicadores || []
-      });
-    });
-
-    // 2. Gestão & Especialistas in data.gestao_especialistas
-    if (data.gestao_especialistas) {
-      const metaGestao = data.metadata.gestao_especialistas_meta;
-      const pools: {
-        key: keyof NonNullable<DashboardData['gestao_especialistas']>;
-        ambitos: string[];
-      }[] = [
-        {
-          key: 'coordenadores_ciclo',
-          ambitos: metaGestao?.ambitos_coordenadores || []
-        },
-        {
-          key: 'psicologos',
-          ambitos: metaGestao?.ambitos_psicologos || []
-        },
-        {
-          key: 'gestao_ingles',
-          ambitos: metaGestao?.ambitos_gestao_ingles || []
-        },
-        {
-          key: 'disciplinas_institucionais',
-          ambitos: metaGestao?.ambitos_disciplinas_institucionais || []
-        }
-      ];
-
-      for (const pool of pools) {
-        const recs = data.gestao_especialistas[pool.key] || [];
-        recs.forEach((rec, idx) => {
-          const paresCandidates = [rec.outros, rec.dos_pares, rec.dos_subordinados].filter(
-            (v): v is number => v !== null && v !== undefined && v > 0
-          );
-          const paresAvg =
-            paresCandidates.length > 0
-              ? Number((paresCandidates.reduce((a, b) => a + b, 0) / paresCandidates.length).toFixed(2))
-              : null;
-
-          const ambitosOrder =
-            pool.ambitos.length > 0 ? pool.ambitos : Object.keys(rec.topicos || {});
-
-          const rawLider = rec.lider && rec.lider.trim() && rec.lider.trim() !== '-' ? rec.lider.trim() : null;
-
-          list.push({
-            id: `gestao::${pool.key}::${idx}::${rec.email || rec.nome}`,
-            nome: rec.nome,
-            email: rec.email,
-            unidade: rec.unidade,
-            segmento: rec.segmento,
-            segmentos_list: rec.segmentos_list || [rec.segmento],
-            cargo: rec.cargo,
-            grupo: 'Gestão & Especialistas',
-            lider: rawLider || 'Direção Escolar',
-            lider_raw: rawLider,
-            nota_final: rec.nota_final,
-            nivel: rec.nivel,
-            autoavaliacao: rec.autoavaliacao,
-            do_lider: rec.do_lider,
-            pares_psicologos: paresAvg,
-            alunos: null,
-            ambitos_order: ambitosOrder,
-            ambitos_por_avaliador: rec.ambitos_por_avaliador || {},
-            indicadores: rec.indicadores || []
-          });
-        });
-      }
-    }
-
-    return list.sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));
-  }, [data]);
+  const allColaboradores = useMemo<UnifiedColaborador[]>(() => buildUnifiedColaboradoresList(data), [data]);
 
   // Distinct cargos for the filter dropdown
   const availableCargos = useMemo(() => {

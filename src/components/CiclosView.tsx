@@ -324,26 +324,32 @@ export default function CiclosView({ analytics, metadata, unidade }: CiclosViewP
             <tbody className="divide-y divide-slate-100 bg-white">
               {metadata.ambitos.map((amb) => {
                 const score = currentCicloData.ambitos[amb] || 0;
+                const ambEval = currentCicloData.ambitos_por_avaliador?.[amb];
+                const autoVal = ambEval?.autoavaliacao ?? null;
+                const liderVal = ambEval?.lider ?? null;
+                const paresVal = ambEval?.pares_psicologos ?? null;
+                const alunosVal = ambEval?.alunos ?? null;
+
                 return (
                   <tr key={amb} className="hover:bg-slate-50/60">
                     <td className="py-2.5 px-4 font-semibold text-slate-800">{amb}</td>
                     <td className="py-2.5 px-4 text-center font-bold text-blue-800 bg-blue-50/30">
                       {score.toFixed(2)}
                     </td>
-                    <td className="py-2.5 px-4 text-center text-slate-700">
-                      {currentCicloData.perfis_avaliadores.autoavaliação.toFixed(2)}
+                    <td className="py-2.5 px-4 text-center text-slate-700 font-medium">
+                      {autoVal !== null ? autoVal.toFixed(2) : <span className="text-slate-400 italic text-[11px]">Não avaliado</span>}
                     </td>
-                    <td className="py-2.5 px-4 text-center text-slate-700">
-                      {currentCicloData.perfis_avaliadores.coordenador.toFixed(2)}
+                    <td className="py-2.5 px-4 text-center text-slate-700 font-medium">
+                      {liderVal !== null ? liderVal.toFixed(2) : <span className="text-slate-400 italic text-[11px]">Não avaliado</span>}
                     </td>
-                    <td className="py-2.5 px-4 text-center text-slate-700">
-                      {currentCicloData.perfis_avaliadores.pares.toFixed(2)}
+                    <td className="py-2.5 px-4 text-center text-slate-700 font-medium">
+                      {paresVal !== null ? paresVal.toFixed(2) : <span className="text-slate-400 italic text-[11px]">Não avaliado</span>}
                     </td>
                     {selectedCiclo === 'EFII' || selectedCiclo === 'EM' ? (
                       <td className="py-2.5 px-4 text-center text-purple-800 bg-purple-50/20 font-semibold">
-                        {currentCicloData.perfis_avaliadores.alunos > 0
-                          ? currentCicloData.perfis_avaliadores.alunos.toFixed(2)
-                          : 'Não aplicável / 0'}
+                        {alunosVal !== null && alunosVal > 0
+                          ? alunosVal.toFixed(2)
+                          : <span className="text-slate-400 italic font-normal text-[11px]">Não avaliado</span>}
                       </td>
                     ) : null}
                   </tr>
