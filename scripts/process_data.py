@@ -20,12 +20,13 @@ PSICO_XLSX = os.path.join(BASE_DIR, 'src', 'data', 'raw', 'psicologos.xlsx')
 SUP_INGLES_XLSX = os.path.join(BASE_DIR, 'src', 'data', 'raw', 'supervisores_ingles.xlsx')
 COORD_INGLES_XLSX = os.path.join(BASE_DIR, 'src', 'data', 'raw', 'coordenadores_ingles.xlsx')
 DISC_INST_XLSX = os.path.join(BASE_DIR, 'src', 'data', 'raw', 'disciplinas_institucionais.xlsx')
+ED_FISICA_XLSX = os.path.join(BASE_DIR, 'src', 'data', 'raw', 'educacao_fisica.xlsx')
 
 MALE_NAMES = {
     'allander', 'arlindo', 'bernardo', 'carlos', 'danilo', 'david', 'dennis', 'euclides',
     'fernando', 'gabriel', 'guilherme', 'ivan', 'joao', 'jonas', 'juliano', 'lucas',
     'luiz', 'marcio', 'raphael', 'rene', 'rodrigo', 'silvio', 'thales', 'wellington',
-    'yuri', 'alex', 'darlan', 'felipe', 'pedro', 'reinaldo', 'igor', 'agostinho'
+    'yuri', 'alex', 'darlan', 'felipe', 'pedro', 'reinaldo', 'igor', 'agostinho', 'rafael'
 }
 
 STUDENT_QUESTIONS_META = [
@@ -511,6 +512,85 @@ def build_individual_details(questoes_dict, meta_list, ambitos_list, topicos_dic
 
     return ambitos_por_avaliador, indicadores
 
+def load_educacao_fisica_evaluations():
+    if not os.path.exists(ED_FISICA_XLSX):
+        return []
+    wb = openpyxl.load_workbook(ED_FISICA_XLSX, data_only=True)
+    ws_m = wb['Médias']
+    ws_t = wb['Tópicos']
+    ws_p = wb['Perguntas computáveis']
+
+    t_headers = []
+    for c in range(13, ws_t.max_column + 1):
+        v = ws_t.cell(2, c).value
+        if v:
+            t_headers.append((c, str(v).strip()))
+
+    p_headers = []
+    for c in range(13, ws_p.max_column + 1):
+        amb = ws_p.cell(1, c).value
+        q_raw = ws_p.cell(2, c).value
+        if q_raw:
+            amb = str(amb).strip() if amb else 'Geral'
+            q_str = str(q_raw).strip()
+            m = re.match(r'\[(.*?)\]\s*(.*)', q_str)
+            perfil = m.group(1) if m else 'Geral'
+            quesito = m.group(2) if m else q_str
+            quesito_clean = quesito.replace('Pró atividade profissonal', 'Proatividade profissional')
+            p_headers.append({
+                'col': c,
+                'ambito': amb,
+                'perfil': perfil,
+                'quesito': quesito_clean,
+                'key': f"{perfil}::{quesito_clean}"
+            })
+
+    ed_records = []
+    for r in range(3, ws_m.max_row + 1):
+        nome = clean_str(ws_m.cell(r, 1).value)
+        if not nome:
+            continue
+        email = clean_str(ws_m.cell(r, 2).value) or ''
+        area = clean_str(ws_m.cell(r, 5).value) or 'Educação Física'
+        dept = clean_str(ws_m.cell(r, 6).value) or 'Educação Física'
+        tag = clean_str(ws_m.cell(r, 9).value)
+        lider = clean_str(ws_m.cell(r, 10).value)
+
+        nota_final = clean_val(ws_m.cell(r, 14).value) or clean_val(ws_m.cell(r, 15).value) or clean_val(ws_m.cell(r, 16).value)
+        media = clean_val(ws_m.cell(r, 16).value)
+        auto = clean_val(ws_m.cell(r, 17).value)
+        do_lider = clean_val(ws_m.cell(r, 18).value)
+        outros = clean_val(ws_m.cell(r, 19).value)
+        colegas = clean_val(ws_m.cell(r, 20).value)
+        dos_pares = clean_val(ws_m.cell(r, 21).value)
+
+        topicos = {}
+        for c, tname in t_headers:
+            topicos[tname] = clean_val(ws_t.cell(r, c).value)
+
+        questoes = {}
+        for p in p_headers:
+            questoes[p['key']] = clean_val(ws_p.cell(r, p['col']).value)
+
+        ed_records.append({
+            'nome': nome,
+            'email': email,
+            'area_raw': area,
+            'dept_raw': dept,
+            'tag_raw': tag,
+            'lider_raw': lider,
+            'nota_final': nota_final,
+            'media': media,
+            'autoavaliação': auto,
+            'do_líder': do_lider,
+            'outros': outros,
+            'colegas': colegas,
+            'dos_pares': dos_pares,
+            'topicos': topicos,
+            'questoes': questoes
+        })
+    return ed_records
+
 def parse_generic_instrument(filepath, mapping_dict, default_instrument_key):
     wb = openpyxl.load_workbook(filepath, data_only=True)
     ws_m = wb['Médias']
@@ -932,6 +1012,64 @@ def run():
             existing_payload = json.load(f_existing)
         q_map = {q['id']: q for q in existing_payload['metadata']['questoes_meta']}
         raw_avaliados = existing_payload['avaliados']
+
+        # Integrate Educação Física instrument (src/data/raw/educacao_fisica.xlsx)
+        ed_fisica_rows = load_educacao_fisica_evaluations()
+        if ed_fisica_rows:
+            print(f"Planilha de Educação Física carregada: {len(ed_fisica_rows)} professores avaliados.")
+            by_norm_name = {norm_person_name(r.get('nome')): r for r in raw_avaliados}
+            for ed in ed_fisica_rows:
+                n_ed = norm_person_name(ed['nome'])
+                if n_ed in by_norm_name:
+                    target = by_norm_name[n_ed]
+                    target['email'] = ed['email'] or target.get('email')
+                    target['lider_raw'] = ed['lider_raw'] or target.get('lider_raw')
+                    if ed['tag_raw']:
+                        target['tag_raw'] = ed['tag_raw']
+                    target['autoavaliação'] = ed['autoavaliação']
+                    target['do_líder'] = ed['do_líder']
+                    target['outros'] = ed['outros']
+                    target['colegas'] = ed['colegas']
+                    target['dos_pares'] = ed['dos_pares']
+                    target['nota_final'] = ed['nota_final']
+                    target['media'] = ed['media']
+                    target['nivel'] = get_performance_level(ed['nota_final'])
+                    if target.get('src') == 'Alunos_Forms':
+                        target['src'] = 'EI_F1'
+                    for tk, tv in ed['topicos'].items():
+                        target['topicos'][tk] = tv
+                    # Replace non-student questions with the official Educação Física instrument questions
+                    for qk in list(target['questoes'].keys()):
+                        if not qk.startswith('Alunos::'):
+                            target['questoes'][qk] = ed['questoes'].get(qk)
+                else:
+                    unidade_ed = infer_unit(ed['email'], ed['tag_raw'])
+                    seg_ed = normalize_segment(ed['dept_raw'], ed['tag_raw'], ed['lider_raw'], ed['email'])
+                    q_full = {m['key']: ed['questoes'].get(m['key']) for m in q_map.values()}
+                    raw_avaliados.append({
+                        'src': 'Ed_Fisica',
+                        'nome': ed['nome'],
+                        'email': ed['email'],
+                        'dept_raw': ed['dept_raw'],
+                        'area_raw': ed['area_raw'],
+                        'tag_raw': ed['tag_raw'],
+                        'lider_raw': ed['lider_raw'],
+                        'nota_final': ed['nota_final'],
+                        'media': ed['media'],
+                        'autoavaliação': ed['autoavaliação'],
+                        'do_líder': ed['do_líder'],
+                        'outros': ed['outros'],
+                        'colegas': ed['colegas'],
+                        'dos_pares': ed['dos_pares'],
+                        'dos_subordinados': None,
+                        'topicos': ed['topicos'],
+                        'questoes': q_full,
+                        'unidade': unidade_ed,
+                        'segmento': seg_ed,
+                        'sexo': infer_gender(ed['nome']),
+                        'cargo': 'Docentes',
+                        'nivel': get_performance_level(ed['nota_final'])
+                    })
 
         # Pre-merge Larissa Souza Rosa Farinazzo if split into 2 rows (EI_F1 + F2_EM)
         larissa_rows = [x for x in raw_avaliados if x.get('nome') == 'Larissa Souza Rosa Farinazzo']
