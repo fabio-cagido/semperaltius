@@ -1039,9 +1039,9 @@ def run():
                     for tk, tv in ed['topicos'].items():
                         target['topicos'][tk] = tv
                     # Replace non-student questions with the official Educação Física instrument questions
-                    for qk in list(target['questoes'].keys()):
+                    for qk, qv in ed['questoes'].items():
                         if not qk.startswith('Alunos::'):
-                            target['questoes'][qk] = ed['questoes'].get(qk)
+                            target['questoes'][qk] = qv
                 else:
                     unidade_ed = infer_unit(ed['email'], ed['tag_raw'])
                     seg_ed = normalize_segment(ed['dept_raw'], ed['tag_raw'], ed['lider_raw'], ed['email'])
